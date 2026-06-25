@@ -6,7 +6,7 @@
 <title>InspectFlow — Office Dashboard</title>
 <style>
   :root{
-    --navy:#0B2C4D; --navy2:#0E3A63; --blue:#1487C9; --blue-d:#0F6FA8;
+    --navy:#0B2C4D; --blue:#1487C9; --blue-d:#0F6FA8;
     --green:#27AE60; --amber:#F2A93B; --red:#E74C3C;
     --bg:#F4F7FA; --card:#FFFFFF; --line:#E5EAF0; --text:#1F2D3D; --muted:#7387A0;
   }
@@ -14,9 +14,8 @@
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
   .app{display:flex;height:100vh}
 
-  /* Sidebar */
   .sidebar{width:236px;background:var(--navy);color:#fff;display:flex;flex-direction:column;flex-shrink:0}
-  .brand{display:flex;align-items:center;gap:10px;padding:20px 22px;font-size:20px;font-weight:700;letter-spacing:-.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .brand{display:flex;align-items:center;gap:10px;padding:18px 22px;font-size:20px;font-weight:700;letter-spacing:-.5px;border-bottom:1px solid rgba(255,255,255,.08)}
   .brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#2FB3E8);display:flex;align-items:center;justify-content:center;font-size:16px}
   .brand b{color:#fff}.brand span{color:#7FD3F5}
   .nav{padding:14px 12px;flex:1;overflow:auto}
@@ -24,30 +23,36 @@
   .nav a .ic{width:18px;text-align:center;opacity:.9}
   .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
   .nav a.active{background:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(20,135,201,.35)}
-  .upgrade{margin:12px;padding:14px;background:rgba(255,255,255,.06);border-radius:12px;font-size:12.5px;color:#C6D6E8}
+  .hublink{display:block;padding:10px 22px;color:#7FA9CC;font-size:12.5px;text-decoration:none;border-top:1px solid rgba(255,255,255,.08)}
+  .upgrade{margin:10px 12px;padding:14px;background:rgba(255,255,255,.06);border-radius:12px;font-size:12.5px;color:#C6D6E8}
   .upgrade b{color:#fff;display:block;margin-bottom:4px}
   .upgrade button{margin-top:10px;width:100%;border:0;background:var(--blue);color:#fff;padding:8px;border-radius:8px;font-weight:600;cursor:pointer}
 
-  /* Main */
   .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-  .topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:18px;flex-shrink:0}
+  .topbar{height:62px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:16px;flex-shrink:0}
   .search{flex:1;max-width:420px;position:relative}
   .search input{width:100%;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:14px}
   .search .si{position:absolute;left:13px;top:9px;color:var(--muted)}
   .topbar .spacer{flex:1}
+  .live{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600}
+  .live .ld{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(39,174,96,.5);animation:lp 2s infinite}
+  @keyframes lp{0%{box-shadow:0 0 0 0 rgba(39,174,96,.5)}70%{box-shadow:0 0 0 7px rgba(39,174,96,0)}100%{box-shadow:0 0 0 0 rgba(39,174,96,0)}}
   .btn-primary{background:var(--blue);color:#fff;border:0;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:7px}
   .btn-primary:hover{background:var(--blue-d)}
   .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:16px;color:var(--muted)}
   .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1487C9,#0B2C4D);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600}
 
-  .content{flex:1;overflow:auto;padding:26px 30px}
-  .h1{font-size:23px;font-weight:700;letter-spacing:-.4px}
+  .content{flex:1;overflow:auto;padding:24px 30px}
+  .screen{display:none}
+  .screen.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .h1{font-size:22px;font-weight:700;letter-spacing:-.4px}
   .sub{color:var(--muted);font-size:14px;margin-top:3px}
 
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:22px 0}
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
   .kpi .label{font-size:13px;color:var(--muted);font-weight:500}
-  .kpi .val{font-size:27px;font-weight:700;margin:6px 0 2px;letter-spacing:-.5px}
+  .kpi .val{font-size:26px;font-weight:700;margin:6px 0 2px;letter-spacing:-.5px}
   .kpi .delta{font-size:12.5px;font-weight:600}
   .up{color:var(--green)} .down{color:var(--red)}
 
@@ -55,11 +60,11 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
   .card h3{font-size:15.5px;font-weight:700;margin-bottom:2px}
   .card .csub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-  .card .clink{float:right;font-size:13px;color:var(--blue);font-weight:600;text-decoration:none;cursor:pointer}
+  .card .clink{float:right;font-size:13px;color:var(--blue);font-weight:600;cursor:pointer}
 
-  /* Schedule timeline */
-  .job{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .job{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
   .job:last-child{border-bottom:0}
+  .job:hover{background:#FAFCFE}
   .job .time{width:70px;font-size:13px;font-weight:600;color:var(--navy);flex-shrink:0}
   .job .time small{display:block;color:var(--muted);font-weight:500}
   .job .bar{width:4px;border-radius:3px;background:var(--blue)}
@@ -73,142 +78,279 @@
   .chip.amber{background:#FDF1DC;color:#B97D17}
   .chip.gray{background:#EDF1F6;color:#5C708A}
 
-  /* Mini bar chart */
   .chart{display:flex;align-items:flex-end;gap:12px;height:140px;margin-top:8px;padding-top:10px}
   .chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
-  .chart .bar2{width:100%;max-width:34px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#2FB3E8,#1487C9)}
+  .chart .bar2{width:100%;max-width:34px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#2FB3E8,#1487C9);transition:height .6s ease}
   .chart .col small{font-size:11.5px;color:var(--muted)}
 
-  /* Inspections table */
   table{width:100%;border-collapse:collapse;margin-top:6px}
   th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--line)}
   td{padding:13px 8px;border-bottom:1px solid var(--line);font-size:13.5px}
-  tr:last-child td{border-bottom:0}
+  tbody tr{cursor:pointer}
+  tbody tr:hover{background:#FAFCFE}
   td .pa{font-weight:600}
   .mini-av{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#E3F1FB;color:var(--blue-d);align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:8px;vertical-align:middle}
   .tablecard{margin-top:22px}
+  .empty{color:var(--muted);font-size:13px;padding:24px 8px;text-align:center}
+
+  .listrow{display:flex;align-items:center;gap:14px;padding:14px 8px;border-bottom:1px solid var(--line)}
+  .listrow:last-child{border-bottom:0}
+  .listrow .nm{flex:1}
+  .listrow .nm b{font-size:14px}.listrow .nm small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+  .overlay{position:fixed;inset:0;background:rgba(11,28,46,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:16px;max-width:520px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.4);overflow:hidden}
+  .modal .mh{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+  .modal .mh h3{font-size:17px;font-weight:700}
+  .modal .mh .x{border:0;background:var(--bg);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px}
+  .modal .mb{padding:20px 22px}
+  .fld{margin-bottom:14px}
+  .fld label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+  .fld input,.fld select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px;font-family:inherit}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .modal .mf{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+  .modal .mf button{padding:11px 18px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--line);background:#fff}
+  .modal .mf .save{background:var(--blue);border-color:var(--blue);color:#fff}
+
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.28s;z-index:90;display:flex;flex-direction:column}
+  .drawer.show{transform:none}
+  .drawer .dh{padding:20px 22px;border-bottom:1px solid var(--line)}
+  .drawer .dh .x{float:right;border:0;background:var(--bg);width:30px;height:30px;border-radius:8px;cursor:pointer}
+  .drawer .dh h3{font-size:17px;font-weight:700}
+  .drawer .dh p{color:var(--muted);font-size:13px;margin-top:3px}
+  .drawer .db{padding:20px 22px;flex:1;overflow:auto}
+  .drow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .drow .k{color:var(--muted)}
+  .drawer .df{padding:16px 22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .drawer .df a{display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;font-weight:700;font-size:14px}
+  .df .openrep{background:var(--blue);color:#fff}
+  .df .openfield{background:#fff;border:1px solid var(--line);color:var(--text)}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:#0B2C4D;color:#fff;padding:12px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:9px;z-index:130;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
 </style>
 </head>
 <body>
 <div class="app">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand"><span class="mark">◧</span><div><b>Inspect</b><span>Flow</span></div></div>
-    <nav class="nav">
-      <a class="active"><span class="ic">▦</span> Dashboard</a>
-      <a><span class="ic">▣</span> Schedule</a>
-      <a><span class="ic">▤</span> Inspections</a>
-      <a><span class="ic">☷</span> Clients & Agents</a>
-      <a><span class="ic">▥</span> Templates</a>
-      <a><span class="ic">$</span> Payments</a>
-      <a><span class="ic">◉</span> Metrics</a>
-      <a><span class="ic">⚙</span> Settings</a>
+    <nav class="nav" id="nav">
+      <a class="active" data-s="dashboard"><span class="ic">▦</span> Dashboard</a>
+      <a data-s="schedule"><span class="ic">▣</span> Schedule</a>
+      <a data-s="inspections"><span class="ic">▤</span> Inspections</a>
+      <a data-s="clients"><span class="ic">☷</span> Clients &amp; Agents</a>
+      <a data-s="templates"><span class="ic">▥</span> Templates</a>
+      <a data-s="payments"><span class="ic">$</span> Payments</a>
+      <a data-s="metrics"><span class="ic">◉</span> Metrics</a>
+      <a data-s="settings"><span class="ic">⚙</span> Settings</a>
     </nav>
-    <div class="upgrade">
-      <b>InspectFlow Advanced</b>
-      Automations, pay splits & business intelligence.
-      <button>Start free trial</button>
-    </div>
+    <div class="upgrade"><b>InspectFlow Advanced</b>Automations, pay splits &amp; business intelligence.<button onclick="toast('🚀 Advanced trial started')">Start free trial</button></div>
+    <a class="hublink" href="index.html">← Back to demo hub</a>
   </aside>
 
-  <!-- Main -->
   <div class="main">
     <div class="topbar">
-      <div class="search"><span class="si">⌕</span><input placeholder="Search inspections, clients, addresses…"></div>
+      <div class="search"><span class="si">⌕</span><input id="search" placeholder="Search inspections, clients, addresses…" oninput="liveSearch(this.value)"></div>
       <div class="spacer"></div>
-      <button class="icon-btn">🔔</button>
-      <button class="btn-primary">＋ New Inspection</button>
+      <div class="live"><span class="ld"></span> Live · synced <span id="syncAgo">just now</span></div>
+      <button class="icon-btn" onclick="toast('🔔 3 new notifications')">🔔</button>
+      <button class="btn-primary" onclick="openNew()">＋ New Inspection</button>
       <div class="avatar">RW</div>
     </div>
 
     <div class="content">
-      <div class="h1">Good morning, Ryan 👋</div>
-      <div class="sub">Thursday, June 25, 2026 · 3 inspections scheduled today</div>
-
-      <!-- KPIs -->
-      <div class="kpis">
-        <div class="kpi"><div class="label">Inspections this month</div><div class="val">42</div><div class="delta up">▲ 18% vs. last month</div></div>
-        <div class="kpi"><div class="label">Revenue (MTD)</div><div class="val">$26,880</div><div class="delta up">▲ 12% vs. last month</div></div>
-        <div class="kpi"><div class="label">Avg. report turnaround</div><div class="val">4.2 hrs</div><div class="delta up">▲ Faster than target</div></div>
-        <div class="kpi"><div class="label">Outstanding payments</div><div class="val">$1,140</div><div class="delta down">2 invoices unpaid</div></div>
-      </div>
-
-      <!-- Two column -->
-      <div class="grid2">
-        <div class="card">
-          <a class="clink">View calendar →</a>
-          <h3>Today's Schedule</h3>
-          <div class="csub">3 inspections · 2 inspectors active</div>
-
-          <div class="job g">
-            <div class="time">8:00a<small>90 min</small></div><div class="bar"></div>
-            <div class="det">
-              <div class="addr">1428 Magnolia Ave, Jacksonville, FL</div>
-              <div class="meta">Buyer: Sarah Mitchell · Inspector: Ryan W. · Full Home + Radon</div>
-            </div>
-            <span class="chip green">Completed</span>
+      <div class="screen active" id="s-dashboard">
+        <div class="h1">Good morning, Ryan 👋</div>
+        <div class="sub" id="todayLine">Loading…</div>
+        <div class="kpis">
+          <div class="kpi"><div class="label">Inspections this month</div><div class="val" id="kpiCount">42</div><div class="delta up">▲ 18% vs. last month</div></div>
+          <div class="kpi"><div class="label">Revenue (MTD)</div><div class="val" id="kpiRev">$26,880</div><div class="delta up">▲ 12% vs. last month</div></div>
+          <div class="kpi"><div class="label">Avg. report turnaround</div><div class="val">4.2 hrs</div><div class="delta up">▲ Faster than target</div></div>
+          <div class="kpi"><div class="label">Outstanding payments</div><div class="val">$1,140</div><div class="delta down">2 invoices unpaid</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <span class="clink" onclick="go('schedule')">View calendar →</span>
+            <h3>Today's Schedule</h3><div class="csub">3 inspections · 2 inspectors active</div>
+            <div class="job g" onclick="openInsp(0)"><div class="time">8:00a<small>90 min</small></div><div class="bar"></div><div class="det"><div class="addr">1428 Magnolia Ave, Jacksonville</div><div class="meta">Sarah Mitchell · Ryan W. · Full Home + Radon</div></div><span class="chip green">Completed</span></div>
+            <div class="job" onclick="openInsp(1)"><div class="time">11:30a<small>120 min</small></div><div class="bar"></div><div class="det"><div class="addr">76 Riverside Dr, Ortega</div><div class="meta">James Carter · Ryan W. · Full Home + WDO</div></div><span class="chip blue">In Progress</span></div>
+            <div class="job a" onclick="openInsp(5)"><div class="time">3:00p<small>90 min</small></div><div class="bar"></div><div class="det"><div class="addr">912 Atlantic Blvd, Neptune Beach</div><div class="meta">The Nguyen Family · Dave M. · Full Home</div></div><span class="chip amber">Upcoming</span></div>
           </div>
-
-          <div class="job">
-            <div class="time">11:30a<small>120 min</small></div><div class="bar"></div>
-            <div class="det">
-              <div class="addr">76 Riverside Dr, Ortega, FL</div>
-              <div class="meta">Buyer: James Carter · Inspector: Ryan W. · Full Home + WDO</div>
-            </div>
-            <span class="chip blue">In Progress</span>
-          </div>
-
-          <div class="job a">
-            <div class="time">3:00p<small>90 min</small></div><div class="bar"></div>
-            <div class="det">
-              <div class="addr">912 Atlantic Blvd, Neptune Beach, FL</div>
-              <div class="meta">Buyer: The Nguyen Family · Inspector: Dave M. · Full Home</div>
-            </div>
-            <span class="chip amber">Upcoming</span>
+          <div class="card">
+            <h3>Inspections by Month</h3><div class="csub">Last 6 months</div>
+            <div class="chart" id="chart"></div>
           </div>
         </div>
-
-        <div class="card">
-          <h3>Inspections by Month</h3>
-          <div class="csub">Last 6 months</div>
-          <div class="chart">
-            <div class="col"><div class="bar2" style="height:48%"></div><small>Jan</small></div>
-            <div class="col"><div class="bar2" style="height:58%"></div><small>Feb</small></div>
-            <div class="col"><div class="bar2" style="height:52%"></div><small>Mar</small></div>
-            <div class="col"><div class="bar2" style="height:72%"></div><small>Apr</small></div>
-            <div class="col"><div class="bar2" style="height:80%"></div><small>May</small></div>
-            <div class="col"><div class="bar2" style="height:96%"></div><small>Jun</small></div>
-          </div>
+        <div class="card tablecard">
+          <span class="clink" onclick="go('inspections')">See all →</span>
+          <h3>Recent Inspections</h3><div class="csub">Across all inspectors</div>
+          <table><thead><tr><th>Property</th><th>Client</th><th>Inspector</th><th>Date</th><th>Status</th><th>Payment</th></tr></thead><tbody id="recentBody"></tbody></table>
         </div>
       </div>
 
-      <!-- Recent inspections -->
-      <div class="card tablecard">
-        <a class="clink">See all →</a>
-        <h3>Recent Inspections</h3>
-        <div class="csub">Across all inspectors</div>
-        <table>
-          <thead><tr><th>Property</th><th>Client</th><th>Inspector</th><th>Date</th><th>Status</th><th>Payment</th></tr></thead>
-          <tbody>
-            <tr><td class="pa">1428 Magnolia Ave</td><td>Sarah Mitchell</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 25</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
-            <tr><td class="pa">76 Riverside Dr</td><td>James Carter</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 25</td><td><span class="chip blue">Draft</span></td><td><span class="chip gray">Pending</span></td></tr>
-            <tr><td class="pa">3301 Hendricks Ave</td><td>Morgan Lee</td><td><span class="mini-av">DM</span>Dave M.</td><td>Jun 24</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
-            <tr><td class="pa">58 Beach Blvd #4</td><td>Priya Anand</td><td><span class="mini-av">DM</span>Dave M.</td><td>Jun 23</td><td><span class="chip green">Published</span></td><td><span class="chip amber">Unpaid</span></td></tr>
-            <tr><td class="pa">227 Park St</td><td>Tyler Brooks</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 22</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
-          </tbody>
-        </table>
+      <div class="screen" id="s-schedule">
+        <div class="h1">Schedule</div><div class="sub">Thursday, June 25, 2026</div>
+        <div class="card tablecard">
+          <h3>This Week</h3><div class="csub">8 inspections booked</div>
+          <div id="weekList"></div>
+        </div>
+      </div>
+
+      <div class="screen" id="s-inspections">
+        <div class="h1">Inspections</div><div class="sub"><span id="inspTotal"></span> total · filter with the search bar above</div>
+        <div class="card tablecard">
+          <table><thead><tr><th>Property</th><th>Client</th><th>Inspector</th><th>Date</th><th>Status</th><th>Payment</th></tr></thead><tbody id="inspBody"></tbody></table>
+        </div>
+      </div>
+
+      <div class="screen" id="s-clients">
+        <div class="h1">Clients &amp; Agents</div><div class="sub">Everyone connected to your inspections</div>
+        <div class="card tablecard"><div id="clientList"></div></div>
+      </div>
+
+      <div class="screen" id="s-payments">
+        <div class="h1">Payments</div><div class="sub">Spectora-style integrated payments</div>
+        <div class="kpis">
+          <div class="kpi"><div class="label">Collected (MTD)</div><div class="val">$25,740</div><div class="delta up">▲ 12%</div></div>
+          <div class="kpi"><div class="label">Outstanding</div><div class="val">$1,140</div><div class="delta down">2 invoices</div></div>
+          <div class="kpi"><div class="label">Avg. inspection fee</div><div class="val">$612</div><div class="delta up">▲ $40</div></div>
+          <div class="kpi"><div class="label">Next payout</div><div class="val">$3,210</div><div class="delta">Jun 26</div></div>
+        </div>
+        <div class="card tablecard"><h3>Recent Transactions</h3><div class="csub">Auto-collected via InspectFlow Payments</div><div id="payList"></div></div>
+      </div>
+
+      <div class="screen" id="s-metrics">
+        <div class="h1">Metrics</div><div class="sub">Business intelligence · InspectFlow Advanced</div>
+        <div class="grid2" style="margin-top:22px">
+          <div class="card"><h3>Revenue by Service</h3><div class="csub">Last 90 days</div><div id="svcBars"></div></div>
+          <div class="card"><h3>Top Referring Agents</h3><div class="csub">By inspections sent</div><div id="agentList"></div></div>
+        </div>
+      </div>
+
+      <div class="screen" id="s-templates">
+        <div class="h1">Templates</div><div class="sub">Your inspection report templates</div>
+        <div class="card tablecard"><div id="tplList"></div></div>
+      </div>
+      <div class="screen" id="s-settings">
+        <div class="h1">Settings</div><div class="sub">Company profile, branding, integrations</div>
+        <div class="card tablecard"><div class="listrow"><div class="nm"><b>Company</b><small>904 Digital Media — InspectFlow</small></div><span class="chip green">Active</span></div>
+          <div class="listrow"><div class="nm"><b>Payments</b><small>Connected · instant payouts on</small></div><span class="chip green">Connected</span></div>
+          <div class="listrow"><div class="nm"><b>Online booking widget</b><small>Embedded on yoursite.com</small></div><span class="chip green">Live</span></div>
+          <div class="listrow"><div class="nm"><b>E-sign agreements</b><small>Pre-inspection agreement v3</small></div><span class="chip blue">2 pending</span></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="mh"><h3>New Inspection</h3><button class="x" onclick="closeNew()">✕</button></div>
+    <div class="mb">
+      <div class="fld"><label>Property address</label><input id="f_addr" placeholder="123 Main St, Jacksonville, FL"></div>
+      <div class="frow">
+        <div class="fld"><label>Client name</label><input id="f_client" placeholder="Buyer name"></div>
+        <div class="fld"><label>Inspection type</label><select id="f_type"><option>Full Home</option><option>Full Home + Radon</option><option>Full Home + WDO</option><option>4-Point</option><option>Wind Mitigation</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
+        <div class="fld"><label>Inspector</label><select id="f_insp"><option>Ryan W.</option><option>Dave M.</option></select></div>
+      </div>
+    </div>
+    <div class="mf"><button onclick="closeNew()">Cancel</button><button class="save" onclick="createInsp()">Create &amp; send confirmation</button></div>
+  </div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="dh"><button class="x" onclick="closeDrawer()">✕</button><h3 id="dTitle"></h3><p id="dSub"></p></div>
+  <div class="db" id="dBody"></div>
+  <div class="df">
+    <a class="openrep" href="inspectflow-client-report.html">Open client report →</a>
+    <a class="openfield" href="inspectflow-mobile-app.html">Open in field app →</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="tdot"></span><span id="toastText"></span></div>
+
 <script>
-  document.querySelectorAll('.nav a').forEach(a=>{
-    a.addEventListener('click',()=>{
-      document.querySelector('.nav a.active').classList.remove('active');
-      a.classList.add('active');
-    });
-  });
+const KEY='inspectflow_office_v1';
+function seedInsp(){return[
+  {p:'1428 Magnolia Ave',city:'Jacksonville, FL',client:'Sarah Mitchell',insp:'Ryan W.',date:'Jun 25',type:'Full Home + Radon',status:'Published',pay:'Paid',fee:'$640'},
+  {p:'76 Riverside Dr',city:'Ortega, FL',client:'James Carter',insp:'Ryan W.',date:'Jun 25',type:'Full Home + WDO',status:'Draft',pay:'Pending',fee:'$590'},
+  {p:'3301 Hendricks Ave',city:'Jacksonville, FL',client:'Morgan Lee',insp:'Dave M.',date:'Jun 24',type:'Full Home',status:'Published',pay:'Paid',fee:'$525'},
+  {p:'58 Beach Blvd #4',city:'Jacksonville Beach, FL',client:'Priya Anand',insp:'Dave M.',date:'Jun 23',type:'4-Point',status:'Published',pay:'Unpaid',fee:'$225'},
+  {p:'227 Park St',city:'Jacksonville, FL',client:'Tyler Brooks',insp:'Ryan W.',date:'Jun 22',type:'Full Home',status:'Published',pay:'Paid',fee:'$560'},
+  {p:'912 Atlantic Blvd',city:'Neptune Beach, FL',client:'The Nguyen Family',insp:'Dave M.',date:'Jun 25',type:'Full Home',status:'Scheduled',pay:'Pending',fee:'$575'},
+];}
+let inspections=load();
+function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){} return seedInsp();}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(inspections));}catch(e){}}
+
+const chipFor=s=>({Published:'green',Draft:'blue',Scheduled:'amber',Paid:'green',Pending:'gray',Unpaid:'amber'}[s]||'gray');
+const av=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
+function rowHTML(it,idx){return '<tr onclick="openInsp('+idx+')"><td class="pa">'+it.p+'</td><td>'+it.client+'</td><td><span class="mini-av">'+av(it.insp)+'</span>'+it.insp+'</td><td>'+it.date+'</td><td><span class="chip '+chipFor(it.status)+'">'+it.status+'</span></td><td><span class="chip '+chipFor(it.pay)+'">'+it.pay+'</span></td></tr>';}
+
+function renderAll(filter){
+  const f=(filter||'').toLowerCase();
+  const match=it=>!f||[it.p,it.city,it.client,it.insp,it.type,it.status].join(' ').toLowerCase().includes(f);
+  document.getElementById('recentBody').innerHTML=inspections.slice(0,5).map((it,i)=>rowHTML(it,i)).join('');
+  const list=inspections.map((it,i)=>({it,i})).filter(x=>match(x.it));
+  document.getElementById('inspBody').innerHTML=list.length?list.map(x=>rowHTML(x.it,x.i)).join(''):'<tr><td colspan="6" class="empty">No inspections match "'+filter+'"</td></tr>';
+  document.getElementById('inspTotal').textContent=inspections.length;
+  const clients={}; inspections.forEach(it=>{clients[it.client]=(clients[it.client]||0)+1;});
+  document.getElementById('clientList').innerHTML=Object.entries(clients).map(([n,c])=>'<div class="listrow"><span class="mini-av">'+av(n)+'</span><div class="nm"><b>'+n+'</b><small>'+c+' inspection'+(c>1?'s':'')+'</small></div><span class="chip blue">Buyer</span></div>').join('')
+    +'<div class="listrow"><span class="mini-av">KW</span><div class="nm"><b>Keller Williams — Amanda Cruz</b><small>Referring agent · 6 inspections</small></div><span class="chip green">Repeat agent</span></div>';
+  document.getElementById('payList').innerHTML=inspections.map(it=>'<div class="listrow"><div class="nm"><b>'+it.p+'</b><small>'+it.client+' · '+it.type+'</small></div><b style="margin-right:12px">'+it.fee+'</b><span class="chip '+chipFor(it.pay)+'">'+it.pay+'</span></div>').join('');
+}
+
+function go(s){
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.dataset.s===s));
+  document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id==='s-'+s));
+  document.querySelector('.content').scrollTop=0;
+}
+document.getElementById('nav').addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.dataset.s)go(a.dataset.s);});
+function liveSearch(v){ if(v&&!document.getElementById('s-inspections').classList.contains('active'))go('inspections'); renderAll(v); }
+
+function openNew(){ document.getElementById('overlay').classList.add('show'); document.getElementById('f_date').value='2026-06-26'; }
+function closeNew(){ document.getElementById('overlay').classList.remove('show'); }
+function createInsp(){
+  const addr=document.getElementById('f_addr').value.trim()||'New Property';
+  const client=document.getElementById('f_client').value.trim()||'New Client';
+  const it={p:addr.split(',')[0],city:addr.split(',').slice(1).join(',').trim()||'Jacksonville, FL',client,insp:document.getElementById('f_insp').value,date:'Jun 26',type:document.getElementById('f_type').value,status:'Scheduled',pay:'Pending',fee:'$595'};
+  inspections.unshift(it); persist(); closeNew(); renderAll(''); document.getElementById('f_addr').value='';document.getElementById('f_client').value='';
+  go('inspections'); fakeSync(); toast('✅ Inspection created · confirmation emailed to '+client);
+}
+
+function openInsp(i){
+  const it=inspections[i]; if(!it)return;
+  document.getElementById('dTitle').textContent=it.p;
+  document.getElementById('dSub').textContent=it.city+' · '+it.type;
+  document.getElementById('dBody').innerHTML=[
+    ['Client',it.client],['Inspector',it.insp],['Date',it.date+', 2026'],['Type',it.type],
+    ['Report status',it.status],['Payment',it.pay+' · '+it.fee],['Agreement','Signed'],['Booking source','Online widget']
+  ].map(r=>'<div class="drow"><span class="k">'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+  document.getElementById('drawer').classList.add('show');
+}
+function closeDrawer(){ document.getElementById('drawer').classList.remove('show'); }
+
+function buildStatic(){
+  document.getElementById('chart').innerHTML=[['Jan',48],['Feb',58],['Mar',52],['Apr',72],['May',80],['Jun',96]].map(c=>'<div class="col"><div class="bar2" style="height:'+c[1]+'%"></div><small>'+c[0]+'</small></div>').join('');
+  document.getElementById('weekList').innerHTML=[
+    ['Mon','3 inspections','Ryan W. · Dave M.'],['Tue','2 inspections','Ryan W.'],['Wed','1 inspection','Dave M.'],['Thu','3 inspections · today','Ryan W. · Dave M.'],['Fri','Open','Available']
+  ].map(d=>'<div class="listrow"><div class="time" style="width:60px;font-weight:700">'+d[0]+'</div><div class="nm"><b>'+d[1]+'</b><small>'+d[2]+'</small></div></div>').join('');
+  document.getElementById('svcBars').innerHTML=[['Full Home',82],['+ Radon',46],['+ WDO',38],['4-Point',24],['Wind Mit.',18]].map(s=>'<div style="margin:10px 0"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>'+s[0]+'</span><span style="color:#7387A0">$'+(s[1]*120).toLocaleString()+'</span></div><div style="height:9px;background:#EDF1F6;border-radius:5px;overflow:hidden"><div style="height:100%;width:'+s[1]+'%;background:linear-gradient(90deg,#2FB3E8,#1487C9)"></div></div></div>').join('');
+  document.getElementById('agentList').innerHTML=[['Amanda Cruz — KW',18],['Marcus Bell — eXp',12],['Lia Romano — Compass',9],['Devon Hart — Redfin',6]].map(a=>'<div class="listrow"><span class="mini-av">'+av(a[0])+'</span><div class="nm"><b>'+a[0]+'</b><small>'+a[1]+' inspections referred</small></div></div>').join('');
+  document.getElementById('tplList').innerHTML=[['Residential — Full Home','InterNACHI SOP','Default'],['4-Point Inspection','Citizens format','Active'],['Wind Mitigation','OIR-B1-1802','Active'],['Commercial','Custom','Draft']].map(t=>'<div class="listrow"><div class="nm"><b>'+t[0]+'</b><small>'+t[1]+'</small></div><span class="chip '+(t[2]==='Draft'?'gray':'green')+'">'+t[2]+'</span></div>').join('');
+  const now=new Date(); document.getElementById('todayLine').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' · 3 inspections scheduled today';
+}
+
+function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); }
+function fakeSync(){ const a=document.getElementById('syncAgo'); a.textContent='saving…'; setTimeout(()=>a.textContent='just now',1200); }
+let secs=0; setInterval(()=>{ secs+=5; const a=document.getElementById('syncAgo'); if(a.textContent!=='saving…') a.textContent=secs<60?secs+'s ago':'1m ago'; if(secs>=60)secs=0; },5000);
+
+buildStatic(); renderAll('');
 </script>
 </body>
 </html>
