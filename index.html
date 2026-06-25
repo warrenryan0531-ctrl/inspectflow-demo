@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InspectFlow — Product Demo</title>
+<style>
+  :root{--navy:#0B2C4D; --blue:#1487C9; --blue-l:#E3F1FB; --line:#E5EAF0; --muted:#6E8098; --text:#23303F}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at 50% -10%,#15375a,#0B2C4D 60%);min-height:100vh;color:#fff;
+    display:flex;flex-direction:column;align-items:center;padding:60px 20px}
+  .brand{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:800;letter-spacing:-.8px;margin-bottom:10px}
+  .brand .mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--blue),#2FB3E8);display:flex;align-items:center;justify-content:center;font-size:24px}
+  .brand span{color:#5FC6F2}
+  .tag{color:#9FC2E0;font-size:15px;margin-bottom:8px}
+  .pre{color:#5FC6F2;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:40px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:980px;width:100%}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
+  .card{background:#fff;color:var(--text);border-radius:18px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:0 16px 40px rgba(0,0,0,.3);transition:transform .15s}
+  .card:hover{transform:translateY(-5px)}
+  .thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:54px;color:#fff;position:relative}
+  .t1{background:linear-gradient(135deg,#0B2C4D,#1487C9)}
+  .t2{background:linear-gradient(135deg,#13507f,#2FB3E8)}
+  .t3{background:linear-gradient(135deg,#0F6FA8,#27AE60)}
+  .num{position:absolute;top:12px;left:14px;background:rgba(255,255,255,.2);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  .body{padding:20px}
+  .body h3{font-size:17px;font-weight:700;margin-bottom:6px}
+  .body p{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+  .go{color:var(--blue);font-weight:700;font-size:14px}
+  .note{margin-top:42px;color:#7FA3C4;font-size:12.5px;max-width:620px;text-align:center;line-height:1.7}
+  .note b{color:#BBD9F2}
+</style>
+</head>
+<body>
+  <div class="brand"><span class="mark">◧</span>Inspect<span>Flow</span></div>
+  <div class="tag">The all-in-one home inspection platform</div>
+  <div class="pre">Phase 1 · Concept Demo</div>
+
+  <div class="cards">
+    <a class="card" href="inspectflow-dashboard.html">
+      <div class="thumb t1"><span class="num">1</span>▦</div>
+      <div class="body"><h3>Office Dashboard</h3><p>The home-office command center: scheduling, clients, payments, metrics and the full inspection pipeline.</p><span class="go">Open demo →</span></div>
+    </a>
+    <a class="card" href="inspectflow-mobile-app.html">
+      <div class="thumb t2"><span class="num">2</span>▢</div>
+      <div class="body"><h3>Mobile Field App</h3><p>What the inspector uses on-site: offline-first entry, fast photos, AI comment assist and auto-sync.</p><span class="go">Open demo →</span></div>
+    </a>
+    <a class="card" href="inspectflow-client-report.html">
+      <div class="thumb t3"><span class="num">3</span>▤</div>
+      <div class="body"><h3>Client Report</h3><p>The polished web + PDF report the buyer and agent receive, with a one-click repair request builder.</p><span class="go">Open demo →</span></div>
+    </a>
+  </div>
+
+  <div class="note">
+    <b>These are visual concept demos</b> — click around to get the feel, but nothing is wired to a database yet.
+    Phase 2 makes every button functional with real data. Built for 904 Digital Media × Moxie.
+  </div>
+</body>
+</html>
