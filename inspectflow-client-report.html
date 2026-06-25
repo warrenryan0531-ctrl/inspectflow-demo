@@ -28,8 +28,8 @@
   .wrap{max-width:880px;margin:0 auto;padding:24px 20px 80px}
 
   .hero{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(11,44,77,.12);background:#fff}
-  .hero .img{height:230px;background:linear-gradient(180deg,rgba(11,44,77,.05),rgba(11,44,77,.55)),linear-gradient(135deg,#6FA8CE,#356d99 60%,#274d6e);position:relative}
-  .hero .img .house{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;color:rgba(255,255,255,.25)}
+  .hero .img{height:240px;background:linear-gradient(180deg,rgba(11,44,77,.10),rgba(11,44,77,.65)),url('https://images.unsplash.com/photo-1720065609938-ec0e33ffd9ad?w=1300&q=80&auto=format&fit=crop');background-size:cover;background-position:center 60%;position:relative}
+  .hero .img .house{display:none}
   .hero .badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.92);color:var(--navy);font-weight:700;font-size:12px;padding:6px 12px;border-radius:20px}
   .hero .ov{position:absolute;bottom:16px;left:20px;right:20px;color:#fff}
   .hero .ov h1{font-size:24px;font-weight:700;letter-spacing:-.4px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
@@ -76,8 +76,9 @@
   .item .rec{background:#F6F9FC;border:1px solid var(--line);border-radius:9px;padding:10px 13px;font-size:13px;margin-bottom:13px}
   .item .rec b{color:var(--navy)}
   .imgs{display:flex;gap:10px;flex-wrap:wrap}
-  .imgs .pic{width:130px;height:96px;border-radius:9px;background-size:cover;position:relative;overflow:hidden;cursor:zoom-in}
+  .imgs .pic{width:130px;height:96px;border-radius:9px;background-size:cover;background-position:center;position:relative;overflow:hidden;cursor:zoom-in}
   .imgs .pic .cap{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:9.5px;text-align:center;padding:2px}
+  /* repair-select checkbox */
   .selbox{position:absolute;top:14px;right:16px;width:24px;height:24px;border:2px solid var(--line);border-radius:7px;display:none;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:14px;color:#fff}
   body.selecting .selbox{display:flex}
   body.selecting .item{cursor:pointer}
@@ -92,12 +93,14 @@
 
   .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;line-height:1.7}
 
+  /* selection action bar */
   .selbar{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(40px);background:#0B2C4D;color:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 12px 30px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:60}
   .selbar.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
   .selbar b{font-size:14px}
   .selbar .gen{background:var(--green);border:0;color:#fff;padding:9px 16px;border-radius:9px;font-weight:700;cursor:pointer}
   .selbar .cx{background:transparent;border:0;color:#9FC2E0;cursor:pointer;font-size:13px}
 
+  /* modal */
   .overlay{position:fixed;inset:0;background:rgba(11,28,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
   .overlay.show{display:flex}
   .modal{background:#fff;border-radius:16px;max-width:620px;width:100%;max-height:86vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.4)}
@@ -114,16 +117,27 @@
   .modal .mf button{padding:11px 18px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--line);background:#fff}
   .modal .mf .send{background:var(--blue);border-color:var(--blue);color:#fff}
 
+  /* lightbox */
   .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:120;cursor:zoom-out}
   .lightbox.show{display:flex}
   .lightbox .lb{width:min(80vw,640px);height:min(60vh,460px);border-radius:14px;background-size:cover;background-position:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 
+  /* toast */
   .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);background:#0B2C4D;color:#fff;padding:12px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:9px;z-index:130;box-shadow:0 10px 28px rgba(0,0,0,.3)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
 
+  .hintbar{max-width:880px;margin:14px auto 0;padding:0 20px}
+  .hintbar .hb{background:#EAF4FB;border:1px solid #CDE4F4;color:#0F6FA8;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .hintbar .hb .b{background:#1487C9;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+  @media(max-width:560px){
+    .stats{grid-template-columns:1fr}
+    .hero .meta{grid-template-columns:repeat(2,1fr)}
+    .toolbar{gap:8px} .tb-btn{padding:8px 11px;font-size:12.5px}
+    .imgs .pic{width:calc(50% - 5px)}
+  }
   @media print{
-    .toolbar,.pills,.cta,.selbar,.selbox{display:none!important}
+    .toolbar,.pills,.cta,.selbar,.selbox,.reset,.hintbar{display:none!important}
     body{background:#fff} .wrap{max-width:100%}
     .item{break-inside:avoid;box-shadow:none}
   }
@@ -138,6 +152,8 @@
     <button class="tb-btn repair" id="repairToggle" onclick="toggleSelect()">🛠 Create Repair Request</button>
     <button class="tb-btn primary" onclick="shareReport()">Share</button>
   </div>
+
+  <div class="hintbar"><div class="hb"><span class="b">Try this</span> Tap the color cards or pills to filter findings · hit “Create Repair Request” to build a list · click any photo to enlarge.</div></div>
 
   <div class="wrap">
     <div class="hero">
@@ -199,23 +215,25 @@
   <div class="toast" id="toast"><span class="tdot"></span><span id="toastText"></span></div>
 
 <script>
+const U=(id,w)=>'https://images.unsplash.com/photo-'+id+'?w='+(w||640)+'&h='+Math.round((w||640)*0.74)+'&fit=crop&q=75&auto=format';
+const IMG={roof1:U('1727777266423-6a33048e4894'),roof2:U('1710139323182-69622cad5c3b'),panel:U('1607631697491-61972eecf928'),gfci:U('1609208522221-bd6b667fb671'),wh:U('1575299737366-39c143459bc5')};
 const FINDINGS=[
   {sec:'Roof',icon:'▲',cls:'safety',tag:'Safety',title:'Roof Coverings — Cracked & Lifted Shingles',loc:'South slope',
    text:"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with age. Exposed nail heads were noted near the ridge, which can allow water intrusion over time.",
    rec:"Have a licensed roofing contractor evaluate and repair the affected areas to prevent leaks. Budget for full replacement may be appropriate given the roof's age.",
-   pics:[{g:'135deg,#6b7a8d,#3a4856',c:'Lifted shingles — S slope'},{g:'135deg,#7e8c9b,#4a5868',c:'Exposed nails at ridge'}]},
+   pics:[{img:IMG.roof1,c:'Lifted shingles — S slope'},{img:IMG.roof2,c:'Exposed nails at ridge'}]},
   {sec:'Electrical',icon:'⚡',cls:'safety',tag:'Safety',title:'Service Panel — Double-Tapped Breaker',loc:'Garage panel',
    text:"A double-tapped breaker was found in the main service panel. Two conductors are connected to a single breaker not rated for it, which is a potential fire hazard.",
    rec:"A licensed electrician should correct the connection to manufacturer specifications.",
-   pics:[{g:'135deg,#5a6675,#2f3947',c:'Double-tap — breaker 14'}]},
+   pics:[{img:IMG.panel,c:'Double-tap — breaker 14'}]},
   {sec:'Electrical',icon:'⚡',cls:'repair',tag:'Repair',title:'Bathroom GFCI — Not Tripping',loc:'Hall bath',
    text:"The GFCI outlet adjacent to the sink did not trip when tested. GFCI protection is important near water sources.",
    rec:"Replace the non-functioning GFCI outlet.",
-   pics:[{g:'135deg,#8a9aab,#5a6a7d',c:'Hall bath GFCI'}]},
+   pics:[{img:IMG.gfci,c:'Hall bath GFCI'}]},
   {sec:'Plumbing',icon:'⚙',cls:'repair',tag:'Repair',title:'Water Heater — Missing Drain Pan',loc:'Utility closet',
    text:"The water heater is installed without a drain pan. A failure could allow water to damage surrounding flooring and walls.",
    rec:"Install a drain pan with a drain line routed to an appropriate location.",
-   pics:[{g:'135deg,#79899a,#48586a',c:'No pan under heater'}]},
+   pics:[{img:IMG.wh,c:'No pan under heater'}]},
   {sec:'Plumbing',icon:'⚙',cls:'maint',tag:'Maintenance',title:'Exterior Hose Bib — Minor Drip',loc:'Rear of home',
    text:"A slow drip was noted at the rear exterior hose bib. A routine maintenance item that is inexpensive to address.",
    rec:"Replace the washer or valve as part of routine upkeep.",pics:[]},
@@ -232,7 +250,7 @@ function render(){
     it.innerHTML='<div class="selbox">'+(picked.has(idx)?'✓':'')+'</div>'+
       '<div class="top"><h3>'+f.title+'</h3><span class="tagb '+f.cls+'">'+f.tag+'</span><span class="loc">'+f.loc+'</span></div>'+
       '<p>'+f.text+'</p><div class="rec"><b>Recommendation:</b> '+f.rec+'</div>'+
-      (f.pics.length?'<div class="imgs">'+f.pics.map(p=>'<div class="pic" style="background:linear-gradient('+p.g+')" onclick="openLightbox(event,\''+p.g+'\')"><div class="cap">'+p.c+'</div></div>').join('')+'</div>':'');
+      (f.pics.length?'<div class="imgs">'+f.pics.map(p=>'<div class="pic" style="background-image:url('+p.img+')" onclick="openLightbox(event,\''+p.img+'\')"><div class="cap">'+p.c+'</div></div>').join('')+'</div>':'');
     it.addEventListener('click',e=>{ if(!selecting)return; if(e.target.closest('.pic'))return; togglePick(idx); });
     body.appendChild(it);
   });
@@ -261,7 +279,7 @@ function copyRR(){ toast('📋 Repair request copied to clipboard'); }
 function sendRR(){ closeModal(); fakeBusy('Sending to agent…',()=>{ toast('✅ Repair request sent to agent'); toggleSelect(); }); }
 function downloadPDF(){ fakeBusy('Generating PDF…',()=>{ toast('⤓ PDF ready'); window.print(); }); }
 function shareReport(){ fakeBusy('Creating share link…',()=>toast('🔗 Share link copied · expires in 30 days')); }
-function openLightbox(e,g){ e.stopPropagation(); document.getElementById('lbImg').style.background='linear-gradient('+g+')'; document.getElementById('lightbox').classList.add('show'); }
+function openLightbox(e,u){ e.stopPropagation(); const lb=document.getElementById('lbImg'); lb.style.backgroundImage='url('+u.replace('w=640','w=1200').replace('h=474','h=900')+')'; lb.style.backgroundSize='cover'; document.getElementById('lightbox').classList.add('show'); }
 function closeLightbox(){ document.getElementById('lightbox').classList.remove('show'); }
 function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2200); }
 function fakeBusy(msg,cb){ toast('⏳ '+msg); setTimeout(cb,1100); }
