@@ -93,11 +93,13 @@
   .tablecard{margin-top:22px}
   .empty{color:var(--muted);font-size:13px;padding:24px 8px;text-align:center}
 
+  /* clients / payments lists */
   .listrow{display:flex;align-items:center;gap:14px;padding:14px 8px;border-bottom:1px solid var(--line)}
   .listrow:last-child{border-bottom:0}
   .listrow .nm{flex:1}
   .listrow .nm b{font-size:14px}.listrow .nm small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
 
+  /* modal */
   .overlay{position:fixed;inset:0;background:rgba(11,28,46,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
   .overlay.show{display:flex}
   .modal{background:#fff;border-radius:16px;max-width:520px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.4);overflow:hidden}
@@ -113,6 +115,7 @@
   .modal .mf button{padding:11px 18px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--line);background:#fff}
   .modal .mf .save{background:var(--blue);border-color:var(--blue);color:#fff}
 
+  /* detail drawer */
   .drawer{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#fff;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.28s;z-index:90;display:flex;flex-direction:column}
   .drawer.show{transform:none}
   .drawer .dh{padding:20px 22px;border-bottom:1px solid var(--line)}
@@ -161,9 +164,11 @@
     </div>
 
     <div class="content">
+      <!-- DASHBOARD -->
       <div class="screen active" id="s-dashboard">
         <div class="h1">Good morning, Ryan 👋</div>
         <div class="sub" id="todayLine">Loading…</div>
+        <div style="margin-top:14px;background:#EAF4FB;border:1px solid #CDE4F4;color:#0F6FA8;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="background:#1487C9;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px">Try this</span> Click the left nav, search a client, hit “＋ New Inspection”, or open any inspection row →</div>
         <div class="kpis">
           <div class="kpi"><div class="label">Inspections this month</div><div class="val" id="kpiCount">42</div><div class="delta up">▲ 18% vs. last month</div></div>
           <div class="kpi"><div class="label">Revenue (MTD)</div><div class="val" id="kpiRev">$26,880</div><div class="delta up">▲ 12% vs. last month</div></div>
@@ -190,6 +195,7 @@
         </div>
       </div>
 
+      <!-- SCHEDULE -->
       <div class="screen" id="s-schedule">
         <div class="h1">Schedule</div><div class="sub">Thursday, June 25, 2026</div>
         <div class="card tablecard">
@@ -198,6 +204,7 @@
         </div>
       </div>
 
+      <!-- INSPECTIONS -->
       <div class="screen" id="s-inspections">
         <div class="h1">Inspections</div><div class="sub"><span id="inspTotal"></span> total · filter with the search bar above</div>
         <div class="card tablecard">
@@ -205,11 +212,13 @@
         </div>
       </div>
 
+      <!-- CLIENTS -->
       <div class="screen" id="s-clients">
         <div class="h1">Clients &amp; Agents</div><div class="sub">Everyone connected to your inspections</div>
         <div class="card tablecard"><div id="clientList"></div></div>
       </div>
 
+      <!-- PAYMENTS -->
       <div class="screen" id="s-payments">
         <div class="h1">Payments</div><div class="sub">Spectora-style integrated payments</div>
         <div class="kpis">
@@ -221,6 +230,7 @@
         <div class="card tablecard"><h3>Recent Transactions</h3><div class="csub">Auto-collected via InspectFlow Payments</div><div id="payList"></div></div>
       </div>
 
+      <!-- METRICS -->
       <div class="screen" id="s-metrics">
         <div class="h1">Metrics</div><div class="sub">Business intelligence · InspectFlow Advanced</div>
         <div class="grid2" style="margin-top:22px">
@@ -229,6 +239,7 @@
         </div>
       </div>
 
+      <!-- TEMPLATES / SETTINGS placeholders -->
       <div class="screen" id="s-templates">
         <div class="h1">Templates</div><div class="sub">Your inspection report templates</div>
         <div class="card tablecard"><div id="tplList"></div></div>
@@ -245,6 +256,7 @@
   </div>
 </div>
 
+<!-- New Inspection modal -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="mh"><h3>New Inspection</h3><button class="x" onclick="closeNew()">✕</button></div>
@@ -263,6 +275,7 @@
   </div>
 </div>
 
+<!-- Detail drawer -->
 <div class="drawer" id="drawer">
   <div class="dh"><button class="x" onclick="closeDrawer()">✕</button><h3 id="dTitle"></h3><p id="dSub"></p></div>
   <div class="db" id="dBody"></div>
@@ -295,13 +308,15 @@ function rowHTML(it,idx){return '<tr onclick="openInsp('+idx+')"><td class="pa">
 function renderAll(filter){
   const f=(filter||'').toLowerCase();
   const match=it=>!f||[it.p,it.city,it.client,it.insp,it.type,it.status].join(' ').toLowerCase().includes(f);
-  document.getElementById('recentBody').innerHTML=inspections.slice(0,5).map((it,i)=>rowHTML(it,i)).join('');
+  const recent=document.getElementById('recentBody'); recent.innerHTML=inspections.slice(0,5).map((it,i)=>rowHTML(it,i)).join('');
   const list=inspections.map((it,i)=>({it,i})).filter(x=>match(x.it));
   document.getElementById('inspBody').innerHTML=list.length?list.map(x=>rowHTML(x.it,x.i)).join(''):'<tr><td colspan="6" class="empty">No inspections match "'+filter+'"</td></tr>';
   document.getElementById('inspTotal').textContent=inspections.length;
+  // clients
   const clients={}; inspections.forEach(it=>{clients[it.client]=(clients[it.client]||0)+1;});
   document.getElementById('clientList').innerHTML=Object.entries(clients).map(([n,c])=>'<div class="listrow"><span class="mini-av">'+av(n)+'</span><div class="nm"><b>'+n+'</b><small>'+c+' inspection'+(c>1?'s':'')+'</small></div><span class="chip blue">Buyer</span></div>').join('')
     +'<div class="listrow"><span class="mini-av">KW</span><div class="nm"><b>Keller Williams — Amanda Cruz</b><small>Referring agent · 6 inspections</small></div><span class="chip green">Repeat agent</span></div>';
+  // payments
   document.getElementById('payList').innerHTML=inspections.map(it=>'<div class="listrow"><div class="nm"><b>'+it.p+'</b><small>'+it.client+' · '+it.type+'</small></div><b style="margin-right:12px">'+it.fee+'</b><span class="chip '+chipFor(it.pay)+'">'+it.pay+'</span></div>').join('');
 }
 
@@ -327,7 +342,7 @@ function openInsp(i){
   const it=inspections[i]; if(!it)return;
   document.getElementById('dTitle').textContent=it.p;
   document.getElementById('dSub').textContent=it.city+' · '+it.type;
-  document.getElementById('dBody').innerHTML=[
+  document.getElementById('dBody').innerHTML='<div style="height:150px;border-radius:12px;margin-bottom:14px;background-image:linear-gradient(180deg,rgba(11,44,77,0),rgba(11,44,77,.35)),url(\'https://images.unsplash.com/photo-1720065609938-ec0e33ffd9ad?w=700&q=80&auto=format&fit=crop\');background-size:cover;background-position:center 60%"></div>'+[
     ['Client',it.client],['Inspector',it.insp],['Date',it.date+', 2026'],['Type',it.type],
     ['Report status',it.status],['Payment',it.pay+' · '+it.fee],['Agreement','Signed'],['Booking source','Online widget']
   ].map(r=>'<div class="drow"><span class="k">'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
@@ -348,6 +363,7 @@ function buildStatic(){
 
 function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); }
 function fakeSync(){ const a=document.getElementById('syncAgo'); a.textContent='saving…'; setTimeout(()=>a.textContent='just now',1200); }
+// drifting "synced X ago" for live feel
 let secs=0; setInterval(()=>{ secs+=5; const a=document.getElementById('syncAgo'); if(a.textContent!=='saving…') a.textContent=secs<60?secs+'s ago':'1m ago'; if(secs>=60)secs=0; },5000);
 
 buildStatic(); renderAll('');
