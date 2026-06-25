@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InspectFlow — Office Dashboard</title>
+<style>
+  :root{
+    --navy:#0B2C4D; --navy2:#0E3A63; --blue:#1487C9; --blue-d:#0F6FA8;
+    --green:#27AE60; --amber:#F2A93B; --red:#E74C3C;
+    --bg:#F4F7FA; --card:#FFFFFF; --line:#E5EAF0; --text:#1F2D3D; --muted:#7387A0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+  .app{display:flex;height:100vh}
+
+  /* Sidebar */
+  .sidebar{width:236px;background:var(--navy);color:#fff;display:flex;flex-direction:column;flex-shrink:0}
+  .brand{display:flex;align-items:center;gap:10px;padding:20px 22px;font-size:20px;font-weight:700;letter-spacing:-.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#2FB3E8);display:flex;align-items:center;justify-content:center;font-size:16px}
+  .brand b{color:#fff}.brand span{color:#7FD3F5}
+  .nav{padding:14px 12px;flex:1;overflow:auto}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;color:#AFC2D8;text-decoration:none;font-size:14.5px;font-weight:500;margin-bottom:3px;cursor:pointer}
+  .nav a .ic{width:18px;text-align:center;opacity:.9}
+  .nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav a.active{background:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(20,135,201,.35)}
+  .upgrade{margin:12px;padding:14px;background:rgba(255,255,255,.06);border-radius:12px;font-size:12.5px;color:#C6D6E8}
+  .upgrade b{color:#fff;display:block;margin-bottom:4px}
+  .upgrade button{margin-top:10px;width:100%;border:0;background:var(--blue);color:#fff;padding:8px;border-radius:8px;font-weight:600;cursor:pointer}
+
+  /* Main */
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:18px;flex-shrink:0}
+  .search{flex:1;max-width:420px;position:relative}
+  .search input{width:100%;padding:10px 14px 10px 38px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:14px}
+  .search .si{position:absolute;left:13px;top:9px;color:var(--muted)}
+  .topbar .spacer{flex:1}
+  .btn-primary{background:var(--blue);color:#fff;border:0;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:7px}
+  .btn-primary:hover{background:var(--blue-d)}
+  .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:16px;color:var(--muted)}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1487C9,#0B2C4D);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600}
+
+  .content{flex:1;overflow:auto;padding:26px 30px}
+  .h1{font-size:23px;font-weight:700;letter-spacing:-.4px}
+  .sub{color:var(--muted);font-size:14px;margin-top:3px}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:22px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .kpi .label{font-size:13px;color:var(--muted);font-weight:500}
+  .kpi .val{font-size:27px;font-weight:700;margin:6px 0 2px;letter-spacing:-.5px}
+  .kpi .delta{font-size:12.5px;font-weight:600}
+  .up{color:var(--green)} .down{color:var(--red)}
+
+  .grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:15.5px;font-weight:700;margin-bottom:2px}
+  .card .csub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  .card .clink{float:right;font-size:13px;color:var(--blue);font-weight:600;text-decoration:none;cursor:pointer}
+
+  /* Schedule timeline */
+  .job{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .job:last-child{border-bottom:0}
+  .job .time{width:70px;font-size:13px;font-weight:600;color:var(--navy);flex-shrink:0}
+  .job .time small{display:block;color:var(--muted);font-weight:500}
+  .job .bar{width:4px;border-radius:3px;background:var(--blue)}
+  .job.g .bar{background:var(--green)} .job.a .bar{background:var(--amber)}
+  .job .det{flex:1}
+  .job .addr{font-weight:600;font-size:14px}
+  .job .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .chip{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
+  .chip.blue{background:#E3F1FB;color:var(--blue-d)}
+  .chip.green{background:#E6F7EE;color:#1E8E4E}
+  .chip.amber{background:#FDF1DC;color:#B97D17}
+  .chip.gray{background:#EDF1F6;color:#5C708A}
+
+  /* Mini bar chart */
+  .chart{display:flex;align-items:flex-end;gap:12px;height:140px;margin-top:8px;padding-top:10px}
+  .chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+  .chart .bar2{width:100%;max-width:34px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#2FB3E8,#1487C9)}
+  .chart .col small{font-size:11.5px;color:var(--muted)}
+
+  /* Inspections table */
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--line)}
+  td{padding:13px 8px;border-bottom:1px solid var(--line);font-size:13.5px}
+  tr:last-child td{border-bottom:0}
+  td .pa{font-weight:600}
+  .mini-av{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#E3F1FB;color:var(--blue-d);align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:8px;vertical-align:middle}
+  .tablecard{margin-top:22px}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand"><span class="mark">◧</span><div><b>Inspect</b><span>Flow</span></div></div>
+    <nav class="nav">
+      <a class="active"><span class="ic">▦</span> Dashboard</a>
+      <a><span class="ic">▣</span> Schedule</a>
+      <a><span class="ic">▤</span> Inspections</a>
+      <a><span class="ic">☷</span> Clients & Agents</a>
+      <a><span class="ic">▥</span> Templates</a>
+      <a><span class="ic">$</span> Payments</a>
+      <a><span class="ic">◉</span> Metrics</a>
+      <a><span class="ic">⚙</span> Settings</a>
+    </nav>
+    <div class="upgrade">
+      <b>InspectFlow Advanced</b>
+      Automations, pay splits & business intelligence.
+      <button>Start free trial</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div class="search"><span class="si">⌕</span><input placeholder="Search inspections, clients, addresses…"></div>
+      <div class="spacer"></div>
+      <button class="icon-btn">🔔</button>
+      <button class="btn-primary">＋ New Inspection</button>
+      <div class="avatar">RW</div>
+    </div>
+
+    <div class="content">
+      <div class="h1">Good morning, Ryan 👋</div>
+      <div class="sub">Thursday, June 25, 2026 · 3 inspections scheduled today</div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <div class="kpi"><div class="label">Inspections this month</div><div class="val">42</div><div class="delta up">▲ 18% vs. last month</div></div>
+        <div class="kpi"><div class="label">Revenue (MTD)</div><div class="val">$26,880</div><div class="delta up">▲ 12% vs. last month</div></div>
+        <div class="kpi"><div class="label">Avg. report turnaround</div><div class="val">4.2 hrs</div><div class="delta up">▲ Faster than target</div></div>
+        <div class="kpi"><div class="label">Outstanding payments</div><div class="val">$1,140</div><div class="delta down">2 invoices unpaid</div></div>
+      </div>
+
+      <!-- Two column -->
+      <div class="grid2">
+        <div class="card">
+          <a class="clink">View calendar →</a>
+          <h3>Today's Schedule</h3>
+          <div class="csub">3 inspections · 2 inspectors active</div>
+
+          <div class="job g">
+            <div class="time">8:00a<small>90 min</small></div><div class="bar"></div>
+            <div class="det">
+              <div class="addr">1428 Magnolia Ave, Jacksonville, FL</div>
+              <div class="meta">Buyer: Sarah Mitchell · Inspector: Ryan W. · Full Home + Radon</div>
+            </div>
+            <span class="chip green">Completed</span>
+          </div>
+
+          <div class="job">
+            <div class="time">11:30a<small>120 min</small></div><div class="bar"></div>
+            <div class="det">
+              <div class="addr">76 Riverside Dr, Ortega, FL</div>
+              <div class="meta">Buyer: James Carter · Inspector: Ryan W. · Full Home + WDO</div>
+            </div>
+            <span class="chip blue">In Progress</span>
+          </div>
+
+          <div class="job a">
+            <div class="time">3:00p<small>90 min</small></div><div class="bar"></div>
+            <div class="det">
+              <div class="addr">912 Atlantic Blvd, Neptune Beach, FL</div>
+              <div class="meta">Buyer: The Nguyen Family · Inspector: Dave M. · Full Home</div>
+            </div>
+            <span class="chip amber">Upcoming</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Inspections by Month</h3>
+          <div class="csub">Last 6 months</div>
+          <div class="chart">
+            <div class="col"><div class="bar2" style="height:48%"></div><small>Jan</small></div>
+            <div class="col"><div class="bar2" style="height:58%"></div><small>Feb</small></div>
+            <div class="col"><div class="bar2" style="height:52%"></div><small>Mar</small></div>
+            <div class="col"><div class="bar2" style="height:72%"></div><small>Apr</small></div>
+            <div class="col"><div class="bar2" style="height:80%"></div><small>May</small></div>
+            <div class="col"><div class="bar2" style="height:96%"></div><small>Jun</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent inspections -->
+      <div class="card tablecard">
+        <a class="clink">See all →</a>
+        <h3>Recent Inspections</h3>
+        <div class="csub">Across all inspectors</div>
+        <table>
+          <thead><tr><th>Property</th><th>Client</th><th>Inspector</th><th>Date</th><th>Status</th><th>Payment</th></tr></thead>
+          <tbody>
+            <tr><td class="pa">1428 Magnolia Ave</td><td>Sarah Mitchell</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 25</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
+            <tr><td class="pa">76 Riverside Dr</td><td>James Carter</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 25</td><td><span class="chip blue">Draft</span></td><td><span class="chip gray">Pending</span></td></tr>
+            <tr><td class="pa">3301 Hendricks Ave</td><td>Morgan Lee</td><td><span class="mini-av">DM</span>Dave M.</td><td>Jun 24</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
+            <tr><td class="pa">58 Beach Blvd #4</td><td>Priya Anand</td><td><span class="mini-av">DM</span>Dave M.</td><td>Jun 23</td><td><span class="chip green">Published</span></td><td><span class="chip amber">Unpaid</span></td></tr>
+            <tr><td class="pa">227 Park St</td><td>Tyler Brooks</td><td><span class="mini-av">RW</span>Ryan W.</td><td>Jun 22</td><td><span class="chip green">Published</span></td><td><span class="chip green">Paid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.nav a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      document.querySelector('.nav a.active').classList.remove('active');
+      a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
