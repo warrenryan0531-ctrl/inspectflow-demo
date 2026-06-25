@@ -19,11 +19,13 @@
   .head p{color:#9FC2E0;font-size:13px;margin-top:5px}
   .head .back-link{color:#7FD3F5;font-size:12.5px;text-decoration:none;display:inline-block;margin-top:9px}
 
+  /* Phone */
   .phone{width:340px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
   .screen{background:var(--bg);border-radius:36px;overflow:hidden;height:710px;position:relative;display:flex;flex-direction:column}
   .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:30}
   .statusbar{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0}
 
+  /* App header */
   .ahead{background:var(--navy);color:#fff;padding:8px 18px 14px;flex-shrink:0}
   .ahead .row1{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#A9C4DE;min-height:22px}
   .ahead .row1 .lft{cursor:pointer;display:flex;align-items:center;gap:4px}
@@ -44,6 +46,7 @@
   .view.active{display:block;animation:slidein .25s ease}
   @keyframes slidein{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
 
+  /* Section / item rows */
   .row{background:var(--card);border-radius:14px;padding:13px 15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 3px rgba(11,44,77,.05);cursor:pointer;transition:transform .1s}
   .row:active{transform:scale(.985)}
   .sicon{width:42px;height:42px;border-radius:11px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
@@ -57,6 +60,7 @@
   .ring.todo{background:#EDF1F6;color:var(--muted)}
   .ring.flag{background:var(--red);color:#fff}
 
+  /* Item detail */
   .field{background:#fff;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 1px 3px rgba(11,44,77,.05)}
   .field h4{font-size:13.5px;font-weight:700;margin-bottom:11px}
   .field h4 .req{color:var(--red)}
@@ -87,6 +91,7 @@
   .save-btn{width:100%;background:var(--blue);color:#fff;border:0;padding:13px;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer}
   .save-btn:active{background:var(--blue-d)}
 
+  /* Summary view */
   .sumhead{font-size:15px;font-weight:700;margin:2px 0 12px}
   .sumstats{display:flex;gap:10px;margin-bottom:16px}
   .ss{flex:1;border-radius:12px;padding:13px;color:#fff;text-align:center}
@@ -102,11 +107,13 @@
   .findrow small{color:var(--muted);display:block;margin-top:2px;font-size:11.5px}
   .publish{width:100%;background:var(--green);color:#fff;border:0;padding:13px;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:8px}
 
+  /* bottom nav */
   .tabbar{height:60px;background:#fff;border-top:1px solid var(--line);display:flex;flex-shrink:0;padding-bottom:5px}
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--muted);font-weight:600;cursor:pointer}
   .tab.on{color:var(--blue)}
   .tab .ti{font-size:17px}
 
+  /* toast */
   .toast{position:absolute;left:50%;bottom:74px;transform:translateX(-50%) translateY(20px);background:#0B2C4D;color:#fff;padding:11px 18px;border-radius:24px;font-size:12.5px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:40}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
@@ -162,7 +169,10 @@
   <button class="reset" onclick="resetDemo()">↺ Reset demo data</button>
 
 <script>
-const KEY='inspectflow_field_v1';
+const KEY='inspectflow_field_v2';
+const U=(id)=>'https://images.unsplash.com/photo-'+id+'?w=300&h=300&fit=crop&q=72&auto=format';
+const IMG={roof1:U('1727777266423-6a33048e4894'),roof2:U('1710139323182-69622cad5c3b'),panel:U('1607631697491-61972eecf928'),gfci:U('1609208522221-bd6b667fb671'),wh:U('1575299737366-39c143459bc5')};
+const PHOTO_POOL=[IMG.roof1,IMG.roof2,IMG.panel,IMG.wh,IMG.gfci];
 const AI={
   'roof-cov':"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor to prevent water intrusion; budget for full replacement may be appropriate.",
   'elec-panel':"A double-tapped breaker was observed in the main service panel — two conductors are terminated under a single breaker not rated for it. This is a potential fire hazard. Recommend correction by a licensed electrician to manufacturer specifications.",
@@ -173,7 +183,7 @@ function seed(){return{
   meta:{title:'76 Riverside Dr',sub:'Ortega, FL 32210 · Full Home + WDO'},
   sections:[
     {id:'roof',name:'Roof',icon:'▲',items:[
-      {id:'roof-cov',name:'Roof Coverings',sub:'Asphalt shingle · 3-tab',cond:'Inspected',rating:'safety',comment:"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor.",photos:[{g:'135deg,#6b7a8d,#3a4856',tag:'DEFICIENCY'},{g:'135deg,#7e8c9b,#4a5868',tag:''}]},
+      {id:'roof-cov',name:'Roof Coverings',sub:'Asphalt shingle · 3-tab',cond:'Inspected',rating:'safety',comment:"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor.",photos:[{img:IMG.roof1,tag:'DEFICIENCY'},{img:IMG.roof2,tag:''}]},
       {id:'roof-flash',name:'Flashing',sub:'Step & valley',cond:'Inspected',rating:'serv',comment:'',photos:[]},
       {id:'roof-gutter',name:'Gutters & Downspouts',sub:'Aluminum, seamless',cond:'',rating:'',comment:'',photos:[]},
     ]},
@@ -212,8 +222,6 @@ function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);
 function save(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}}
 function resetDemo(){data=seed();save();showSections();toast('Demo data reset');}
 
-const PHOTO_GRADS=['135deg,#6b7a8d,#3a4856','135deg,#8a9aab,#5a6a7d','135deg,#79899a,#48586a','135deg,#5a6675,#2f3947'];
-
 function itemStatus(it){ if(!it.cond) return 'todo'; if(it.rating==='safety') return 'flag'; if(it.rating==='main') return 'part'; return 'done'; }
 function sectionDone(sec){ return sec.items.filter(i=>i.cond).length; }
 function updateProgress(){
@@ -223,6 +231,7 @@ function updateProgress(){
   document.getElementById('progFill').style.width=(total?Math.round(done/total*100):0)+'%';
 }
 
+/* ---------- views ---------- */
 function showSections(){
   nav={section:null,item:null};
   setHeader('‹ Inspections','76 Riverside Dr','Ortega, FL 32210 · Full Home + WDO');
@@ -279,7 +288,7 @@ function showDetail(secId,itId){
       </div></div>
     <div class="field"><h4>Photos</h4>
       <div class="photos" id="photoRow">
-        ${it.photos.map(p=>`<div class="ph" style="background:linear-gradient(${p.g})">${p.tag?'<div class="tag">'+p.tag+'</div>':''}</div>`).join('')}
+        ${it.photos.map(p=>`<div class="ph" data-img="${p.img}" style="background-image:url(${p.img})">${p.tag?'<div class="tag">'+p.tag+'</div>':''}</div>`).join('')}
         <div class="ph add" onclick="addPhoto()">＋</div>
       </div></div>`;
   document.getElementById('savebar').style.display='block';
@@ -305,12 +314,13 @@ function showSummary(){
   switchView('summary'); setTab('summary');
 }
 
+/* ---------- interactions ---------- */
 function pickCond(elm,c){ document.querySelectorAll('#condRow .tg').forEach(t=>t.classList.remove('on')); elm.classList.add('on'); }
 function pickRate(elm,r){ const on=elm.classList.contains('on'); document.querySelectorAll('#rateRow .rate').forEach(t=>t.classList.remove('on')); if(!on)elm.classList.add('on'); }
 function addPhoto(){
   const row=document.getElementById('photoRow'); const add=row.querySelector('.add');
-  const g=PHOTO_GRADS[Math.floor(Math.random()*PHOTO_GRADS.length)];
-  const d=document.createElement('div'); d.className='ph'; d.style.background='linear-gradient('+g+')';
+  const url=PHOTO_POOL[Math.floor(Math.random()*PHOTO_POOL.length)];
+  const d=document.createElement('div'); d.className='ph'; d.dataset.img=url; d.style.backgroundImage='url('+url+')';
   row.insertBefore(d,add); toast('📷 Photo captured');
 }
 function runAI(itId){
@@ -330,11 +340,12 @@ function saveItem(){
   const rate=document.querySelector('#rateRow .rate.on'); it.rating=rate?(rate.classList.contains('safety')?'safety':rate.classList.contains('main')?'main':'serv'):'';
   it.comment=document.getElementById('cmt').value;
   const phs=[...document.querySelectorAll('#photoRow .ph:not(.add)')];
-  it.photos=phs.map(p=>({g:p.style.background.replace('linear-gradient(','').replace(')',''),tag:p.querySelector('.tag')?p.querySelector('.tag').textContent:''}));
+  it.photos=phs.map(p=>({img:p.dataset.img,tag:p.querySelector('.tag')?p.querySelector('.tag').textContent:''}));
   save(); fakeSync(); showItems(nav.section);
 }
 function publish(){ fakeSync('Publishing…'); setTimeout(()=>toast('✅ Report published & sent to client'),900); }
 
+/* ---------- chrome ---------- */
 function setHeader(left,title,sub){ document.getElementById('hdrLeft').textContent=left; document.getElementById('hdrTitle').textContent=title; document.getElementById('hdrSub').textContent=sub; }
 function switchView(v){ document.querySelectorAll('.view').forEach(x=>x.classList.remove('active')); document.getElementById('view-'+v).classList.add('active'); document.getElementById('body').scrollTop=0; }
 function setTab(t){ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===t)); }
