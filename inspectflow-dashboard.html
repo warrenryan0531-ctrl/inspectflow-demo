@@ -196,6 +196,38 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast .tdot{width:8px;height:8px;border-radius:50%;background:var(--green)}
   .bars{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+
+  /* calendar */
+  .caltop{display:flex;align-items:center;gap:12px;margin:18px 0 12px}
+  .caltop .nav{display:flex;gap:6px}
+  .caltop .nav button{width:32px;height:32px;border-radius:9px;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:15px;cursor:pointer}
+  .caltop .nav button:hover{color:#fff;border-color:var(--line2)}
+  .caltop .rng{font-size:15px;font-weight:750}
+  .caltop .views{margin-left:auto;display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .caltop .views button{padding:7px 15px;background:transparent;border:0;color:var(--muted);font-size:12.5px;font-weight:650;cursor:pointer}
+  .caltop .views button.on{background:var(--grad);color:#06101f}
+  .cal{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(7,1fr);background:var(--panel)}
+  .cal .dh{padding:10px 8px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:center}
+  .cal .dh:last-child{border-right:0}
+  .cal .dh b{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  .cal .dh em{display:block;font-style:normal;font-size:19px;font-weight:800;color:var(--text);margin-top:3px}
+  .cal .dh.today b{color:var(--cyan)}
+  .cal .dh.today em{color:#fff;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--grad);color:#06101f}
+  .cal .dc{min-height:330px;border-right:1px solid var(--line);padding:8px;display:flex;flex-direction:column;gap:7px}
+  .cal .dc:nth-child(7n){border-right:0}
+  .cal .dc.today{background:rgba(59,158,255,.05)}
+  .calev{border-radius:9px;padding:7px 9px;border-left:3px solid var(--blue);background:var(--card2);cursor:pointer;transition:.12s}
+  .calev:hover{background:var(--card);transform:translateX(1px)}
+  .calev.g{border-left-color:var(--green)} .calev.a{border-left-color:var(--amber)} .calev.b{border-left-color:var(--blue)} .calev.p{border-left-color:var(--purple)}
+  .calev .ct{font-size:11px;font-weight:800;color:var(--text)}
+  .calev .cl{font-size:11px;color:var(--text);margin-top:2px;font-weight:600;line-height:1.25}
+  .calev .ci{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .calev .cg{font-size:9.5px;font-weight:800;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
+  .calev.g .cg{color:var(--green)} .calev.b .cg{color:var(--cyan)} .calev.a .cg{color:var(--amber)}
+  .calmore{font-size:10.5px;color:var(--muted2);padding:2px 4px}
+  .callegend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+  .callegend span{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+  .callegend i{width:10px;height:10px;border-radius:3px;display:inline-block}
 </style>
 </head>
 <body>
@@ -309,8 +341,19 @@
 
       <!-- CALENDAR -->
       <div class="screen" id="s-calendar">
-        <div class="h1">Calendar</div><div class="sub">Thursday, June 25, 2026 · day / week / month views · Google Calendar synced</div>
-        <div class="card tablecard"><h3>This Week</h3><div class="csub">8 inspections booked</div><div id="weekList"></div></div>
+        <div class="h1">Calendar</div><div class="sub">8 inspections this week · Google Calendar synced · drag to reschedule</div>
+        <div class="caltop">
+          <div class="nav"><button onclick="toast('Previous week')">‹</button><button onclick="toast('Next week')">›</button></div>
+          <div class="rng">Jun 21 – 27, 2026</div>
+          <div class="views"><button onclick="toast('Day view')">Day</button><button class="on">Week</button><button onclick="toast('Month view')">Month</button></div>
+        </div>
+        <div class="cal" id="calGrid"></div>
+        <div class="callegend">
+          <span><i style="background:var(--green)"></i> Completed</span>
+          <span><i style="background:var(--blue)"></i> In progress</span>
+          <span><i style="background:var(--amber)"></i> Upcoming</span>
+          <span><i style="background:var(--purple)"></i> Sewer / ancillary</span>
+        </div>
       </div>
 
       <!-- INSPECTIONS -->
@@ -602,11 +645,35 @@ function tplRender(){
 function tplPickSec(k){ tplSel=k; tplItem=0; tplRender(); }
 function tplPickItem(i){ tplItem=i; tplRender(); }
 
+function buildCalendar(){
+  var grid=document.getElementById('calGrid'); if(!grid) return;
+  var days=[
+    {d:'Sun',n:21,ev:[]},
+    {d:'Mon',n:22,ev:[{t:'9:00a',l:'227 Park St',i:'Ryan W. · Full Home',c:'a',g:'Upcoming'}]},
+    {d:'Tue',n:23,ev:[{t:'10:00a',l:'58 Beach Blvd',i:'Dave M. · 4-Point',c:'a',g:'Upcoming'},{t:'2:00p',l:'19 Sago Palm Ct',i:'Ryan W. · Full Home',c:'a',g:'Upcoming'}]},
+    {d:'Wed',n:24,ev:[{t:'9:00a',l:'3301 Hendricks',i:'Dave M. · Full Home + Radon',c:'a',g:'Upcoming'}]},
+    {d:'Thu',n:25,today:true,ev:[
+      {t:'8:00a',l:'1428 Magnolia Ave',i:'Ryan W. · Full Home',c:'g',g:'Completed'},
+      {t:'11:30a',l:'76 Riverside Ave',i:'Ryan W. · Full Home',c:'b',g:'In progress'},
+      {t:'11:30a',l:'+ Sewer scope',i:'Ryan W. · Ancillary',c:'p'},
+      {t:'3:00p',l:'912 Atlantic Blvd',i:'Dave M. · Wind Mit.',c:'a',g:'Upcoming'}
+    ]},
+    {d:'Fri',n:26,ev:[{t:'9:00a',l:'14 Loris Ln',i:'Ryan W. · Full Home',c:'a',g:'Scheduled'},{t:'1:00p',l:'Open slot',i:'Available',c:'',open:1}]},
+    {d:'Sat',n:27,ev:[]}
+  ];
+  var h=days.map(function(d){return '<div class="dh'+(d.today?' today':'')+'"><b>'+d.d+'</b><em>'+d.n+'</em></div>';}).join('');
+  var b=days.map(function(d){
+    var evs=d.ev.map(function(e){
+      if(e.open) return '<div class="calev" style="border-left-color:var(--line2);opacity:.6" onclick="go(\'inspections\')"><div class="ct">'+e.t+'</div><div class="cl" style="color:var(--muted)">+ Open slot</div></div>';
+      return '<div class="calev '+e.c+'" onclick="go(\'inspections\')"><div class="ct">'+e.t+'</div><div class="cl">'+e.l+'</div><div class="ci">'+e.i+'</div>'+(e.g?'<div class="cg">'+e.g+'</div>':'')+'</div>';
+    }).join('');
+    return '<div class="dc'+(d.today?' today':'')+'">'+evs+'</div>';
+  }).join('');
+  grid.innerHTML=h+b;
+}
 function buildStatic(){
   document.getElementById('chart').innerHTML=[['Jan',48],['Feb',58],['Mar',52],['Apr',72],['May',80],['Jun',96]].map(c=>'<div class="col"><div class="bar2" style="height:'+c[1]+'%"></div><small>'+c[0]+'</small></div>').join('');
-  document.getElementById('weekList').innerHTML=[
-    ['Mon','3 inspections','Ryan W. · Dave M.'],['Tue','2 inspections','Ryan W.'],['Wed','1 inspection','Dave M.'],['Thu','3 inspections · today','Ryan W. · Dave M.'],['Fri','Open','Available']
-  ].map(d=>'<div class="listrow"><div class="time" style="width:60px;font-weight:700">'+d[0]+'</div><div class="nm"><b>'+d[1]+'</b><small>'+d[2]+'</small></div></div>').join('');
+  buildCalendar();
   document.getElementById('svcBars').innerHTML=[['Full Home',82],['+ Radon',46],['+ WDO',38],['4-Point',24],['Wind Mit.',18]].map(s=>'<div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span>'+s[0]+'</span><span style="color:var(--muted)">$'+(s[1]*120).toLocaleString()+'</span></div><div style="height:9px;background:rgba(255,255,255,.07);border-radius:6px;overflow:hidden"><div style="height:100%;width:'+s[1]+'%;background:linear-gradient(90deg,#39C2FF,#3B9EFF)"></div></div></div>').join('');
   document.getElementById('agentList').innerHTML=[['Amanda Cruz — KW',18],['Marcus Bell — eXp',12],['Lia Romano — Compass',9],['Devon Hart — Redfin',6]].map(a=>'<div class="listrow"><span class="mini-av">'+av(a[0])+'</span><div class="nm"><b>'+a[0]+'</b><small>'+a[1]+' inspections referred</small></div></div>').join('');
 
@@ -658,6 +725,17 @@ function buildStatic(){
 function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); }
 function fakeSync(){ const a=document.getElementById('syncAgo'); a.textContent='saving…'; setTimeout(()=>a.textContent='just now',1200); }
 let secs=0; setInterval(()=>{ secs+=5; const a=document.getElementById('syncAgo'); if(a.textContent!=='saving…') a.textContent=secs<60?secs+'s ago':'1m ago'; if(secs>=60)secs=0; },5000);
+
+/* make every secondary button feel live */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.minibtn'); if(!b||b.getAttribute('onclick'))return;
+  var t=b.textContent.trim();
+  if(t==='Connect'){ b.outerHTML='<span class="chip green">Connected</span>'; toast('✅ Integration connected'); fakeSync(); return; }
+  if(/Export CSV/.test(t)){ toast('⤓ Export started — CSV downloading'); return; }
+  if(t==='Run report'){ toast('📊 Report generated'); return; }
+  if(/Send confirmation/.test(t)){ b.outerHTML='<span class="chip green">Sent ✓</span>'; toast('✅ Confirmation sent to client'); return; }
+  toast('✓ '+t);
+});
 
 buildStatic(); renderAll('');
 </script>
