@@ -5,34 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InspectFlow — Product Demo</title>
 <style>
-  :root{--navy:#0B2C4D; --blue:#1487C9; --blue-l:#E3F1FB; --line:#E5EAF0; --muted:#6E8098; --text:#23303F}
+  :root{
+    --bg:#0A0F1C; --card:#121A2E; --card2:#0F1728; --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --text:#E8EEF9; --muted:#8595B0; --muted2:#5E6E8C; --blue:#3B9EFF; --cyan:#39C2FF; --purple:#A78BFA; --green:#34D399;
+    --grad:linear-gradient(120deg,#3B9EFF,#39C2FF);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:radial-gradient(circle at 50% -10%,#15375a,#0B2C4D 60%);min-height:100vh;color:#fff;
-    display:flex;flex-direction:column;align-items:center;padding:56px 20px}
-  .brand{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:800;letter-spacing:-.8px;margin-bottom:10px}
-  .brand .mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--blue),#2FB3E8);display:flex;align-items:center;justify-content:center;font-size:24px}
-  .brand span{color:#5FC6F2}
-  .tag{color:#fff;font-size:18px;font-weight:600;margin-bottom:6px;text-align:center}
-  .tag2{color:#9FC2E0;font-size:14px;margin-bottom:8px}
-  .pre{color:#5FC6F2;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:38px}
-  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:760px;width:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(900px 520px at 50% -8%,rgba(47,179,232,.16),transparent),radial-gradient(700px 400px at 85% 10%,rgba(167,139,250,.12),transparent),var(--bg);
+    min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;padding:60px 20px;-webkit-font-smoothing:antialiased}
+  .brand{display:flex;align-items:center;gap:13px;font-size:32px;font-weight:850;letter-spacing:-.9px;margin-bottom:14px}
+  .brand .mark{width:48px;height:48px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:24px;color:#06101f;box-shadow:0 10px 30px rgba(59,158,255,.4)}
+  .brand span{background:linear-gradient(120deg,var(--cyan),#8fe0ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .tag{color:#fff;font-size:19px;font-weight:650;margin-bottom:6px;text-align:center;letter-spacing:-.2px}
+  .tag2{color:var(--muted);font-size:14px;margin-bottom:10px}
+  .pre{color:var(--cyan);font-size:11.5px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:40px}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:780px;width:100%}
   @media(max-width:720px){.cards{grid-template-columns:1fr}}
-  .card{background:#fff;color:var(--text);border-radius:18px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:0 16px 40px rgba(0,0,0,.3);transition:transform .15s}
-  .card:hover{transform:translateY(-5px)}
-  .thumb{height:124px;display:flex;align-items:center;justify-content:center;font-size:46px;color:#fff;position:relative}
-  .t1{background:linear-gradient(135deg,#0B2C4D,#1487C9)}
-  .t2{background:linear-gradient(135deg,#13507f,#2FB3E8)}
-  .t3{background:linear-gradient(135deg,#0F6FA8,#27AE60)}
-  .t4{background:linear-gradient(135deg,#7C3AED,#2FB3E8)}
-  .num{position:absolute;top:12px;left:14px;background:rgba(255,255,255,.2);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
-  .aitag{position:absolute;top:13px;right:14px;background:rgba(255,255,255,.92);color:#7C3AED;font-size:10px;font-weight:800;letter-spacing:.4px;padding:3px 9px;border-radius:20px}
+  .card{background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .16s,border-color .16s;backdrop-filter:blur(6px)}
+  .card:hover{transform:translateY(-6px);border-color:rgba(59,158,255,.4)}
+  .thumb{height:128px;display:flex;align-items:center;justify-content:center;position:relative;color:#fff}
+  .thumb svg{width:40px;height:40px;stroke:#fff;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+  .t1{background:linear-gradient(135deg,#0B2C4D,#3B9EFF)}
+  .t2{background:linear-gradient(135deg,#13507f,#39C2FF)}
+  .t3{background:linear-gradient(135deg,#0F6FA8,#34D399)}
+  .t4{background:linear-gradient(135deg,#7C3AED,#39C2FF)}
+  .num{position:absolute;top:13px;left:15px;background:rgba(255,255,255,.22);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .aitag{position:absolute;top:14px;right:15px;background:rgba(8,16,30,.55);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:10px;font-weight:800;letter-spacing:.4px;padding:3px 9px;border-radius:20px;backdrop-filter:blur(4px)}
   .body{padding:20px}
-  .body h3{font-size:17px;font-weight:700;margin-bottom:6px}
-  .body p{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:14px}
-  .go{color:var(--blue);font-weight:700;font-size:14px}
-  .note{margin-top:40px;color:#7FA3C4;font-size:12.5px;max-width:660px;text-align:center;line-height:1.7}
-  .note b{color:#BBD9F2}
+  .body h3{font-size:17px;font-weight:750;margin-bottom:6px}
+  .body p{font-size:13.5px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+  .go{color:var(--cyan);font-weight:700;font-size:14px}
+  .note{margin-top:42px;color:var(--muted2);font-size:12.5px;max-width:680px;text-align:center;line-height:1.75}
+  .note b{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -43,19 +48,19 @@
 
   <div class="cards">
     <a class="card" href="inspectflow-dashboard.html">
-      <div class="thumb t1"><span class="num">1</span>▦</div>
-      <div class="body"><h3>Office Dashboard</h3><p>Scheduling, clients, payments — plus live AI intelligence: booking forecasts, QA scores, and the lead→paid pipeline.</p><span class="go">Open demo →</span></div>
+      <div class="thumb t1"><span class="num">1</span><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></div>
+      <div class="body"><h3>Office Dashboard</h3><p>The full command center — scheduling, contacts, payments, templates, automations — plus live AI intelligence. Mirrors what Spectora users already know.</p><span class="go">Open demo →</span></div>
     </a>
     <a class="card" href="inspectflow-mobile-app.html">
-      <div class="thumb t2"><span class="num">2</span>▢<span class="aitag">✨ AI</span></div>
+      <div class="thumb t2"><span class="num">2</span><span class="aitag">✨ AI</span><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
       <div class="body"><h3>Mobile Field App</h3><p>Run an inspection: rate items, then scan a photo with AI computer vision that detects the defect and writes the comment.</p><span class="go">Open demo →</span></div>
     </a>
     <a class="card" href="inspectflow-client-report.html">
-      <div class="thumb t3"><span class="num">3</span>▤</div>
-      <div class="body"><h3>Client Report</h3><p>Filter findings, build a repair request from checkboxes, open photos, and export a real PDF.</p><span class="go">Open demo →</span></div>
+      <div class="thumb t3"><span class="num">3</span><svg viewBox="0 0 24 24"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M8 13h8M8 17h5"/></svg></div>
+      <div class="body"><h3>Client Report</h3><p>Filter findings, build a repair request from checkboxes, open photos in a lightbox, and export a real PDF.</p><span class="go">Open demo →</span></div>
     </a>
     <a class="card" href="inspectflow-ai-scheduler.html">
-      <div class="thumb t4"><span class="num">4</span>✨<span class="aitag">✨ AI</span></div>
+      <div class="thumb t4"><span class="num">4</span><span class="aitag">✨ AI</span><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
       <div class="body"><h3>AI Scheduling Agent</h3><p>Watch the AI book a job over text — property lookup, live availability, an upsell, agreement &amp; payment — fully autonomous.</p><span class="go">Open demo →</span></div>
     </a>
   </div>
