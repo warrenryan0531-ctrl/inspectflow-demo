@@ -7,193 +7,348 @@
 <style>
   :root{
     --navy:#0B2C4D; --blue:#1487C9; --blue-d:#0F6FA8; --blue-l:#E3F1FB;
-    --green:#27AE60; --amber:#F2A93B; --red:#E74C3C;
+    --green:#27AE60; --amber:#F2A93B; --red:#E74C3C; --purple:#7C3AED;
     --bg:#EAF0F6; --card:#fff; --line:#E7ECF2; --text:#1F2D3D; --muted:#8295AD;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:radial-gradient(circle at 50% 0%,#1b3a5c,#0B2C4D 70%);min-height:100vh;color:var(--text);
-    padding:34px 20px;display:flex;flex-direction:column;align-items:center;gap:6px}
-  .head{color:#fff;text-align:center;margin-bottom:18px}
-  .head h1{font-size:22px;font-weight:700;letter-spacing:-.3px}
-  .head p{color:#9FC2E0;font-size:13.5px;margin-top:5px}
-  .stage{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
-  .label{color:#9FC2E0;font-size:12.5px;text-align:center;margin-top:14px;font-weight:500;letter-spacing:.3px}
+    padding:30px 20px;display:flex;flex-direction:column;align-items:center}
+  .head{color:#fff;text-align:center;margin-bottom:16px}
+  .head h1{font-size:21px;font-weight:700;letter-spacing:-.3px}
+  .head p{color:#9FC2E0;font-size:13px;margin-top:5px}
+  .head .back-link{color:#7FD3F5;font-size:12.5px;text-decoration:none;display:inline-block;margin-top:9px}
 
-  /* Phone */
-  .phone{width:330px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
-  .screen{background:var(--bg);border-radius:36px;overflow:hidden;height:690px;position:relative;display:flex;flex-direction:column}
+  .phone{width:340px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+  .screen{background:var(--bg);border-radius:36px;overflow:hidden;height:710px;position:relative;display:flex;flex-direction:column}
   .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:30}
-  .statusbar{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0}
+  .statusbar{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0}
 
-  /* App header */
-  .ahead{background:var(--navy);color:#fff;padding:10px 18px 14px}
-  .ahead .row1{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#A9C4DE}
-  .sync{display:flex;align-items:center;gap:6px;background:rgba(39,174,96,.2);color:#7BE0A3;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+  .ahead{background:var(--navy);color:#fff;padding:8px 18px 14px;flex-shrink:0}
+  .ahead .row1{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#A9C4DE;min-height:22px}
+  .ahead .row1 .lft{cursor:pointer;display:flex;align-items:center;gap:4px}
+  .sync{display:flex;align-items:center;gap:6px;background:rgba(39,174,96,.2);color:#7BE0A3;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer}
+  .sync.saving{background:rgba(242,169,59,.2);color:#F6C97A}
   .dot{width:7px;height:7px;border-radius:50%;background:#3CDC7F}
-  .ahead h2{font-size:17px;font-weight:700;margin-top:9px;letter-spacing:-.2px}
+  .sync.saving .dot{background:#F2A93B;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .ahead h2{font-size:17px;font-weight:700;margin-top:8px;letter-spacing:-.2px}
   .ahead .addr{font-size:12.5px;color:#9FC2E0;margin-top:2px}
-  .prog{margin-top:13px}
+  .prog{margin-top:12px}
   .prog .ptop{display:flex;justify-content:space-between;font-size:11.5px;color:#9FC2E0;margin-bottom:6px}
   .ptrack{height:7px;background:rgba(255,255,255,.15);border-radius:6px;overflow:hidden}
-  .pfill{height:100%;width:62%;background:linear-gradient(90deg,#2FB3E8,#3CDC7F);border-radius:6px}
+  .pfill{height:100%;width:0;background:linear-gradient(90deg,#2FB3E8,#3CDC7F);border-radius:6px;transition:width .5s ease}
 
   .body{flex:1;overflow:auto;padding:14px}
+  .view{display:none}
+  .view.active{display:block;animation:slidein .25s ease}
+  @keyframes slidein{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
 
-  /* Section list */
-  .sec{background:var(--card);border-radius:14px;padding:14px 15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 3px rgba(11,44,77,.05)}
+  .row{background:var(--card);border-radius:14px;padding:13px 15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 3px rgba(11,44,77,.05);cursor:pointer;transition:transform .1s}
+  .row:active{transform:scale(.985)}
   .sicon{width:42px;height:42px;border-radius:11px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .sec .st{flex:1}
-  .sec .st b{font-size:14.5px;font-weight:650}
-  .sec .st small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
-  .ring{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  .row .st{flex:1;min-width:0}
+  .row .st b{font-size:14.5px;font-weight:650}
+  .row .st small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .chev{color:#C2CFDD;font-size:18px}
+  .ring{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
   .ring.done{background:var(--green);color:#fff}
-  .ring.part{background:conic-gradient(var(--blue) 60%,#E3EAF2 0);color:var(--blue-d)}
-  .ring.part i{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal}
+  .ring.part{background:var(--amber);color:#fff}
   .ring.todo{background:#EDF1F6;color:var(--muted)}
-
-  /* Item detail screen */
-  .ihead{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-  .back{font-size:20px;color:#9FC2E0}
-  .ihead .it{flex:1}
-  .ihead .it b{font-size:15.5px}
-  .ihead .it small{display:block;color:#9FC2E0;font-size:12px}
+  .ring.flag{background:var(--red);color:#fff}
 
   .field{background:#fff;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 1px 3px rgba(11,44,77,.05)}
-  .field h4{font-size:14px;font-weight:700;margin-bottom:11px}
+  .field h4{font-size:13.5px;font-weight:700;margin-bottom:11px}
   .field h4 .req{color:var(--red)}
-  .toggles{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
-  .tg{flex:1;min-width:90px;text-align:center;padding:9px 6px;border:1.5px solid var(--line);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--muted);background:#fff;cursor:pointer}
+  .toggles{display:flex;gap:8px;flex-wrap:wrap}
+  .tg{flex:1;min-width:84px;text-align:center;padding:9px 6px;border:1.5px solid var(--line);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--muted);background:#fff;cursor:pointer;transition:.12s}
   .tg.on{border-color:var(--blue);background:var(--blue-l);color:var(--blue-d)}
 
-  .ratings{display:flex;gap:8px;margin-top:4px}
-  .rate{padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid transparent}
-  .rate.main{background:#FDF1DC;color:#B97D17}
-  .rate.safety{background:#FBE6E3;color:#C0392B}
-  .rate.off{background:#fff;border-color:var(--line);color:var(--muted)}
+  .ratings{display:flex;gap:8px}
+  .rate{padding:8px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--muted);transition:.12s}
+  .rate.on.main{background:#FDF1DC;color:#B97D17;border-color:#F2A93B}
+  .rate.on.safety{background:#FBE6E3;color:#C0392B;border-color:#E74C3C}
+  .rate.on.serv{background:#E6F7EE;color:#1E8E4E;border-color:#27AE60}
 
-  .commentbox{position:relative}
-  .commentbox textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:11px;padding:12px;font-size:13px;font-family:inherit;resize:none;line-height:1.5;color:var(--text)}
+  .commentbox textarea{width:100%;min-height:92px;border:1.5px solid var(--line);border-radius:11px;padding:12px;font-size:13px;font-family:inherit;resize:none;line-height:1.5;color:var(--text)}
   .ai-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:linear-gradient(135deg,#7C3AED,#2FB3E8);color:#fff;border:0;padding:9px 14px;border-radius:10px;font-size:13px;font-weight:650;cursor:pointer;box-shadow:0 4px 12px rgba(124,58,237,.3)}
-  .ai-hint{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+  .ai-btn:disabled{opacity:.7;cursor:default}
+  .ai-status{font-size:11.5px;color:var(--purple);margin-top:9px;display:none;align-items:center;gap:7px;font-weight:600}
+  .ai-status.show{display:flex}
+  .spin{width:13px;height:13px;border:2px solid #D9C8F5;border-top-color:var(--purple);border-radius:50%;animation:rot .7s linear infinite}
+  @keyframes rot{to{transform:rotate(360deg)}}
 
-  /* photos */
-  .photos{display:flex;gap:9px;margin-top:4px}
-  .ph{width:64px;height:64px;border-radius:11px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+  .photos{display:flex;gap:9px;flex-wrap:wrap}
+  .ph{width:62px;height:62px;border-radius:11px;background-size:cover;background-position:center;position:relative;overflow:hidden}
   .ph.add{background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:24px;border:1.5px dashed #9CCBE8;cursor:pointer}
-  .ph .tag{position:absolute;bottom:0;left:0;right:0;background:rgba(231,76,60,.9);color:#fff;font-size:8.5px;font-weight:700;text-align:center;padding:1px}
+  .ph .tag{position:absolute;bottom:0;left:0;right:0;background:rgba(231,76,60,.9);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px}
 
-  /* bottom nav */
-  .tabbar{height:62px;background:#fff;border-top:1px solid var(--line);display:flex;flex-shrink:0;padding-bottom:6px}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--muted);font-weight:600}
+  .savebar{padding:12px 14px;flex-shrink:0;background:#fff;border-top:1px solid var(--line)}
+  .save-btn{width:100%;background:var(--blue);color:#fff;border:0;padding:13px;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer}
+  .save-btn:active{background:var(--blue-d)}
+
+  .sumhead{font-size:15px;font-weight:700;margin:2px 0 12px}
+  .sumstats{display:flex;gap:10px;margin-bottom:16px}
+  .ss{flex:1;border-radius:12px;padding:13px;color:#fff;text-align:center}
+  .ss.s{background:linear-gradient(135deg,#E74C3C,#c0392b)}
+  .ss.r{background:linear-gradient(135deg,#F2A93B,#dd8e1c)}
+  .ss.m{background:linear-gradient(135deg,#1487C9,#0F6FA8)}
+  .ss .n{font-size:24px;font-weight:800}
+  .ss .l{font-size:10.5px;font-weight:600;opacity:.95;margin-top:2px}
+  .findrow{background:#fff;border-radius:11px;border-left:4px solid var(--line);padding:11px 13px;margin-bottom:9px;font-size:13px}
+  .findrow.safety{border-left-color:var(--red)}
+  .findrow.repair{border-left-color:var(--amber)}
+  .findrow b{font-size:13px}
+  .findrow small{color:var(--muted);display:block;margin-top:2px;font-size:11.5px}
+  .publish{width:100%;background:var(--green);color:#fff;border:0;padding:13px;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:8px}
+
+  .tabbar{height:60px;background:#fff;border-top:1px solid var(--line);display:flex;flex-shrink:0;padding-bottom:5px}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--muted);font-weight:600;cursor:pointer}
   .tab.on{color:var(--blue)}
-  .tab .ti{font-size:18px}
+  .tab .ti{font-size:17px}
 
-  @media(max-width:760px){.stage{gap:30px}.phone{transform:scale(.92)}}
+  .toast{position:absolute;left:50%;bottom:74px;transform:translateX(-50%) translateY(20px);background:#0B2C4D;color:#fff;padding:11px 18px;border-radius:24px;font-size:12.5px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:40}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
+
+  .reset{position:fixed;bottom:14px;right:16px;background:rgba(255,255,255,.12);color:#cfe2f2;border:1px solid rgba(255,255,255,.2);padding:7px 13px;border-radius:8px;font-size:12px;cursor:pointer}
 </style>
 </head>
 <body>
   <div class="head">
     <h1>InspectFlow — In the Field</h1>
-    <p>Offline-first mobile app · fast photo capture · AI comment assist · auto-sync</p>
+    <p>Tap a system → open an item → rate it → let AI write the comment</p>
+    <a class="back-link" href="index.html">← Back to demo hub</a>
   </div>
 
-  <div class="stage">
-    <!-- SCREEN 1: Section list -->
-    <div>
-    <div class="phone"><div class="screen">
-      <div class="notch"></div>
-      <div class="statusbar"><span>9:41</span><span>● ● ● &nbsp; ⌶ &nbsp; 100%</span></div>
-      <div class="ahead">
-        <div class="row1"><span>‹ Inspections</span><span class="sync"><span class="dot"></span> All synced</span></div>
-        <h2>76 Riverside Dr</h2>
-        <div class="addr">Ortega, FL 32210 · Full Home + WDO</div>
-        <div class="prog">
-          <div class="ptop"><span>Inspection progress</span><span>8 / 13 sections</span></div>
-          <div class="ptrack"><div class="pfill"></div></div>
-        </div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>● ● ● &nbsp; ⌶ &nbsp; 100%</span></div>
+
+    <div class="ahead">
+      <div class="row1">
+        <span class="lft" id="hdrLeft" onclick="goBack()">‹ Inspections</span>
+        <span class="sync" id="syncPill"><span class="dot"></span> <span id="syncText">All synced</span></span>
       </div>
-      <div class="body">
-        <div class="sec"><div class="sicon">▲</div><div class="st"><b>Roof</b><small>3 items · 1 deficiency</small></div><div class="ring part"><i>!</i></div></div>
-        <div class="sec"><div class="sicon">▦</div><div class="st"><b>Exterior</b><small>6 items · complete</small></div><div class="ring done">✓</div></div>
-        <div class="sec"><div class="sicon">⌂</div><div class="st"><b>Garage</b><small>4 items · complete</small></div><div class="ring done">✓</div></div>
-        <div class="sec"><div class="sicon">☷</div><div class="st"><b>Interior</b><small>7 items · complete</small></div><div class="ring done">✓</div></div>
-        <div class="sec"><div class="sicon">⚡</div><div class="st"><b>Electrical</b><small>5 items · in progress</small></div><div class="ring part"><i>3</i></div></div>
-        <div class="sec"><div class="sicon">⚙</div><div class="st"><b>Plumbing</b><small>5 items · not started</small></div><div class="ring todo">—</div></div>
-        <div class="sec"><div class="sicon">❄</div><div class="st"><b>HVAC</b><small>4 items · not started</small></div><div class="ring todo">—</div></div>
+      <h2 id="hdrTitle">76 Riverside Dr</h2>
+      <div class="addr" id="hdrSub">Ortega, FL 32210 · Full Home + WDO</div>
+      <div class="prog">
+        <div class="ptop"><span>Inspection progress</span><span id="progLabel">0 / 0 items</span></div>
+        <div class="ptrack"><div class="pfill" id="progFill"></div></div>
       </div>
-      <div class="tabbar">
-        <div class="tab on"><span class="ti">▤</span>Sections</div>
-        <div class="tab"><span class="ti">▦</span>Photos</div>
-        <div class="tab"><span class="ti">✦</span>Summary</div>
-        <div class="tab"><span class="ti">⤓</span>Sync</div>
-      </div>
-    </div></div>
-    <div class="label">Section checklist — tap any system to inspect</div>
     </div>
 
-    <!-- SCREEN 2: Item detail -->
-    <div>
-    <div class="phone"><div class="screen">
-      <div class="notch"></div>
-      <div class="statusbar"><span>9:41</span><span>● ● ● &nbsp; ⌶ &nbsp; 100%</span></div>
-      <div class="ihead">
-        <span class="back">‹</span>
-        <div class="it"><b>Roof › Coverings</b><small>Asphalt shingle · 3-tab</small></div>
-      </div>
-      <div class="body">
-        <div class="field">
-          <h4>Condition <span class="req">*</span></h4>
-          <div class="toggles">
-            <div class="tg on">Inspected</div>
-            <div class="tg">Not Present</div>
-            <div class="tg">Not Inspected</div>
-          </div>
-        </div>
-
-        <div class="field">
-          <h4>Rating</h4>
-          <div class="ratings">
-            <div class="rate main">⚠ Maintenance</div>
-            <div class="rate safety on">⛌ Safety</div>
-            <div class="rate off">✓ Serviceable</div>
-          </div>
-        </div>
-
-        <div class="field">
-          <h4>Comment</h4>
-          <div class="commentbox">
-            <textarea>Several cracked and lifted shingles observed on the south-facing slope, with granule loss consistent with age. Exposed nail heads noted near the ridge. </textarea>
-            <button class="ai-btn">✨ AI Comment Assist</button>
-            <div class="ai-hint">AI rewrote your shorthand into buyer-friendly language and added a recommendation. <b>Tap to insert.</b></div>
-          </div>
-        </div>
-
-        <div class="field">
-          <h4>Photos</h4>
-          <div class="photos">
-            <div class="ph" style="background:linear-gradient(135deg,#6b7a8d,#3a4856)"><div class="tag">DEFICIENCY</div></div>
-            <div class="ph" style="background:linear-gradient(135deg,#8a9aab,#5a6a7d)"></div>
-            <div class="ph add">＋</div>
-          </div>
-        </div>
-      </div>
-      <div class="tabbar">
-        <div class="tab on"><span class="ti">▤</span>Sections</div>
-        <div class="tab"><span class="ti">▦</span>Photos</div>
-        <div class="tab"><span class="ti">✦</span>Summary</div>
-        <div class="tab"><span class="ti">⤓</span>Sync</div>
-      </div>
-    </div></div>
-    <div class="label">Item entry — condition, rating, AI comments & photos</div>
+    <div class="body" id="body">
+      <div class="view active" id="view-sections"></div>
+      <div class="view" id="view-items"></div>
+      <div class="view" id="view-detail"></div>
+      <div class="view" id="view-summary"></div>
     </div>
-  </div>
+
+    <div class="savebar" id="savebar" style="display:none">
+      <button class="save-btn" onclick="saveItem()">Save & continue</button>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab on" data-tab="sections" onclick="showSections()"><span class="ti">▤</span>Sections</div>
+      <div class="tab" data-tab="photos" onclick="toast('📷 42 photos in this inspection')"><span class="ti">▦</span>Photos</div>
+      <div class="tab" data-tab="summary" onclick="showSummary()"><span class="ti">✦</span>Summary</div>
+      <div class="tab" data-tab="sync" onclick="doSync()"><span class="ti">⤓</span>Sync</div>
+    </div>
+
+    <div class="toast" id="toast"><span class="tdot"></span><span id="toastText">Saved</span></div>
+  </div></div>
+
+  <button class="reset" onclick="resetDemo()">↺ Reset demo data</button>
 
 <script>
-  document.querySelectorAll('.toggles').forEach(g=>g.addEventListener('click',e=>{
-    if(!e.target.classList.contains('tg'))return;
-    g.querySelector('.tg.on')?.classList.remove('on'); e.target.classList.add('on');
+const KEY='inspectflow_field_v1';
+const AI={
+  'roof-cov':"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor to prevent water intrusion; budget for full replacement may be appropriate.",
+  'elec-panel':"A double-tapped breaker was observed in the main service panel — two conductors are terminated under a single breaker not rated for it. This is a potential fire hazard. Recommend correction by a licensed electrician to manufacturer specifications.",
+  'plumb-wh':"The water heater is installed without a drain pan. In the event of a tank failure, water could damage surrounding flooring and finishes. Recommend installing a drain pan with a drain line routed to an appropriate location.",
+  'elec-gfci':"The GFCI-protected outlet adjacent to the sink did not trip when tested. GFCI protection is important near water sources. Recommend replacing the non-functioning device.",
+};
+function seed(){return{
+  meta:{title:'76 Riverside Dr',sub:'Ortega, FL 32210 · Full Home + WDO'},
+  sections:[
+    {id:'roof',name:'Roof',icon:'▲',items:[
+      {id:'roof-cov',name:'Roof Coverings',sub:'Asphalt shingle · 3-tab',cond:'Inspected',rating:'safety',comment:"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor.",photos:[{g:'135deg,#6b7a8d,#3a4856',tag:'DEFICIENCY'},{g:'135deg,#7e8c9b,#4a5868',tag:''}]},
+      {id:'roof-flash',name:'Flashing',sub:'Step & valley',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'roof-gutter',name:'Gutters & Downspouts',sub:'Aluminum, seamless',cond:'',rating:'',comment:'',photos:[]},
+    ]},
+    {id:'ext',name:'Exterior',icon:'▦',items:[
+      {id:'ext-clad',name:'Siding / Cladding',sub:'Fiber cement',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'ext-trim',name:'Trim & Soffits',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'ext-grade',name:'Grading & Drainage',sub:'',cond:'',rating:'',comment:'',photos:[]},
+    ]},
+    {id:'garage',name:'Garage',icon:'⌂',items:[
+      {id:'gar-door',name:'Door & Auto-Opener',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'gar-fire',name:'Firewall / Separation',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+    ]},
+    {id:'interior',name:'Interior',icon:'☷',items:[
+      {id:'int-walls',name:'Walls & Ceilings',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'int-floors',name:'Floors',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+      {id:'int-windows',name:'Windows',sub:'',cond:'Inspected',rating:'serv',comment:'',photos:[]},
+    ]},
+    {id:'elec',name:'Electrical',icon:'⚡',items:[
+      {id:'elec-panel',name:'Service Panel',sub:'200A · Square D',cond:'',rating:'',comment:'',photos:[]},
+      {id:'elec-gfci',name:'Outlets & GFCI',sub:'',cond:'',rating:'',comment:'',photos:[]},
+      {id:'elec-smoke',name:'Smoke Detectors',sub:'',cond:'',rating:'',comment:'',photos:[]},
+    ]},
+    {id:'plumb',name:'Plumbing',icon:'⚙',items:[
+      {id:'plumb-wh',name:'Water Heater',sub:'40 gal · gas',cond:'',rating:'',comment:'',photos:[]},
+      {id:'plumb-supply',name:'Supply & Drains',sub:'',cond:'',rating:'',comment:'',photos:[]},
+      {id:'plumb-fix',name:'Fixtures',sub:'',cond:'',rating:'',comment:'',photos:[]},
+    ]},
+    {id:'hvac',name:'HVAC',icon:'❄',items:[
+      {id:'hvac-heat',name:'Heating',sub:'',cond:'',rating:'',comment:'',photos:[]},
+      {id:'hvac-cool',name:'Cooling',sub:'',cond:'',rating:'',comment:'',photos:[]},
+    ]},
+  ]
+};}
+let data=load(), nav={section:null,item:null};
+function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){} return seed();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}}
+function resetDemo(){data=seed();save();showSections();toast('Demo data reset');}
+
+const PHOTO_GRADS=['135deg,#6b7a8d,#3a4856','135deg,#8a9aab,#5a6a7d','135deg,#79899a,#48586a','135deg,#5a6675,#2f3947'];
+
+function itemStatus(it){ if(!it.cond) return 'todo'; if(it.rating==='safety') return 'flag'; if(it.rating==='main') return 'part'; return 'done'; }
+function sectionDone(sec){ return sec.items.filter(i=>i.cond).length; }
+function updateProgress(){
+  let total=0,done=0;
+  data.sections.forEach(s=>s.items.forEach(i=>{total++; if(i.cond)done++;}));
+  document.getElementById('progLabel').textContent=done+' / '+total+' items';
+  document.getElementById('progFill').style.width=(total?Math.round(done/total*100):0)+'%';
+}
+
+function showSections(){
+  nav={section:null,item:null};
+  setHeader('‹ Inspections','76 Riverside Dr','Ortega, FL 32210 · Full Home + WDO');
+  document.getElementById('savebar').style.display='none';
+  const el=document.getElementById('view-sections'); el.innerHTML='';
+  data.sections.forEach(sec=>{
+    const done=sectionDone(sec), total=sec.items.length;
+    const hasFlag=sec.items.some(i=>i.rating==='safety');
+    let ring = done===0?'<div class="ring todo">—</div>' : done<total?'<div class="ring part">'+done+'</div>' : (hasFlag?'<div class="ring flag">!</div>':'<div class="ring done">✓</div>');
+    const defs=sec.items.filter(i=>i.rating==='safety'||i.rating==='main').length;
+    const sub = done===0?total+' items · not started' : done<total?done+' of '+total+' done' : (defs?total+' items · '+defs+' finding'+(defs>1?'s':''):total+' items · complete');
+    const r=document.createElement('div'); r.className='row'; r.onclick=()=>showItems(sec.id);
+    r.innerHTML='<div class="sicon">'+sec.icon+'</div><div class="st"><b>'+sec.name+'</b><small>'+sub+'</small></div>'+ring;
+    el.appendChild(r);
+  });
+  switchView('sections'); setTab('sections'); updateProgress();
+}
+function showItems(secId){
+  const sec=data.sections.find(s=>s.id===secId); nav.section=secId;
+  setHeader('‹ Sections',sec.name,sec.items.length+' items');
+  document.getElementById('savebar').style.display='none';
+  const el=document.getElementById('view-items'); el.innerHTML='';
+  sec.items.forEach(it=>{
+    const stt=itemStatus(it);
+    const ring={todo:'<div class="ring todo">—</div>',done:'<div class="ring done">✓</div>',part:'<div class="ring part">●</div>',flag:'<div class="ring flag">!</div>'}[stt];
+    const sub = it.cond? (it.rating==='safety'?'Safety concern flagged':it.rating==='main'?'Maintenance item':'Serviceable') : (it.sub||'Tap to inspect');
+    const r=document.createElement('div'); r.className='row'; r.onclick=()=>showDetail(secId,it.id);
+    r.innerHTML='<div class="st"><b>'+it.name+'</b><small>'+sub+'</small></div>'+ring+'<div class="chev">›</div>';
+    el.appendChild(r);
+  });
+  switchView('items'); setTab('sections');
+}
+function showDetail(secId,itId){
+  const sec=data.sections.find(s=>s.id===secId); const it=sec.items.find(i=>i.id===itId);
+  nav.section=secId; nav.item=itId;
+  setHeader('‹ '+sec.name, it.name, it.sub||sec.name);
+  const el=document.getElementById('view-detail');
+  el.innerHTML=`
+    <div class="field"><h4>Condition <span class="req">*</span></h4>
+      <div class="toggles" id="condRow">
+        ${['Inspected','Not Present','Not Inspected'].map(c=>`<div class="tg ${it.cond===c?'on':''}" onclick="pickCond(this,'${c}')">${c}</div>`).join('')}
+      </div></div>
+    <div class="field"><h4>Rating</h4>
+      <div class="ratings" id="rateRow">
+        <div class="rate main ${it.rating==='main'?'on':''}" onclick="pickRate(this,'main')">⚠ Maint.</div>
+        <div class="rate safety ${it.rating==='safety'?'on':''}" onclick="pickRate(this,'safety')">⛌ Safety</div>
+        <div class="rate serv ${it.rating==='serv'?'on':''}" onclick="pickRate(this,'serv')">✓ Serviceable</div>
+      </div></div>
+    <div class="field"><h4>Comment</h4>
+      <div class="commentbox">
+        <textarea id="cmt" placeholder="Type shorthand, e.g. 'cracked shingles south slope, granule loss'…">${it.comment||''}</textarea>
+        <button class="ai-btn" id="aiBtn" onclick="runAI('${itId}')">✨ AI Comment Assist</button>
+        <div class="ai-status" id="aiStatus"><span class="spin"></span> Analyzing photos &amp; writing comment…</div>
+      </div></div>
+    <div class="field"><h4>Photos</h4>
+      <div class="photos" id="photoRow">
+        ${it.photos.map(p=>`<div class="ph" style="background:linear-gradient(${p.g})">${p.tag?'<div class="tag">'+p.tag+'</div>':''}</div>`).join('')}
+        <div class="ph add" onclick="addPhoto()">＋</div>
+      </div></div>`;
+  document.getElementById('savebar').style.display='block';
+  switchView('detail');
+}
+function showSummary(){
+  setHeader('‹ Sections','Inspection Summary','76 Riverside Dr');
+  document.getElementById('savebar').style.display='none';
+  let s=0,m=0,finds=[];
+  data.sections.forEach(sec=>sec.items.forEach(i=>{
+    if(i.rating==='safety'){s++;finds.push({c:'safety',n:i.name,sec:sec.name});}
+    else if(i.rating==='main'){m++;finds.push({c:'repair',n:i.name,sec:sec.name});}
   }));
+  const el=document.getElementById('view-summary');
+  el.innerHTML=`<div class="sumhead">Findings so far</div>
+    <div class="sumstats">
+      <div class="ss s"><div class="n">${s}</div><div class="l">SAFETY</div></div>
+      <div class="ss r"><div class="n">${m}</div><div class="l">REPAIR / MAINT.</div></div>
+      <div class="ss m"><div class="n">${data.sections.reduce((a,sec)=>a+sec.items.filter(i=>i.cond).length,0)}</div><div class="l">ITEMS DONE</div></div>
+    </div>
+    ${finds.length?finds.map(f=>`<div class="findrow ${f.c}"><b>${f.n}</b><small>${f.sec}</small></div>`).join(''):'<div class="findrow"><b>No findings flagged yet</b><small>Flag items as Safety or Maintenance to see them here</small></div>'}
+    <button class="publish" onclick="publish()">Publish report to client →</button>`;
+  switchView('summary'); setTab('summary');
+}
+
+function pickCond(elm,c){ document.querySelectorAll('#condRow .tg').forEach(t=>t.classList.remove('on')); elm.classList.add('on'); }
+function pickRate(elm,r){ const on=elm.classList.contains('on'); document.querySelectorAll('#rateRow .rate').forEach(t=>t.classList.remove('on')); if(!on)elm.classList.add('on'); }
+function addPhoto(){
+  const row=document.getElementById('photoRow'); const add=row.querySelector('.add');
+  const g=PHOTO_GRADS[Math.floor(Math.random()*PHOTO_GRADS.length)];
+  const d=document.createElement('div'); d.className='ph'; d.style.background='linear-gradient('+g+')';
+  row.insertBefore(d,add); toast('📷 Photo captured');
+}
+function runAI(itId){
+  const btn=document.getElementById('aiBtn'), st=document.getElementById('aiStatus'), ta=document.getElementById('cmt');
+  btn.disabled=true; st.classList.add('show');
+  setTimeout(()=>{
+    let out=AI[itId];
+    if(!out){ const typed=ta.value.trim(); out = typed? (typed.charAt(0).toUpperCase()+typed.slice(1).replace(/\.*$/,''))+'. Recommend further evaluation and repair by a qualified contractor.' : 'No significant deficiencies observed at the time of inspection. Component appeared serviceable and functioning as intended.'; }
+    st.classList.remove('show'); btn.disabled=false;
+    ta.value=''; let i=0; const t=setInterval(()=>{ ta.value=out.slice(0,i+=3); ta.scrollTop=ta.scrollHeight; if(i>=out.length)clearInterval(t); },12);
+    toast('✨ Comment generated');
+  },1400);
+}
+function saveItem(){
+  const sec=data.sections.find(s=>s.id===nav.section); const it=sec.items.find(i=>i.id===nav.item);
+  const cond=document.querySelector('#condRow .tg.on'); it.cond=cond?cond.textContent.trim():'';
+  const rate=document.querySelector('#rateRow .rate.on'); it.rating=rate?(rate.classList.contains('safety')?'safety':rate.classList.contains('main')?'main':'serv'):'';
+  it.comment=document.getElementById('cmt').value;
+  const phs=[...document.querySelectorAll('#photoRow .ph:not(.add)')];
+  it.photos=phs.map(p=>({g:p.style.background.replace('linear-gradient(','').replace(')',''),tag:p.querySelector('.tag')?p.querySelector('.tag').textContent:''}));
+  save(); fakeSync(); showItems(nav.section);
+}
+function publish(){ fakeSync('Publishing…'); setTimeout(()=>toast('✅ Report published & sent to client'),900); }
+
+function setHeader(left,title,sub){ document.getElementById('hdrLeft').textContent=left; document.getElementById('hdrTitle').textContent=title; document.getElementById('hdrSub').textContent=sub; }
+function switchView(v){ document.querySelectorAll('.view').forEach(x=>x.classList.remove('active')); document.getElementById('view-'+v).classList.add('active'); document.getElementById('body').scrollTop=0; }
+function setTab(t){ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===t)); }
+function goBack(){ if(document.getElementById('view-detail').classList.contains('active')){ showItems(nav.section); } else if(document.getElementById('view-items').classList.contains('active')||document.getElementById('view-summary').classList.contains('active')){ showSections(); } }
+function showToastEl(txt){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=txt; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2000); }
+function toast(t){ showToastEl(t); }
+function fakeSync(label){
+  const pill=document.getElementById('syncPill'), txt=document.getElementById('syncText');
+  pill.classList.add('saving'); txt.textContent=label||'Saving…';
+  setTimeout(()=>{ pill.classList.remove('saving'); txt.textContent='All synced'; },1100);
+}
+function doSync(){ fakeSync('Syncing to cloud…'); toast('☁️ Synced to cloud · 42 photos uploaded'); setTab('sync'); setTimeout(()=>setTab('sections'),1500); }
+
+showSections();
 </script>
 </body>
 </html>
