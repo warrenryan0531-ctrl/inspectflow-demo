@@ -49,7 +49,9 @@
   /* Section / item rows */
   .row{background:var(--card);border-radius:14px;padding:13px 15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 3px rgba(11,44,77,.05);cursor:pointer;transition:transform .1s}
   .row:active{transform:scale(.985)}
-  .sicon{width:42px;height:42px;border-radius:11px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .sicon{width:42px;height:42px;border-radius:12px;background:linear-gradient(160deg,#EAF4FB,#DCEBF7);color:var(--blue-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(20,135,201,.08)}
+  .sicon svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .tab .ti svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .row .st{flex:1;min-width:0}
   .row .st b{font-size:14.5px;font-weight:650}
   .row .st small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
@@ -130,7 +132,7 @@
 <body>
   <div class="head">
     <h1>InspectFlow — In the Field</h1>
-    <p>Tap a system → rate an item → scan a photo with AI → let it write the comment</p>
+    <p>Tap a system → open an item → rate it → let AI write the comment</p>
     <a class="back-link" href="index.html">← Back to demo hub</a>
   </div>
 
@@ -163,10 +165,10 @@
     </div>
 
     <div class="tabbar">
-      <div class="tab on" data-tab="sections" onclick="showSections()"><span class="ti">▤</span>Sections</div>
-      <div class="tab" data-tab="photos" onclick="toast('📷 42 photos in this inspection')"><span class="ti">▦</span>Photos</div>
-      <div class="tab" data-tab="summary" onclick="showSummary()"><span class="ti">✦</span>Summary</div>
-      <div class="tab" data-tab="sync" onclick="doSync()"><span class="ti">⤓</span>Sync</div>
+      <div class="tab on" data-tab="sections" onclick="showSections()"><span class="ti"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>Sections</div>
+      <div class="tab" data-tab="photos" onclick="toast('📷 42 photos in this inspection')"><span class="ti"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5L5 20"/></svg></span>Photos</div>
+      <div class="tab" data-tab="summary" onclick="showSummary()"><span class="ti"><svg viewBox="0 0 24 24"><path d="M4 21V4M4 4h13l-2 4 2 4H4"/></svg></span>Summary</div>
+      <div class="tab" data-tab="sync" onclick="doSync()"><span class="ti"><svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A3.5 3.5 0 0 1 18 18z"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg></span>Sync</div>
     </div>
 
     <div class="toast" id="toast"><span class="tdot"></span><span id="toastText">Saved</span></div>
@@ -179,6 +181,21 @@ const KEY='inspectflow_field_v2';
 const U=(id)=>'https://images.unsplash.com/photo-'+id+'?w=300&h=300&fit=crop&q=72&auto=format';
 const IMG={roof1:U('1727777266423-6a33048e4894'),roof2:U('1710139323182-69622cad5c3b'),panel:U('1607631697491-61972eecf928'),gfci:U('1609208522221-bd6b667fb671'),wh:U('1575299737366-39c143459bc5')};
 const PHOTO_POOL=[IMG.roof1,IMG.roof2,IMG.panel,IMG.wh,IMG.gfci];
+const SECICON={
+  roof:'<svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v9h14v-9"/></svg>',
+  ext:'<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg>',
+  garage:'<svg viewBox="0 0 24 24"><path d="M3 10l9-5 9 5v10H3z"/><path d="M6 20v-6h12v6"/></svg>',
+  interior:'<svg viewBox="0 0 24 24"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M3 11a2 2 0 0 1 4 0v3h10v-3a2 2 0 0 1 4 0v5H3z"/><path d="M6 19v2M18 19v2"/></svg>',
+  elec:'<svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  plumb:'<svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>',
+  hvac:'<svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3M3 12h9"/></svg>'
+};
+const TABICON={
+  sections:'<svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  photos:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5L5 20"/></svg>',
+  summary:'<svg viewBox="0 0 24 24"><path d="M4 21V4M4 4h13l-2 4 2 4H4"/></svg>',
+  sync:'<svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A3.5 3.5 0 0 1 18 18z"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg>'
+};
 const CV={'roof-cov':{label:'Cracked & lifted shingles',conf:92,rating:'safety'},'roof-flash':{label:'Flashing intact — serviceable',conf:78,rating:'serv'},'elec-panel':{label:'Double-tapped breaker',conf:89,rating:'safety'},'elec-gfci':{label:'GFCI failed to trip',conf:90,rating:'main'},'plumb-wh':{label:'Water heater — no drain pan',conf:86,rating:'main'}};
 const AI={
   'roof-cov':"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor to prevent water intrusion; budget for full replacement may be appropriate.",
@@ -251,7 +268,7 @@ function showSections(){
     const defs=sec.items.filter(i=>i.rating==='safety'||i.rating==='main').length;
     const sub = done===0?total+' items · not started' : done<total?done+' of '+total+' done' : (defs?total+' items · '+defs+' finding'+(defs>1?'s':''):total+' items · complete');
     const r=document.createElement('div'); r.className='row'; r.onclick=()=>showItems(sec.id);
-    r.innerHTML='<div class="sicon">'+sec.icon+'</div><div class="st"><b>'+sec.name+'</b><small>'+sub+'</small></div>'+ring;
+    r.innerHTML='<div class="sicon">'+(SECICON[sec.id]||sec.icon)+'</div><div class="st"><b>'+sec.name+'</b><small>'+sub+'</small></div>'+ring;
     el.appendChild(r);
   });
   switchView('sections'); setTab('sections'); updateProgress();
