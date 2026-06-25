@@ -87,6 +87,12 @@
   .ph.add{background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:24px;border:1.5px dashed #9CCBE8;cursor:pointer}
   .ph .tag{position:absolute;bottom:0;left:0;right:0;background:rgba(231,76,60,.9);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px}
 
+  .cv-btn{display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:linear-gradient(135deg,#0F766E,#2FB3E8);color:#fff;border:0;padding:9px 14px;border-radius:10px;font-size:13px;font-weight:650;cursor:pointer;box-shadow:0 4px 12px rgba(20,135,201,.3)}
+  .cv-btn:disabled{opacity:.7;cursor:default}
+  .cv-status{display:none;font-size:12px;color:#0F766E;margin-top:11px;font-weight:600;align-items:center;gap:7px;line-height:1.4}
+  .cv-status.show{display:flex}
+  .cv-status b{color:#C0392B}
+  .cvspin{width:13px;height:13px;border:2px solid #BFE6E2;border-top-color:#0F766E;border-radius:50%;animation:rot .7s linear infinite;display:inline-block;flex-shrink:0}
   .savebar{padding:12px 14px;flex-shrink:0;background:#fff;border-top:1px solid var(--line)}
   .save-btn{width:100%;background:var(--blue);color:#fff;border:0;padding:13px;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer}
   .save-btn:active{background:var(--blue-d)}
@@ -124,7 +130,7 @@
 <body>
   <div class="head">
     <h1>InspectFlow — In the Field</h1>
-    <p>Tap a system → open an item → rate it → let AI write the comment</p>
+    <p>Tap a system → rate an item → scan a photo with AI → let it write the comment</p>
     <a class="back-link" href="index.html">← Back to demo hub</a>
   </div>
 
@@ -173,6 +179,7 @@ const KEY='inspectflow_field_v2';
 const U=(id)=>'https://images.unsplash.com/photo-'+id+'?w=300&h=300&fit=crop&q=72&auto=format';
 const IMG={roof1:U('1727777266423-6a33048e4894'),roof2:U('1710139323182-69622cad5c3b'),panel:U('1607631697491-61972eecf928'),gfci:U('1609208522221-bd6b667fb671'),wh:U('1575299737366-39c143459bc5')};
 const PHOTO_POOL=[IMG.roof1,IMG.roof2,IMG.panel,IMG.wh,IMG.gfci];
+const CV={'roof-cov':{label:'Cracked & lifted shingles',conf:92,rating:'safety'},'roof-flash':{label:'Flashing intact — serviceable',conf:78,rating:'serv'},'elec-panel':{label:'Double-tapped breaker',conf:89,rating:'safety'},'elec-gfci':{label:'GFCI failed to trip',conf:90,rating:'main'},'plumb-wh':{label:'Water heater — no drain pan',conf:86,rating:'main'}};
 const AI={
   'roof-cov':"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with the roof's age. Exposed nail heads were noted near the ridge. Recommend evaluation and repair by a licensed roofing contractor to prevent water intrusion; budget for full replacement may be appropriate.",
   'elec-panel':"A double-tapped breaker was observed in the main service panel — two conductors are terminated under a single breaker not rated for it. This is a potential fire hazard. Recommend correction by a licensed electrician to manufacturer specifications.",
@@ -290,7 +297,10 @@ function showDetail(secId,itId){
       <div class="photos" id="photoRow">
         ${it.photos.map(p=>`<div class="ph" data-img="${p.img}" style="background-image:url(${p.img})">${p.tag?'<div class="tag">'+p.tag+'</div>':''}</div>`).join('')}
         <div class="ph add" onclick="addPhoto()">＋</div>
-      </div></div>`;
+      </div>
+      <button class="cv-btn" id="cvBtn" onclick="cvScan()">🔍 AI Defect Scan</button>
+      <div class="cv-status" id="cvStatus"></div>
+      </div>`;
   document.getElementById('savebar').style.display='block';
   switchView('detail');
 }
@@ -322,6 +332,24 @@ function addPhoto(){
   const url=PHOTO_POOL[Math.floor(Math.random()*PHOTO_POOL.length)];
   const d=document.createElement('div'); d.className='ph'; d.dataset.img=url; d.style.backgroundImage='url('+url+')';
   row.insertBefore(d,add); toast('📷 Photo captured');
+}
+function cvScan(){
+  const btn=document.getElementById('cvBtn'), st=document.getElementById('cvStatus');
+  const phs=[...document.querySelectorAll('#photoRow .ph:not(.add)')];
+  if(!phs.length){ toast('📷 Add a photo first'); return; }
+  btn.disabled=true; btn.textContent='🔍 Analyzing…';
+  st.className='cv-status show'; st.innerHTML='<span class="cvspin"></span> Running computer vision on '+phs.length+' photo'+(phs.length>1?'s':'')+'…';
+  setTimeout(()=>{
+    const cv=CV[nav.item]||{label:'No significant defects detected',conf:73,rating:'serv'};
+    phs.forEach(p=>{ if(!p.querySelector('.tag')){ const t=document.createElement('div'); t.className='tag'; t.textContent=cv.conf+'%'; p.appendChild(t); } });
+    btn.disabled=false; btn.textContent='🔍 AI Defect Scan';
+    st.innerHTML='✓ Detected: <b>'+cv.label+'</b> · '+cv.conf+'% confidence — drafting comment…';
+    const cls=cv.rating==='safety'?'safety':cv.rating==='main'?'main':'serv';
+    const rateEl=document.querySelector('#rateRow .rate.'+cls);
+    if(rateEl){ document.querySelectorAll('#rateRow .rate').forEach(x=>x.classList.remove('on')); rateEl.classList.add('on'); }
+    runAI(nav.item);
+    toast('🔍 Defect detected: '+cv.label);
+  },1700);
 }
 function runAI(itId){
   const btn=document.getElementById('aiBtn'), st=document.getElementById('aiStatus'), ta=document.getElementById('cmt');
