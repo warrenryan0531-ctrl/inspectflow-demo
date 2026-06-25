@@ -59,9 +59,11 @@
   .pill .c.r{background:var(--red)}.pill .c.a{background:var(--amber)}.pill .c.b{background:var(--blue)}
 
   .section-h{margin:30px 0 12px;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
-  .section-h .si{width:34px;height:34px;border-radius:9px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center}
+  .section-h .si{width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#EAF4FB,#DCEBF7);color:var(--blue-d);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(20,135,201,.08)}
+  .section-h .si svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .imgs .pic{box-shadow:0 2px 8px rgba(11,44,77,.10)}
 
-  .item{background:#fff;border:1px solid var(--line);border-left-width:5px;border-radius:13px;padding:18px 20px;margin-bottom:15px;position:relative}
+  .item{background:#fff;border:1px solid var(--line);border-left-width:5px;border-radius:13px;padding:18px 20px;margin-bottom:15px;position:relative;box-shadow:0 1px 2px rgba(11,44,77,.04)}
   .item.safety{border-left-color:var(--red)}
   .item.repair{border-left-color:var(--amber)}
   .item.maint{border-left-color:var(--blue)}
@@ -239,13 +241,18 @@ const FINDINGS=[
    rec:"Replace the washer or valve as part of routine upkeep.",pics:[]},
 ];
 let filter='all', selecting=false, picked=new Set();
+const SECICON={
+  Roof:'<svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v9h14v-9"/></svg>',
+  Electrical:'<svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  Plumbing:'<svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>'
+};
 
 function render(){
   const body=document.getElementById('reportBody'); body.innerHTML='';
   let lastSec=null;
   FINDINGS.forEach((f,idx)=>{
     if(filter!=='all' && f.cls!==filter) return;
-    if(f.sec!==lastSec){ const h=document.createElement('div'); h.className='section-h'; h.innerHTML='<span class="si">'+f.icon+'</span>'+f.sec; body.appendChild(h); lastSec=f.sec; }
+    if(f.sec!==lastSec){ const h=document.createElement('div'); h.className='section-h'; h.innerHTML='<span class="si">'+(SECICON[f.sec]||f.icon)+'</span>'+f.sec; body.appendChild(h); lastSec=f.sec; }
     const it=document.createElement('div'); it.className='item '+f.cls+(picked.has(idx)?' picked':''); it.dataset.idx=idx;
     it.innerHTML='<div class="selbox">'+(picked.has(idx)?'✓':'')+'</div>'+
       '<div class="top"><h3>'+f.title+'</h3><span class="tagb '+f.cls+'">'+f.tag+'</span><span class="loc">'+f.loc+'</span></div>'+
