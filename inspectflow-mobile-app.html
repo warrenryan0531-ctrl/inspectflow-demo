@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InspectFlow — Mobile Field App</title>
+<style>
+  :root{
+    --navy:#0B2C4D; --blue:#1487C9; --blue-d:#0F6FA8; --blue-l:#E3F1FB;
+    --green:#27AE60; --amber:#F2A93B; --red:#E74C3C;
+    --bg:#EAF0F6; --card:#fff; --line:#E7ECF2; --text:#1F2D3D; --muted:#8295AD;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at 50% 0%,#1b3a5c,#0B2C4D 70%);min-height:100vh;color:var(--text);
+    padding:34px 20px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .head{color:#fff;text-align:center;margin-bottom:18px}
+  .head h1{font-size:22px;font-weight:700;letter-spacing:-.3px}
+  .head p{color:#9FC2E0;font-size:13.5px;margin-top:5px}
+  .stage{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .label{color:#9FC2E0;font-size:12.5px;text-align:center;margin-top:14px;font-weight:500;letter-spacing:.3px}
+
+  /* Phone */
+  .phone{width:330px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+  .screen{background:var(--bg);border-radius:36px;overflow:hidden;height:690px;position:relative;display:flex;flex-direction:column}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:30}
+  .statusbar{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0}
+
+  /* App header */
+  .ahead{background:var(--navy);color:#fff;padding:10px 18px 14px}
+  .ahead .row1{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#A9C4DE}
+  .sync{display:flex;align-items:center;gap:6px;background:rgba(39,174,96,.2);color:#7BE0A3;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+  .dot{width:7px;height:7px;border-radius:50%;background:#3CDC7F}
+  .ahead h2{font-size:17px;font-weight:700;margin-top:9px;letter-spacing:-.2px}
+  .ahead .addr{font-size:12.5px;color:#9FC2E0;margin-top:2px}
+  .prog{margin-top:13px}
+  .prog .ptop{display:flex;justify-content:space-between;font-size:11.5px;color:#9FC2E0;margin-bottom:6px}
+  .ptrack{height:7px;background:rgba(255,255,255,.15);border-radius:6px;overflow:hidden}
+  .pfill{height:100%;width:62%;background:linear-gradient(90deg,#2FB3E8,#3CDC7F);border-radius:6px}
+
+  .body{flex:1;overflow:auto;padding:14px}
+
+  /* Section list */
+  .sec{background:var(--card);border-radius:14px;padding:14px 15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 3px rgba(11,44,77,.05)}
+  .sicon{width:42px;height:42px;border-radius:11px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .sec .st{flex:1}
+  .sec .st b{font-size:14.5px;font-weight:650}
+  .sec .st small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .ring{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  .ring.done{background:var(--green);color:#fff}
+  .ring.part{background:conic-gradient(var(--blue) 60%,#E3EAF2 0);color:var(--blue-d)}
+  .ring.part i{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal}
+  .ring.todo{background:#EDF1F6;color:var(--muted)}
+
+  /* Item detail screen */
+  .ihead{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .back{font-size:20px;color:#9FC2E0}
+  .ihead .it{flex:1}
+  .ihead .it b{font-size:15.5px}
+  .ihead .it small{display:block;color:#9FC2E0;font-size:12px}
+
+  .field{background:#fff;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 1px 3px rgba(11,44,77,.05)}
+  .field h4{font-size:14px;font-weight:700;margin-bottom:11px}
+  .field h4 .req{color:var(--red)}
+  .toggles{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+  .tg{flex:1;min-width:90px;text-align:center;padding:9px 6px;border:1.5px solid var(--line);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--muted);background:#fff;cursor:pointer}
+  .tg.on{border-color:var(--blue);background:var(--blue-l);color:var(--blue-d)}
+
+  .ratings{display:flex;gap:8px;margin-top:4px}
+  .rate{padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid transparent}
+  .rate.main{background:#FDF1DC;color:#B97D17}
+  .rate.safety{background:#FBE6E3;color:#C0392B}
+  .rate.off{background:#fff;border-color:var(--line);color:var(--muted)}
+
+  .commentbox{position:relative}
+  .commentbox textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:11px;padding:12px;font-size:13px;font-family:inherit;resize:none;line-height:1.5;color:var(--text)}
+  .ai-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:linear-gradient(135deg,#7C3AED,#2FB3E8);color:#fff;border:0;padding:9px 14px;border-radius:10px;font-size:13px;font-weight:650;cursor:pointer;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+  .ai-hint{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+  /* photos */
+  .photos{display:flex;gap:9px;margin-top:4px}
+  .ph{width:64px;height:64px;border-radius:11px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+  .ph.add{background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:24px;border:1.5px dashed #9CCBE8;cursor:pointer}
+  .ph .tag{position:absolute;bottom:0;left:0;right:0;background:rgba(231,76,60,.9);color:#fff;font-size:8.5px;font-weight:700;text-align:center;padding:1px}
+
+  /* bottom nav */
+  .tabbar{height:62px;background:#fff;border-top:1px solid var(--line);display:flex;flex-shrink:0;padding-bottom:6px}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--muted);font-weight:600}
+  .tab.on{color:var(--blue)}
+  .tab .ti{font-size:18px}
+
+  @media(max-width:760px){.stage{gap:30px}.phone{transform:scale(.92)}}
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>InspectFlow — In the Field</h1>
+    <p>Offline-first mobile app · fast photo capture · AI comment assist · auto-sync</p>
+  </div>
+
+  <div class="stage">
+    <!-- SCREEN 1: Section list -->
+    <div>
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>● ● ● &nbsp; ⌶ &nbsp; 100%</span></div>
+      <div class="ahead">
+        <div class="row1"><span>‹ Inspections</span><span class="sync"><span class="dot"></span> All synced</span></div>
+        <h2>76 Riverside Dr</h2>
+        <div class="addr">Ortega, FL 32210 · Full Home + WDO</div>
+        <div class="prog">
+          <div class="ptop"><span>Inspection progress</span><span>8 / 13 sections</span></div>
+          <div class="ptrack"><div class="pfill"></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="sec"><div class="sicon">▲</div><div class="st"><b>Roof</b><small>3 items · 1 deficiency</small></div><div class="ring part"><i>!</i></div></div>
+        <div class="sec"><div class="sicon">▦</div><div class="st"><b>Exterior</b><small>6 items · complete</small></div><div class="ring done">✓</div></div>
+        <div class="sec"><div class="sicon">⌂</div><div class="st"><b>Garage</b><small>4 items · complete</small></div><div class="ring done">✓</div></div>
+        <div class="sec"><div class="sicon">☷</div><div class="st"><b>Interior</b><small>7 items · complete</small></div><div class="ring done">✓</div></div>
+        <div class="sec"><div class="sicon">⚡</div><div class="st"><b>Electrical</b><small>5 items · in progress</small></div><div class="ring part"><i>3</i></div></div>
+        <div class="sec"><div class="sicon">⚙</div><div class="st"><b>Plumbing</b><small>5 items · not started</small></div><div class="ring todo">—</div></div>
+        <div class="sec"><div class="sicon">❄</div><div class="st"><b>HVAC</b><small>4 items · not started</small></div><div class="ring todo">—</div></div>
+      </div>
+      <div class="tabbar">
+        <div class="tab on"><span class="ti">▤</span>Sections</div>
+        <div class="tab"><span class="ti">▦</span>Photos</div>
+        <div class="tab"><span class="ti">✦</span>Summary</div>
+        <div class="tab"><span class="ti">⤓</span>Sync</div>
+      </div>
+    </div></div>
+    <div class="label">Section checklist — tap any system to inspect</div>
+    </div>
+
+    <!-- SCREEN 2: Item detail -->
+    <div>
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>● ● ● &nbsp; ⌶ &nbsp; 100%</span></div>
+      <div class="ihead">
+        <span class="back">‹</span>
+        <div class="it"><b>Roof › Coverings</b><small>Asphalt shingle · 3-tab</small></div>
+      </div>
+      <div class="body">
+        <div class="field">
+          <h4>Condition <span class="req">*</span></h4>
+          <div class="toggles">
+            <div class="tg on">Inspected</div>
+            <div class="tg">Not Present</div>
+            <div class="tg">Not Inspected</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <h4>Rating</h4>
+          <div class="ratings">
+            <div class="rate main">⚠ Maintenance</div>
+            <div class="rate safety on">⛌ Safety</div>
+            <div class="rate off">✓ Serviceable</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <h4>Comment</h4>
+          <div class="commentbox">
+            <textarea>Several cracked and lifted shingles observed on the south-facing slope, with granule loss consistent with age. Exposed nail heads noted near the ridge. </textarea>
+            <button class="ai-btn">✨ AI Comment Assist</button>
+            <div class="ai-hint">AI rewrote your shorthand into buyer-friendly language and added a recommendation. <b>Tap to insert.</b></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <h4>Photos</h4>
+          <div class="photos">
+            <div class="ph" style="background:linear-gradient(135deg,#6b7a8d,#3a4856)"><div class="tag">DEFICIENCY</div></div>
+            <div class="ph" style="background:linear-gradient(135deg,#8a9aab,#5a6a7d)"></div>
+            <div class="ph add">＋</div>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab on"><span class="ti">▤</span>Sections</div>
+        <div class="tab"><span class="ti">▦</span>Photos</div>
+        <div class="tab"><span class="ti">✦</span>Summary</div>
+        <div class="tab"><span class="ti">⤓</span>Sync</div>
+      </div>
+    </div></div>
+    <div class="label">Item entry — condition, rating, AI comments & photos</div>
+    </div>
+  </div>
+
+<script>
+  document.querySelectorAll('.toggles').forEach(g=>g.addEventListener('click',e=>{
+    if(!e.target.classList.contains('tg'))return;
+    g.querySelector('.tg.on')?.classList.remove('on'); e.target.classList.add('on');
+  }));
+</script>
+</body>
+</html>
