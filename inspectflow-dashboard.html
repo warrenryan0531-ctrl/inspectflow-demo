@@ -133,6 +133,7 @@
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:#0B2C4D;color:#fff;padding:12px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:9px;z-index:130;box-shadow:0 10px 28px rgba(0,0,0,.3)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
+  @media(max-width:760px){.aigrid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
@@ -188,6 +189,42 @@
             <div class="chart" id="chart"></div>
           </div>
         </div>
+
+        <div class="card tablecard">
+          <h3>✨ AI Intelligence <span style="font-size:11px;font-weight:800;color:#fff;background:linear-gradient(120deg,#7C3AED,#2FB3E8);padding:2px 9px;border-radius:20px;margin-left:4px">AI</span></h3>
+          <div class="csub">Your platform working in the background</div>
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin-top:6px" class="aigrid">
+            <div onclick="location.href='inspectflow-ai-scheduler.html'" style="cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:16px;background:linear-gradient(160deg,rgba(124,58,237,.06),rgba(47,179,232,.06))">
+              <div style="font-size:12.5px;color:var(--muted);font-weight:600">AI Scheduling Agent</div>
+              <div style="font-size:21px;font-weight:800;margin:5px 0 2px">3 jobs booked today</div>
+              <div style="font-size:12.5px;color:#1E8E4E;font-weight:600">+$228 in AI upsells · 0 staff minutes</div>
+              <div style="font-size:12.5px;color:var(--blue);font-weight:700;margin-top:8px">View the agent live →</div>
+            </div>
+            <div style="border:1px solid var(--line);border-radius:12px;padding:16px">
+              <div style="font-size:12.5px;color:var(--muted);font-weight:600">Booking Forecast</div>
+              <div style="font-size:21px;font-weight:800;margin:5px 0 2px">48–56</div>
+              <div style="font-size:12.5px;color:var(--muted)">projected next month</div>
+              <div style="font-size:12px;color:#1E8E4E;font-weight:600;margin-top:8px">▲ on pace to beat last month</div>
+            </div>
+            <div style="border:1px solid var(--line);border-radius:12px;padding:16px">
+              <div style="font-size:12.5px;color:var(--muted);font-weight:600">Inspector QA Score</div>
+              <div style="margin-top:9px;font-size:13px;display:flex;justify-content:space-between;align-items:center"><span><span class="mini-av">RW</span>Ryan W.</span><b style="color:#1E8E4E">96</b></div>
+              <div style="margin-top:9px;font-size:13px;display:flex;justify-content:space-between;align-items:center"><span><span class="mini-av">DM</span>Dave M.</span><b style="color:#1E8E4E">92</b></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:7px;margin-top:16px;flex-wrap:wrap;align-items:center">
+            <div style="flex:1;min-width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:18px;font-weight:800">14</div><div style="font-size:10.5px;color:var(--muted);letter-spacing:.3px">LEADS</div></div>
+            <span style="color:#C2CFDD">→</span>
+            <div style="flex:1;min-width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:18px;font-weight:800">9</div><div style="font-size:10.5px;color:var(--muted);letter-spacing:.3px">BOOKED</div></div>
+            <span style="color:#C2CFDD">→</span>
+            <div style="flex:1;min-width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:18px;font-weight:800">42</div><div style="font-size:10.5px;color:var(--muted);letter-spacing:.3px">INSPECTED</div></div>
+            <span style="color:#C2CFDD">→</span>
+            <div style="flex:1;min-width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:18px;font-weight:800">40</div><div style="font-size:10.5px;color:var(--muted);letter-spacing:.3px">PAID</div></div>
+            <span style="color:#C2CFDD">→</span>
+            <div style="flex:1;min-width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:18px;font-weight:800">31</div><div style="font-size:10.5px;color:var(--muted);letter-spacing:.3px">REVIEWED</div></div>
+          </div>
+        </div>
+
         <div class="card tablecard">
           <span class="clink" onclick="go('inspections')">See all →</span>
           <h3>Recent Inspections</h3><div class="csub">Across all inspectors</div>
@@ -344,7 +381,7 @@ function openInsp(i){
   document.getElementById('dSub').textContent=it.city+' · '+it.type;
   document.getElementById('dBody').innerHTML='<div style="height:150px;border-radius:12px;margin-bottom:14px;background-image:linear-gradient(180deg,rgba(11,44,77,0),rgba(11,44,77,.35)),url(\'https://images.unsplash.com/photo-1720065609938-ec0e33ffd9ad?w=700&q=80&auto=format&fit=crop\');background-size:cover;background-position:center 60%"></div>'+[
     ['Client',it.client],['Inspector',it.insp],['Date',it.date+', 2026'],['Type',it.type],
-    ['Report status',it.status],['Payment',it.pay+' · '+it.fee],['Agreement','Signed'],['Booking source','Online widget']
+    ['Report status',it.status],['Payment',it.pay+' · '+it.fee],['Agreement','Signed'],['Booking source','AI Scheduling Agent']
   ].map(r=>'<div class="drow"><span class="k">'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
   document.getElementById('drawer').classList.add('show');
 }
@@ -363,7 +400,6 @@ function buildStatic(){
 
 function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); }
 function fakeSync(){ const a=document.getElementById('syncAgo'); a.textContent='saving…'; setTimeout(()=>a.textContent='just now',1200); }
-// drifting "synced X ago" for live feel
 let secs=0; setInterval(()=>{ secs+=5; const a=document.getElementById('syncAgo'); if(a.textContent!=='saving…') a.textContent=secs<60?secs+'s ago':'1m ago'; if(secs>=60)secs=0; },5000);
 
 buildStatic(); renderAll('');
