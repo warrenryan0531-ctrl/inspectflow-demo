@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InspectFlow — AI Scheduling Agent</title>
+<style>
+  :root{--navy:#0B2C4D; --blue:#1487C9; --cyan:#2FB3E8; --ice:#7FD3F5; --green:#27AE60; --purple:#7C3AED;
+    --bg:#EAF0F6; --line:#E7ECF2; --text:#1F2D3D; --muted:#8295AD;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(900px 500px at 50% -5%,#1b3a5c,#0B2C4D 70%);min-height:100vh;color:#fff;
+    padding:30px 20px;display:flex;flex-direction:column;align-items:center}
+  .head{text-align:center;margin-bottom:18px}
+  .head .badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(120deg,#7C3AED,#2FB3E8);padding:5px 13px;border-radius:30px;font-size:12px;font-weight:800;letter-spacing:.4px;margin-bottom:12px}
+  .head h1{font-size:23px;font-weight:800;letter-spacing:-.4px}
+  .head p{color:#9FC2E0;font-size:13.5px;margin-top:6px;max-width:560px}
+  .head .back{color:#7FD3F5;font-size:12.5px;text-decoration:none;display:inline-block;margin-top:10px}
+
+  .stage{display:flex;gap:34px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+
+  .phone{width:344px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 60px rgba(0,0,0,.45);flex-shrink:0}
+  .screen{background:var(--bg);border-radius:36px;overflow:hidden;height:712px;display:flex;flex-direction:column}
+  .notch{height:26px;position:relative}
+  .notch::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:24px;background:#000;border-radius:0 0 16px 16px}
+  .smshead{background:#fff;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:11px;flex-shrink:0}
+  .smshead .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#2FB3E8);display:flex;align-items:center;justify-content:center;font-size:18px}
+  .smshead .nm{font-weight:700;font-size:14.5px;color:var(--text)}
+  .smshead .nm small{display:block;color:var(--green);font-size:11.5px;font-weight:600}
+  .thread{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:9px;background:#EAF0F6}
+  .msg{max-width:78%;padding:10px 14px;border-radius:18px;font-size:13.5px;line-height:1.45;opacity:0;transform:translateY(8px);animation:pop .3s forwards}
+  @keyframes pop{to{opacity:1;transform:none}}
+  .msg.them{background:#fff;color:var(--text);align-self:flex-start;border-bottom-left-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .msg.me{background:linear-gradient(135deg,#1487C9,#2FB3E8);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+  .msg.ai{background:#fff;color:var(--text);align-self:flex-start;border-bottom-left-radius:5px;border-left:3px solid var(--purple);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .typing{align-self:flex-start;background:#fff;border-radius:18px;border-bottom-left-radius:5px;padding:12px 16px;display:flex;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .typing span{width:7px;height:7px;border-radius:50%;background:#B6C4D6;animation:bl 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes bl{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .banner{margin:6px 8px 0;background:#E6F7EE;border:1px solid #BBE8CC;color:#1E8E4E;border-radius:12px;padding:11px 14px;font-size:12.5px;font-weight:700;text-align:center;opacity:0;animation:pop .4s forwards}
+  .smsfoot{background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .smsfoot .ib{flex:1;background:#EEF2F6;border-radius:20px;padding:9px 14px;color:#9aa7b6;font-size:13px}
+  .smsfoot .snd{width:34px;height:34px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff}
+
+  .bts{width:330px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px;backdrop-filter:blur(6px)}
+  .bts h3{font-size:13px;font-weight:800;letter-spacing:.5px;color:var(--ice);text-transform:uppercase;margin-bottom:4px}
+  .bts .sub{font-size:12.5px;color:#9FC2E0;margin-bottom:16px}
+  .step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);opacity:.35;transition:.4s}
+  .step:last-child{border-bottom:0}
+  .step.on{opacity:1}
+  .step .ic{width:32px;height:32px;border-radius:9px;background:rgba(47,179,232,.18);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+  .step.on .ic{background:linear-gradient(135deg,#7C3AED,#2FB3E8)}
+  .step .tx b{font-size:13px;font-weight:700;display:block}
+  .step .tx small{font-size:12px;color:#9FC2E0}
+  .step .chk{margin-left:auto;color:var(--green);font-weight:800;opacity:0;align-self:center}
+  .step.done .chk{opacity:1}
+  .replay{margin-top:18px;width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;padding:11px;border-radius:11px;font-weight:700;font-size:13.5px;cursor:pointer}
+  .stat{margin-top:14px;text-align:center;font-size:12.5px;color:#7BE0A3;font-weight:700}
+  @media(max-width:740px){.bts{width:344px}}
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="badge">✨ AI SCHEDULING AGENT</div>
+    <h1>It books the job while you sleep.</h1>
+    <p>A real client texts your number. The AI agent looks up the property, checks live availability, suggests an upsell, books it, and sends the agreement &amp; payment link — with zero staff involved.</p>
+    <a class="back" href="index.html">← Back to demo hub</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="smshead">
+        <div class="av">🏠</div>
+        <div class="nm">InspectFlow Agent<small>● Online · replies instantly</small></div>
+      </div>
+      <div class="thread" id="thread"></div>
+      <div class="smsfoot"><div class="ib">Text message…</div><div class="snd">➤</div></div>
+    </div></div>
+
+    <div class="bts">
+      <h3>Behind the scenes</h3>
+      <div class="sub">What the AI does on each message — autonomously.</div>
+      <div class="step" data-step="0"><div class="ic">🔎</div><div class="tx"><b>Property lookup</b><small>Pulls sq ft, year built, type</small></div><span class="chk">✓</span></div>
+      <div class="step" data-step="1"><div class="ic">📅</div><div class="tx"><b>Availability + travel time</b><small>Across all inspectors</small></div><span class="chk">✓</span></div>
+      <div class="step" data-step="2"><div class="ic">💡</div><div class="tx"><b>Upsell from property data</b><small>Suggests the right add-on</small></div><span class="chk">✓</span></div>
+      <div class="step" data-step="3"><div class="ic">📝</div><div class="tx"><b>Creates inspection</b><small>Books &amp; assigns inspector</small></div><span class="chk">✓</span></div>
+      <div class="step" data-step="4"><div class="ic">✉️</div><div class="tx"><b>Sends agreement + payment</b><small>E-sign &amp; secure pay link</small></div><span class="chk">✓</span></div>
+      <button class="replay" onclick="play()">↺ Replay conversation</button>
+      <div class="stat" id="stat"></div>
+    </div>
+  </div>
+
+<script>
+const T=document.getElementById('thread');
+const script=[
+ {who:'them',t:"Hi! Do you have any openings this week for a home inspection? Buying a place at 1428 Magnolia Ave, Jacksonville.",d:500},
+ {who:'ai',step:0,t:"Hi, congrats on the new home! 🏠 I found 1428 Magnolia Ave — single-family, ~1,950 sq ft, built 1996. Is that the one?",d:1500},
+ {who:'them',t:"Yes, that's it!",d:1100},
+ {who:'ai',step:1,t:"Perfect. A home that size runs about 3 hours. I have these openings this week:\n• Wed 8:00 AM\n• Thu 11:30 AM\n• Fri 2:00 PM",d:1700},
+ {who:'them',t:"Thursday works great",d:1100},
+ {who:'ai',step:2,t:"Booked you tentatively for Thu 11:30 AM with Ryan. 💡 Quick tip — homes in this area often have aging sewer lines. Want to add a sewer scope (+$150)? It catches costly surprises before closing.",d:1900},
+ {who:'them',t:"Yeah let's add that",d:1000},
+ {who:'ai',step:3,t:"Done! ✅ Thursday 11:30 AM — Full Home + Sewer Scope, $740.",d:1400},
+ {who:'ai',step:4,t:"I've just texted you the inspection agreement to e-sign and a secure payment link. Anything else I can help with?",d:1500},
+ {who:'them',t:"Nope, that's everything. Thank you!",d:1100},
+ {who:'ai',t:"You're all set — see you Thursday at 11:30. 🔑",d:1300},
+];
+let timer=null;
+function clearAll(){T.innerHTML='';document.querySelectorAll('.step').forEach(s=>s.classList.remove('on','done'));document.getElementById('stat').textContent='';}
+function addTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<span></span><span></span><span></span>';T.appendChild(d);T.scrollTop=T.scrollHeight;}
+function rmTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+function lightStep(i){const s=document.querySelector('.step[data-step="'+i+'"]');if(s){s.classList.add('on');setTimeout(()=>s.classList.add('done'),700);}}
+function play(){
+  clearTimeout(timer);clearAll();let i=0;
+  const next=()=>{
+    if(i>=script.length){
+      const b=document.createElement('div');b.className='banner';b.textContent='✓ Booked autonomously — 0 minutes of staff time';T.appendChild(b);T.scrollTop=T.scrollHeight;
+      document.getElementById('stat').textContent='Avg. $76 more per inspection from AI upsells.';return;
+    }
+    const m=script[i];
+    if(m.who==='them'){
+      const d=document.createElement('div');d.className='msg them';d.textContent=m.t;T.appendChild(d);T.scrollTop=T.scrollHeight;i++;timer=setTimeout(next,m.d);
+    } else {
+      addTyping();
+      timer=setTimeout(()=>{
+        rmTyping();
+        if(typeof m.step==='number')lightStep(m.step);
+        const d=document.createElement('div');d.className='msg ai';d.style.whiteSpace='pre-line';d.textContent=m.t;T.appendChild(d);T.scrollTop=T.scrollHeight;i++;timer=setTimeout(next,m.d);
+      },900);
+    }
+  };
+  next();
+}
+play();
+</script>
+</body>
+</html>
