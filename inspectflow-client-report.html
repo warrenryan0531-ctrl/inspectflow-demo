@@ -13,23 +13,22 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 
-  /* sticky report toolbar */
-  .toolbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:11px 22px}
+  .toolbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:11px 22px;flex-wrap:wrap}
   .toolbar .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:-.3px}
   .toolbar .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#2FB3E8);display:flex;align-items:center;justify-content:center;color:#fff}
   .toolbar .brand span{color:var(--blue)}
+  .toolbar .home{font-size:12.5px;color:var(--muted);text-decoration:none;margin-left:4px}
   .toolbar .sp{flex:1}
   .tb-btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:9px 14px;border-radius:9px;font-weight:600;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .tb-btn:hover{background:var(--bg)}
   .tb-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
   .tb-btn.repair{background:var(--green);border-color:var(--green);color:#fff}
+  .tb-btn.repair.active{background:var(--red);border-color:var(--red)}
 
-  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 80px}
 
-  /* hero */
   .hero{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(11,44,77,.12);background:#fff}
-  .hero .img{height:230px;background:
-    linear-gradient(180deg,rgba(11,44,77,.05),rgba(11,44,77,.55)),
-    linear-gradient(135deg,#6FA8CE,#356d99 60%,#274d6e);position:relative}
+  .hero .img{height:230px;background:linear-gradient(180deg,rgba(11,44,77,.05),rgba(11,44,77,.55)),linear-gradient(135deg,#6FA8CE,#356d99 60%,#274d6e);position:relative}
   .hero .img .house{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;color:rgba(255,255,255,.25)}
   .hero .badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.92);color:var(--navy);font-weight:700;font-size:12px;padding:6px 12px;border-radius:20px}
   .hero .ov{position:absolute;bottom:16px;left:20px;right:20px;color:#fff}
@@ -40,12 +39,12 @@
   .hero .meta .k{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:600}
   .hero .meta .v{font-size:14px;font-weight:650;margin-top:3px}
 
-  /* summary */
   .sumcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:22px}
   .sumcard h2{font-size:17px;font-weight:700;margin-bottom:4px}
   .sumcard .s2{font-size:13px;color:var(--muted);margin-bottom:18px}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .stat{border-radius:13px;padding:16px;color:#fff;position:relative;overflow:hidden}
+  .stat{border-radius:13px;padding:16px;color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:transform .12s}
+  .stat:hover{transform:translateY(-3px)}
   .stat.safety{background:linear-gradient(135deg,#E74C3C,#c0392b)}
   .stat.repair{background:linear-gradient(135deg,#F2A93B,#dd8e1c)}
   .stat.maint{background:linear-gradient(135deg,#1487C9,#0F6FA8)}
@@ -53,18 +52,16 @@
   .stat .t{font-size:13px;font-weight:600;opacity:.95}
   .stat .i{position:absolute;right:12px;top:10px;font-size:30px;opacity:.3}
 
-  /* filter pills */
   .pills{display:flex;gap:9px;margin-top:24px;flex-wrap:wrap}
-  .pill{padding:8px 15px;border-radius:22px;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+  .pill{padding:8px 15px;border-radius:22px;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;transition:.12s}
   .pill.on{background:var(--navy);border-color:var(--navy);color:#fff}
   .pill .c{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
   .pill .c.r{background:var(--red)}.pill .c.a{background:var(--amber)}.pill .c.b{background:var(--blue)}
 
-  /* report items */
   .section-h{margin:30px 0 12px;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
   .section-h .si{width:34px;height:34px;border-radius:9px;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center}
 
-  .item{background:#fff;border:1px solid var(--line);border-left-width:5px;border-radius:13px;padding:18px 20px;margin-bottom:15px}
+  .item{background:#fff;border:1px solid var(--line);border-left-width:5px;border-radius:13px;padding:18px 20px;margin-bottom:15px;position:relative}
   .item.safety{border-left-color:var(--red)}
   .item.repair{border-left-color:var(--amber)}
   .item.maint{border-left-color:var(--blue)}
@@ -79,10 +76,14 @@
   .item .rec{background:#F6F9FC;border:1px solid var(--line);border-radius:9px;padding:10px 13px;font-size:13px;margin-bottom:13px}
   .item .rec b{color:var(--navy)}
   .imgs{display:flex;gap:10px;flex-wrap:wrap}
-  .imgs .pic{width:130px;height:96px;border-radius:9px;background-size:cover;position:relative;overflow:hidden}
+  .imgs .pic{width:130px;height:96px;border-radius:9px;background-size:cover;position:relative;overflow:hidden;cursor:zoom-in}
   .imgs .pic .cap{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:9.5px;text-align:center;padding:2px}
+  .selbox{position:absolute;top:14px;right:16px;width:24px;height:24px;border:2px solid var(--line);border-radius:7px;display:none;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:14px;color:#fff}
+  body.selecting .selbox{display:flex}
+  body.selecting .item{cursor:pointer}
+  .item.picked{border-color:var(--green);box-shadow:0 0 0 2px rgba(39,174,96,.25)}
+  .item.picked .selbox{background:var(--green);border-color:var(--green)}
 
-  /* repair request callout */
   .cta{margin-top:30px;background:linear-gradient(135deg,#0B2C4D,#13507f);border-radius:16px;padding:26px;color:#fff;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
   .cta .txt{flex:1;min-width:240px}
   .cta h3{font-size:18px;font-weight:700}
@@ -90,27 +91,60 @@
   .cta button{background:var(--green);color:#fff;border:0;padding:13px 22px;border-radius:11px;font-weight:700;font-size:14.5px;cursor:pointer;white-space:nowrap}
 
   .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;line-height:1.7}
+
+  .selbar{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(40px);background:#0B2C4D;color:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 12px 30px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:60}
+  .selbar.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .selbar b{font-size:14px}
+  .selbar .gen{background:var(--green);border:0;color:#fff;padding:9px 16px;border-radius:9px;font-weight:700;cursor:pointer}
+  .selbar .cx{background:transparent;border:0;color:#9FC2E0;cursor:pointer;font-size:13px}
+
+  .overlay{position:fixed;inset:0;background:rgba(11,28,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:16px;max-width:620px;width:100%;max-height:86vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+  .modal .mh{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff}
+  .modal .mh h3{font-size:17px;font-weight:700}
+  .modal .mh .x{border:0;background:var(--bg);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px}
+  .modal .mb{padding:22px 24px}
+  .rr-meta{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .rr-item{padding:13px 0;border-bottom:1px solid var(--line)}
+  .rr-item b{font-size:14px}
+  .rr-item .rt{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:5px;margin-left:8px}
+  .rr-item p{font-size:13px;color:#445; margin-top:5px}
+  .modal .mf{padding:16px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:#fff}
+  .modal .mf button{padding:11px 18px;border-radius:9px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--line);background:#fff}
+  .modal .mf .send{background:var(--blue);border-color:var(--blue);color:#fff}
+
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:120;cursor:zoom-out}
+  .lightbox.show{display:flex}
+  .lightbox .lb{width:min(80vw,640px);height:min(60vh,460px);border-radius:14px;background-size:cover;background-position:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);background:#0B2C4D;color:#fff;padding:12px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;display:flex;align-items:center;gap:9px;z-index:130;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .tdot{width:8px;height:8px;border-radius:50%;background:#3CDC7F}
+
+  @media print{
+    .toolbar,.pills,.cta,.selbar,.selbox{display:none!important}
+    body{background:#fff} .wrap{max-width:100%}
+    .item{break-inside:avoid;box-shadow:none}
+  }
 </style>
 </head>
 <body>
   <div class="toolbar">
     <div class="brand"><span class="mark">◧</span>Inspect<span>Flow</span></div>
+    <a class="home" href="index.html">← hub</a>
     <div class="sp"></div>
-    <button class="tb-btn">⤓ Download PDF</button>
-    <button class="tb-btn repair">🛠 Create Repair Request</button>
-    <button class="tb-btn primary">Share</button>
+    <button class="tb-btn" onclick="downloadPDF()">⤓ Download PDF</button>
+    <button class="tb-btn repair" id="repairToggle" onclick="toggleSelect()">🛠 Create Repair Request</button>
+    <button class="tb-btn primary" onclick="shareReport()">Share</button>
   </div>
 
   <div class="wrap">
-    <!-- HERO -->
     <div class="hero">
       <div class="img">
         <div class="house">⌂</div>
         <div class="badge">✓ INSPECTION COMPLETE</div>
-        <div class="ov">
-          <h1>1428 Magnolia Avenue</h1>
-          <p>Jacksonville, FL 32205 · Single Family · Built 1996</p>
-        </div>
+        <div class="ov"><h1>1428 Magnolia Avenue</h1><p>Jacksonville, FL 32205 · Single Family · Built 1996</p></div>
       </div>
       <div class="meta">
         <div><div class="k">Inspected</div><div class="v">Jun 25, 2026</div></div>
@@ -120,89 +154,118 @@
       </div>
     </div>
 
-    <!-- SUMMARY -->
     <div class="sumcard">
       <h2>Report Summary</h2>
-      <div class="s2">37 items inspected · 8 findings flagged for your attention</div>
+      <div class="s2">37 items inspected · <span id="findCount">8</span> findings flagged for your attention</div>
       <div class="stats">
-        <div class="stat safety"><div class="i">⛌</div><div class="n">2</div><div class="t">Safety Concerns</div></div>
-        <div class="stat repair"><div class="i">🛠</div><div class="n">4</div><div class="t">Repairs Recommended</div></div>
-        <div class="stat maint"><div class="i">⚙</div><div class="n">2</div><div class="t">Maintenance Items</div></div>
+        <div class="stat safety" onclick="setFilter('safety')"><div class="i">⛌</div><div class="n">2</div><div class="t">Safety Concerns</div></div>
+        <div class="stat repair" onclick="setFilter('repair')"><div class="i">🛠</div><div class="n">4</div><div class="t">Repairs Recommended</div></div>
+        <div class="stat maint" onclick="setFilter('maint')"><div class="i">⚙</div><div class="n">2</div><div class="t">Maintenance Items</div></div>
       </div>
-
-      <div class="pills">
-        <div class="pill on">All findings</div>
-        <div class="pill"><span class="c r"></span>Safety</div>
-        <div class="pill"><span class="c a"></span>Repair</div>
-        <div class="pill"><span class="c b"></span>Maintenance</div>
-      </div>
-    </div>
-
-    <!-- ROOF SECTION -->
-    <div class="section-h"><span class="si">▲</span>Roof</div>
-
-    <div class="item safety">
-      <div class="top"><h3>Roof Coverings — Cracked & Lifted Shingles</h3><span class="tagb safety">Safety</span><span class="loc">South slope</span></div>
-      <p>Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with age. Exposed nail heads were noted near the ridge, which can allow water intrusion over time.</p>
-      <div class="rec"><b>Recommendation:</b> Have a licensed roofing contractor evaluate and repair the affected areas to prevent leaks. Budget for full replacement may be appropriate given the roof's age.</div>
-      <div class="imgs">
-        <div class="pic" style="background:linear-gradient(135deg,#6b7a8d,#3a4856)"><div class="cap">Lifted shingles — S slope</div></div>
-        <div class="pic" style="background:linear-gradient(135deg,#7e8c9b,#4a5868)"><div class="cap">Exposed nails at ridge</div></div>
+      <div class="pills" id="pills">
+        <div class="pill on" data-f="all" onclick="setFilter('all')">All findings</div>
+        <div class="pill" data-f="safety" onclick="setFilter('safety')"><span class="c r"></span>Safety</div>
+        <div class="pill" data-f="repair" onclick="setFilter('repair')"><span class="c a"></span>Repair</div>
+        <div class="pill" data-f="maint" onclick="setFilter('maint')"><span class="c b"></span>Maintenance</div>
       </div>
     </div>
 
-    <!-- ELECTRICAL -->
-    <div class="section-h"><span class="si">⚡</span>Electrical</div>
+    <div id="reportBody"></div>
 
-    <div class="item safety">
-      <div class="top"><h3>Service Panel — Double-Tapped Breaker</h3><span class="tagb safety">Safety</span><span class="loc">Garage panel</span></div>
-      <p>A double-tapped breaker was found in the main service panel. Two conductors are connected to a single breaker not rated for it, which is a potential fire hazard.</p>
-      <div class="rec"><b>Recommendation:</b> A licensed electrician should correct the connection to manufacturer specifications.</div>
-      <div class="imgs"><div class="pic" style="background:linear-gradient(135deg,#5a6675,#2f3947)"><div class="cap">Double-tap — breaker 14</div></div></div>
-    </div>
-
-    <div class="item repair">
-      <div class="top"><h3>Bathroom GFCI — Not Tripping</h3><span class="tagb repair">Repair</span><span class="loc">Hall bath</span></div>
-      <p>The GFCI outlet adjacent to the sink did not trip when tested. GFCI protection is important near water sources.</p>
-      <div class="rec"><b>Recommendation:</b> Replace the non-functioning GFCI outlet.</div>
-      <div class="imgs"><div class="pic" style="background:linear-gradient(135deg,#8a9aab,#5a6a7d)"><div class="cap">Hall bath GFCI</div></div></div>
-    </div>
-
-    <!-- PLUMBING -->
-    <div class="section-h"><span class="si">⚙</span>Plumbing</div>
-
-    <div class="item repair">
-      <div class="top"><h3>Water Heater — Missing Drain Pan</h3><span class="tagb repair">Repair</span><span class="loc">Utility closet</span></div>
-      <p>The water heater is installed without a drain pan. A failure could allow water to damage surrounding flooring and walls.</p>
-      <div class="rec"><b>Recommendation:</b> Install a drain pan with a drain line routed to an appropriate location.</div>
-      <div class="imgs"><div class="pic" style="background:linear-gradient(135deg,#79899a,#48586a)"><div class="cap">No pan under heater</div></div></div>
-    </div>
-
-    <div class="item maint">
-      <div class="top"><h3>Exterior Hose Bib — Minor Drip</h3><span class="tagb maint">Maintenance</span><span class="loc">Rear of home</span></div>
-      <p>A slow drip was noted at the rear exterior hose bib. A routine maintenance item that is inexpensive to address.</p>
-      <div class="rec"><b>Recommendation:</b> Replace the washer or valve as part of routine upkeep.</div>
-    </div>
-
-    <!-- REPAIR REQUEST CTA -->
     <div class="cta">
-      <div class="txt">
-        <h3>Building a repair request list?</h3>
-        <p>Select any findings above and InspectFlow generates a clean repair request document you can send straight to your agent — no retyping.</p>
-      </div>
-      <button>🛠 Build Repair Request →</button>
+      <div class="txt"><h3>Building a repair request list?</h3>
+        <p>Tap "Create Repair Request" up top, check the findings you want, and InspectFlow generates a clean request document to send to your agent — no retyping.</p></div>
+      <button onclick="toggleSelect()">🛠 Build Repair Request →</button>
     </div>
 
-    <div class="foot">
-      This report was prepared by Ryan Warren, FL HI-12847, using InspectFlow.<br>
-      Interactive report · Web + PDF · Delivered same day · © 2026 InspectFlow
+    <div class="foot">Prepared by Ryan Warren, FL HI-12847, using InspectFlow.<br>Interactive report · Web + PDF · Delivered same day · © 2026 InspectFlow</div>
+  </div>
+
+  <div class="selbar" id="selbar">
+    <b><span id="selCount">0</span> selected</b>
+    <button class="gen" onclick="generateRR()">Generate request →</button>
+    <button class="cx" onclick="toggleSelect()">Cancel</button>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="mh"><h3>Repair Request</h3><button class="x" onclick="closeModal()">✕</button></div>
+      <div class="mb" id="modalBody"></div>
+      <div class="mf"><button onclick="copyRR()">Copy text</button><button class="send" onclick="sendRR()">Send to agent</button></div>
     </div>
   </div>
 
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()"><div class="lb" id="lbImg"></div></div>
+  <div class="toast" id="toast"><span class="tdot"></span><span id="toastText"></span></div>
+
 <script>
-  document.querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{
-    document.querySelector('.pill.on').classList.remove('on'); p.classList.add('on');
-  }));
+const FINDINGS=[
+  {sec:'Roof',icon:'▲',cls:'safety',tag:'Safety',title:'Roof Coverings — Cracked & Lifted Shingles',loc:'South slope',
+   text:"Several cracked and lifted asphalt shingles were observed on the south-facing slope, with granule loss consistent with age. Exposed nail heads were noted near the ridge, which can allow water intrusion over time.",
+   rec:"Have a licensed roofing contractor evaluate and repair the affected areas to prevent leaks. Budget for full replacement may be appropriate given the roof's age.",
+   pics:[{g:'135deg,#6b7a8d,#3a4856',c:'Lifted shingles — S slope'},{g:'135deg,#7e8c9b,#4a5868',c:'Exposed nails at ridge'}]},
+  {sec:'Electrical',icon:'⚡',cls:'safety',tag:'Safety',title:'Service Panel — Double-Tapped Breaker',loc:'Garage panel',
+   text:"A double-tapped breaker was found in the main service panel. Two conductors are connected to a single breaker not rated for it, which is a potential fire hazard.",
+   rec:"A licensed electrician should correct the connection to manufacturer specifications.",
+   pics:[{g:'135deg,#5a6675,#2f3947',c:'Double-tap — breaker 14'}]},
+  {sec:'Electrical',icon:'⚡',cls:'repair',tag:'Repair',title:'Bathroom GFCI — Not Tripping',loc:'Hall bath',
+   text:"The GFCI outlet adjacent to the sink did not trip when tested. GFCI protection is important near water sources.",
+   rec:"Replace the non-functioning GFCI outlet.",
+   pics:[{g:'135deg,#8a9aab,#5a6a7d',c:'Hall bath GFCI'}]},
+  {sec:'Plumbing',icon:'⚙',cls:'repair',tag:'Repair',title:'Water Heater — Missing Drain Pan',loc:'Utility closet',
+   text:"The water heater is installed without a drain pan. A failure could allow water to damage surrounding flooring and walls.",
+   rec:"Install a drain pan with a drain line routed to an appropriate location.",
+   pics:[{g:'135deg,#79899a,#48586a',c:'No pan under heater'}]},
+  {sec:'Plumbing',icon:'⚙',cls:'maint',tag:'Maintenance',title:'Exterior Hose Bib — Minor Drip',loc:'Rear of home',
+   text:"A slow drip was noted at the rear exterior hose bib. A routine maintenance item that is inexpensive to address.",
+   rec:"Replace the washer or valve as part of routine upkeep.",pics:[]},
+];
+let filter='all', selecting=false, picked=new Set();
+
+function render(){
+  const body=document.getElementById('reportBody'); body.innerHTML='';
+  let lastSec=null;
+  FINDINGS.forEach((f,idx)=>{
+    if(filter!=='all' && f.cls!==filter) return;
+    if(f.sec!==lastSec){ const h=document.createElement('div'); h.className='section-h'; h.innerHTML='<span class="si">'+f.icon+'</span>'+f.sec; body.appendChild(h); lastSec=f.sec; }
+    const it=document.createElement('div'); it.className='item '+f.cls+(picked.has(idx)?' picked':''); it.dataset.idx=idx;
+    it.innerHTML='<div class="selbox">'+(picked.has(idx)?'✓':'')+'</div>'+
+      '<div class="top"><h3>'+f.title+'</h3><span class="tagb '+f.cls+'">'+f.tag+'</span><span class="loc">'+f.loc+'</span></div>'+
+      '<p>'+f.text+'</p><div class="rec"><b>Recommendation:</b> '+f.rec+'</div>'+
+      (f.pics.length?'<div class="imgs">'+f.pics.map(p=>'<div class="pic" style="background:linear-gradient('+p.g+')" onclick="openLightbox(event,\''+p.g+'\')"><div class="cap">'+p.c+'</div></div>').join('')+'</div>':'');
+    it.addEventListener('click',e=>{ if(!selecting)return; if(e.target.closest('.pic'))return; togglePick(idx); });
+    body.appendChild(it);
+  });
+}
+function setFilter(f){ filter=f; document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.dataset.f===f)); render(); }
+function toggleSelect(){
+  selecting=!selecting; document.body.classList.toggle('selecting',selecting);
+  document.getElementById('repairToggle').classList.toggle('active',selecting);
+  document.getElementById('repairToggle').innerHTML=selecting?'✕ Done selecting':'🛠 Create Repair Request';
+  if(!selecting){picked.clear();}
+  if(selecting){filter='all';document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('on',p.dataset.f==='all'));}
+  render(); updateSelbar();
+}
+function togglePick(idx){ picked.has(idx)?picked.delete(idx):picked.add(idx); render(); updateSelbar(); }
+function updateSelbar(){ const b=document.getElementById('selbar'); document.getElementById('selCount').textContent=picked.size; b.classList.toggle('show',selecting&&picked.size>0); }
+function generateRR(){
+  const items=[...picked].sort().map(i=>FINDINGS[i]);
+  const mb=document.getElementById('modalBody');
+  const color={safety:'#FBE6E3;color:#c0392b',repair:'#FDF1DC;color:#B97D17',maint:'#E3F1FB;color:#0F6FA8'};
+  mb.innerHTML='<div class="rr-meta"><b>1428 Magnolia Avenue</b>, Jacksonville, FL 32205<br>Prepared for Sarah Mitchell · '+items.length+' item'+(items.length>1?'s':'')+' requested · Jun 25, 2026</div>'+
+    items.map(f=>'<div class="rr-item"><b>'+f.title.split('—')[0].trim()+'</b><span class="rt" style="background:'+color[f.cls]+'">'+f.tag+'</span><p>'+f.rec+'</p></div>').join('');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); }
+function copyRR(){ toast('📋 Repair request copied to clipboard'); }
+function sendRR(){ closeModal(); fakeBusy('Sending to agent…',()=>{ toast('✅ Repair request sent to agent'); toggleSelect(); }); }
+function downloadPDF(){ fakeBusy('Generating PDF…',()=>{ toast('⤓ PDF ready'); window.print(); }); }
+function shareReport(){ fakeBusy('Creating share link…',()=>toast('🔗 Share link copied · expires in 30 days')); }
+function openLightbox(e,g){ e.stopPropagation(); document.getElementById('lbImg').style.background='linear-gradient('+g+')'; document.getElementById('lightbox').classList.add('show'); }
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('show'); }
+function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2200); }
+function fakeBusy(msg,cb){ toast('⏳ '+msg); setTimeout(cb,1100); }
+render();
 </script>
 </body>
 </html>
