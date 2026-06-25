@@ -19,25 +19,24 @@
   .ico{width:18px;height:18px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
   /* Sidebar */
-  .sidebar{width:240px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0}
-  .brand{display:flex;align-items:center;gap:11px;padding:20px 22px;font-size:19px;font-weight:800;letter-spacing:-.5px}
+  .sidebar{width:236px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0}
+  .brand{display:flex;align-items:center;gap:11px;padding:18px 20px;font-size:19px;font-weight:800;letter-spacing:-.5px;border-bottom:1px solid var(--line)}
   .brand .mark{width:32px;height:32px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;color:#06101f;box-shadow:0 6px 18px rgba(59,158,255,.35)}
   .brand span{color:var(--cyan)}
-  .nav{padding:12px 12px;flex:1;overflow:auto}
-  .nav .lbl{font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2);padding:14px 12px 6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:550;margin-bottom:2px;cursor:pointer;transition:.15s}
+  .nav{padding:10px 12px;flex:1;overflow:auto}
+  .nav::-webkit-scrollbar{width:6px}.nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+  .nav .lbl{font-size:10px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted2);padding:13px 12px 5px}
+  .nav a{display:flex;align-items:center;gap:11px;padding:9px 13px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:550;margin-bottom:1px;cursor:pointer;transition:.15s}
   .nav a:hover{background:rgba(255,255,255,.04);color:var(--text)}
   .nav a.active{background:linear-gradient(120deg,rgba(59,158,255,.18),rgba(57,194,255,.10));color:#fff;box-shadow:inset 0 0 0 1px rgba(59,158,255,.25)}
   .nav a.active .ico{stroke:var(--cyan)}
-  .upgrade{margin:10px 12px;padding:15px;background:linear-gradient(160deg,rgba(167,139,250,.14),rgba(59,158,255,.08));border:1px solid var(--line);border-radius:14px;font-size:12.5px;color:var(--muted)}
-  .upgrade b{color:#fff;display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:13px}
-  .upgrade button{margin-top:11px;width:100%;border:0;background:var(--grad);color:#06101f;padding:9px;border-radius:9px;font-weight:700;cursor:pointer}
-  .hublink{display:block;padding:12px 22px;color:var(--muted2);font-size:12.5px;text-decoration:none;border-top:1px solid var(--line)}
+  .nav a .ct{margin-left:auto;font-size:10.5px;font-weight:800;background:rgba(248,113,113,.2);color:#FCA5A5;padding:1px 7px;border-radius:20px}
+  .hublink{display:block;padding:11px 20px;color:var(--muted2);font-size:12.5px;text-decoration:none;border-top:1px solid var(--line)}
   .hublink:hover{color:var(--cyan)}
 
   /* Main */
   .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-  .topbar{height:64px;background:rgba(12,19,34,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;gap:16px;flex-shrink:0}
+  .topbar{height:62px;background:rgba(12,19,34,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:14px;flex-shrink:0}
   .search{flex:1;max-width:440px;position:relative;display:flex;align-items:center}
   .search .ico{position:absolute;left:13px;color:var(--muted2);width:17px;height:17px}
   .search input{width:100%;padding:10px 14px 10px 40px;border:1px solid var(--line);border-radius:11px;background:var(--card2);font-size:14px;color:var(--text)}
@@ -47,10 +46,10 @@
   .live{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:600}
   .live .ld{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.5);animation:lp 2s infinite}
   @keyframes lp{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 7px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
-  .btn-primary{background:var(--grad);color:#06101f;border:0;padding:10px 16px;border-radius:11px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 6px 18px rgba(59,158,255,.3)}
+  .btn-primary{background:var(--grad);color:#06101f;border:0;padding:10px 15px;border-radius:11px;font-weight:700;font-size:13.5px;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 6px 18px rgba(59,158,255,.3)}
   .btn-primary:hover{filter:brightness(1.06)}
   .icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--card2);cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center}
-  .icon-btn:hover{color:var(--text);border-color:var(--line2)}
+  .icon-btn:hover{color:var(--text)}
   .avatar{width:40px;height:40px;border-radius:50%;background:var(--grad);color:#06101f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
 
   .content{flex:1;overflow:auto;padding:26px 30px}
@@ -93,6 +92,7 @@
   .chip.green{background:rgba(52,211,153,.16);color:#4FE0AE}
   .chip.amber{background:rgba(251,191,36,.16);color:#FCD34D}
   .chip.gray{background:rgba(255,255,255,.08);color:#9FB0CC}
+  .chip.red{background:rgba(248,113,113,.18);color:#FCA5A5}
 
   .chart{display:flex;align-items:flex-end;gap:12px;height:140px;margin-top:8px;padding-top:10px}
   .chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
@@ -113,6 +113,8 @@
   .listrow:last-child{border-bottom:0}
   .listrow .nm{flex:1}
   .listrow .nm b{font-size:14px;font-weight:650}.listrow .nm small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .minibtn{background:var(--card2);border:1px solid var(--line);color:var(--text);padding:7px 13px;border-radius:9px;font-size:12.5px;font-weight:650;cursor:pointer}
+  .minibtn:hover{border-color:var(--line2)}
 
   /* AI intelligence */
   .aigrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin-top:8px}
@@ -128,20 +130,50 @@
   .pipe .seg .l{font-size:10px;color:var(--muted2);letter-spacing:.4px;margin-top:2px}
   .pipe .arr{color:var(--muted2)}
 
+  /* template editor */
+  .tpl3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:18px;min-height:440px}
+  .tplcol{border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .tplcol:last-child{border-right:0}
+  .tplcol .ch{padding:13px 16px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted2);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:var(--card2)}
+  .tplcol .ch .add{color:var(--cyan);cursor:pointer;font-size:12px}
+  .tplbody{padding:8px;overflow:auto;flex:1}
+  .tplrow{padding:10px 12px;border-radius:9px;font-size:13.5px;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)}
+  .tplrow:hover{background:rgba(255,255,255,.04)}
+  .tplrow.on{background:linear-gradient(120deg,rgba(59,158,255,.16),rgba(57,194,255,.08));box-shadow:inset 0 0 0 1px rgba(59,158,255,.25)}
+  .tplrow .cnt{margin-left:auto;font-size:11px;color:var(--muted2)}
+  .cmt{padding:11px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:var(--card2)}
+  .cmt .ct{font-size:13px}
+  .cmt .rt{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:2px 7px;border-radius:5px;margin-top:7px;display:inline-block}
+  .rt.info{background:rgba(255,255,255,.08);color:#9FB0CC}
+  .rt.safety{background:rgba(248,113,113,.18);color:#FCA5A5}
+  .rt.repair{background:rgba(251,191,36,.16);color:#FCD34D}
+  .rt.maint{background:rgba(59,158,255,.16);color:#7DC0FF}
+
+  /* integrations */
+  .intgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media(max-width:820px){.intgrid{grid-template-columns:1fr 1fr}}
+  .intcard{border:1px solid var(--line);border-radius:13px;padding:16px;background:var(--card)}
+  .intcard .nm{font-weight:700;font-size:14px}
+  .intcard .ds{font-size:12px;color:var(--muted);margin:4px 0 12px}
+
   /* modal */
   .overlay{position:fixed;inset:0;background:rgba(4,9,18,.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
   .overlay.show{display:flex}
-  .modal{background:var(--card);border:1px solid var(--line2);border-radius:18px;max-width:520px;width:100%;box-shadow:0 40px 90px rgba(0,0,0,.6);overflow:hidden}
-  .modal .mh{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+  .modal{background:var(--card);border:1px solid var(--line2);border-radius:18px;max-width:560px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 40px 90px rgba(0,0,0,.6)}
+  .modal .mh{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card)}
   .modal .mh h3{font-size:17px;font-weight:750}
   .modal .mh .x{border:0;background:var(--card2);width:32px;height:32px;border-radius:9px;cursor:pointer;color:var(--muted);font-size:16px}
-  .modal .mb{padding:20px 22px}
-  .fld{margin-bottom:14px}
-  .fld label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
-  .fld input,.fld select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;background:var(--card2);color:var(--text)}
+  .modal .mb{padding:18px 22px}
+  .mlbl{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted2);margin:16px 0 8px}
+  .mlbl:first-child{margin-top:0}
+  .fld{margin-bottom:12px}
+  .fld label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+  .fld input,.fld select,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:13.5px;font-family:inherit;background:var(--card2);color:var(--text)}
   .fld input:focus,.fld select:focus{outline:none;border-color:rgba(59,158,255,.5)}
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .modal .mf{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+  .svc{display:flex;flex-wrap:wrap;gap:8px}
+  .svc label{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:12.5px;cursor:pointer;color:var(--text)}
+  .modal .mf{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:var(--card)}
   .modal .mf button{padding:11px 18px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--line);background:var(--card2);color:var(--text)}
   .modal .mf .save{background:var(--grad);border:0;color:#06101f}
 
@@ -173,16 +205,31 @@
     <nav class="nav" id="nav">
       <div class="lbl">Operations</div>
       <a class="active" data-s="dashboard"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg> Dashboard</a>
-      <a data-s="schedule"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Schedule</a>
+      <a data-s="calendar"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Calendar</a>
       <a data-s="inspections"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M9 3v3h6V3M8 11h8M8 15h6"/></svg> Inspections</a>
-      <a data-s="clients"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 7a3 3 0 0 1 0 6M17.5 20a5 5 0 0 0-3-4.6"/></svg> Clients &amp; Agents</a>
-      <div class="lbl">Growth</div>
-      <a data-s="templates"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 17l8 4 8-4"/></svg> Templates</a>
-      <a data-s="payments"><svg class="ico" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg> Payments</a>
+      <a data-s="contacts"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 7a3 3 0 0 1 0 6M17.5 20a5 5 0 0 0-3-4.6"/></svg> Contacts</a>
+
+      <div class="lbl">Reports &amp; Growth</div>
+      <a data-s="templates"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 17l8 4 8-4"/></svg> Template Editor</a>
+      <a data-s="automations"><svg class="ico" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg> Automations</a>
       <a data-s="metrics"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 20v-6M13 20V9M18 20v-9"/></svg> Metrics</a>
+      <a data-s="reporting"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M8 17v-3M12 17v-5M16 17v-2"/></svg> Reporting</a>
+
+      <div class="lbl">Business</div>
+      <a data-s="payments"><svg class="ico" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg> Payments</a>
+      <a data-s="billing"><svg class="ico" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg> Billing</a>
+      <a data-s="data"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3v11M8 11l4 4 4-4"/><path d="M4 19h16"/></svg> Data Exports</a>
+      <a data-s="integrations"><svg class="ico" viewBox="0 0 24 24"><path d="M10 3v4M14 3v4M7 7h10v4a5 5 0 0 1-10 0zM12 16v5"/></svg> Integrations</a>
+      <a data-s="team"><svg class="ico" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><path d="M3 20a5.5 5.5 0 0 1 11 0M16.5 7.5a3 3 0 0 1 0 5.5M21 20a5 5 0 0 0-3.2-4.6"/></svg> Team</a>
+
+      <div class="lbl">Queues</div>
+      <a data-s="unconfirmed"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Unconfirmed <span class="ct">3</span></a>
+      <a data-s="textqueue"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg> Text Queue <span class="ct">5</span></a>
+
+      <div class="lbl">Account</div>
       <a data-s="settings"><svg class="ico" viewBox="0 0 24 24"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2.4"/><circle cx="8" cy="16" r="2.4"/></svg> Settings</a>
+      <a data-s="support"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5 5l4.5 4.5M14.5 14.5L19 19M19 5l-4.5 4.5M5 19l4.5-4.5"/></svg> Support Center</a>
     </nav>
-    <div class="upgrade"><b><span class="badge-ai">✨ AI</span> InspectFlow Advanced</b>Automations, pay splits &amp; business intelligence.<button onclick="toast('🚀 Advanced trial started')">Start free trial</button></div>
     <a class="hublink" href="index.html">← Back to demo hub</a>
   </aside>
 
@@ -201,7 +248,7 @@
       <div class="screen active" id="s-dashboard">
         <div class="h1">Good morning, Ryan 👋</div>
         <div class="sub" id="todayLine">Loading…</div>
-        <div class="hint"><span class="b">Try this</span> Click the left nav, search a client, hit “New Inspection”, or open any inspection row →</div>
+        <div class="hint"><span class="b">Try this</span> Click any item in the left nav — it mirrors what Spectora users already know, so it feels familiar from minute one.</div>
         <div class="kpis">
           <div class="kpi"><div class="label">Inspections this month</div><div class="val">42</div><div class="delta up">▲ 18% vs. last month</div></div>
           <div class="kpi"><div class="label">Revenue (MTD)</div><div class="val">$26,880</div><div class="delta up">▲ 12% vs. last month</div></div>
@@ -210,7 +257,7 @@
         </div>
         <div class="grid2">
           <div class="card">
-            <div class="rowflex" style="margin-bottom:3px"><h3>Today's Schedule</h3><span class="clink" onclick="go('schedule')">View calendar →</span></div>
+            <div class="rowflex" style="margin-bottom:3px"><h3>Today's Schedule</h3><span class="clink" onclick="go('calendar')">View calendar →</span></div>
             <div class="csub">3 inspections · 2 inspectors active</div>
             <div class="job g" onclick="openInsp(0)"><div class="time">8:00a<small>90 min</small></div><div class="bar"></div><div class="det"><div class="addr">1428 Magnolia Ave, Jacksonville</div><div class="meta">Sarah Mitchell · Ryan W. · Full Home + Radon</div></div><span class="chip green">Completed</span></div>
             <div class="job" onclick="openInsp(1)"><div class="time">11:30a<small>120 min</small></div><div class="bar"></div><div class="det"><div class="addr">76 Riverside Dr, Ortega</div><div class="meta">James Carter · Ryan W. · Full Home + WDO</div></div><span class="chip blue">In Progress</span></div>
@@ -260,21 +307,68 @@
         </div>
       </div>
 
-      <!-- SCHEDULE -->
-      <div class="screen" id="s-schedule">
-        <div class="h1">Schedule</div><div class="sub">Thursday, June 25, 2026</div>
+      <!-- CALENDAR -->
+      <div class="screen" id="s-calendar">
+        <div class="h1">Calendar</div><div class="sub">Thursday, June 25, 2026 · day / week / month views · Google Calendar synced</div>
         <div class="card tablecard"><h3>This Week</h3><div class="csub">8 inspections booked</div><div id="weekList"></div></div>
       </div>
+
       <!-- INSPECTIONS -->
       <div class="screen" id="s-inspections">
         <div class="h1">Inspections</div><div class="sub"><span id="inspTotal"></span> total · filter with the search bar above</div>
         <div class="card tablecard"><table><thead><tr><th>Property</th><th>Client</th><th>Inspector</th><th>Date</th><th>Status</th><th>Payment</th></tr></thead><tbody id="inspBody"></tbody></table></div>
       </div>
-      <!-- CLIENTS -->
-      <div class="screen" id="s-clients">
-        <div class="h1">Clients &amp; Agents</div><div class="sub">Everyone connected to your inspections</div>
+
+      <!-- CONTACTS -->
+      <div class="screen" id="s-contacts">
+        <div class="h1">Contacts</div><div class="sub">Clients, agents &amp; vendors connected to your inspections</div>
         <div class="card tablecard"><div id="clientList"></div></div>
       </div>
+
+      <!-- TEMPLATE EDITOR -->
+      <div class="screen" id="s-templates">
+        <div class="h1">Template Editor</div><div class="sub">Sections → Items → Comments · build the report once, reuse it on every inspection</div>
+        <div class="card" style="margin-top:18px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
+          <div><b>Residential — Full Home</b> <span class="chip blue" style="margin-left:6px">Default</span><div class="csub" style="margin:5px 0 0">InterNACHI Standards of Practice · 8 sections · 31 items</div></div>
+          <div style="display:flex;gap:8px"><button class="minibtn">Template Center</button><button class="minibtn">＋ New Template</button></div>
+        </div>
+        <div class="tpl3">
+          <div class="tplcol"><div class="ch">Sections <span class="add" onclick="toast('＋ Section added')">＋ Add</span></div><div class="tplbody" id="tplSections"></div></div>
+          <div class="tplcol"><div class="ch">Items <span class="add" onclick="toast('＋ Item added')">＋ Add</span></div><div class="tplbody" id="tplItems"></div></div>
+          <div class="tplcol"><div class="ch">Comment Library <span class="add" onclick="toast('＋ Comment added')">＋ Add</span></div><div class="tplbody" id="tplComments"></div></div>
+        </div>
+      </div>
+
+      <!-- AUTOMATIONS -->
+      <div class="screen" id="s-automations">
+        <div class="h1">Automations</div><div class="sub">Rule-based emails &amp; texts around every job · upsells, reminders, follow-ups</div>
+        <div class="card tablecard" style="display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap">
+          <span class="csub" style="margin:0;margin-right:auto"><b style="color:#4FE0AE">+$1,715</b> in upsell revenue from automations in the last 30 days</span>
+          <button class="minibtn">Presets Library</button><button class="minibtn">＋ New Automation</button>
+        </div>
+        <div class="card tablecard">
+          <table><thead><tr><th>Automation</th><th>Category</th><th>Recipient</th><th>Channel</th><th>Status</th></tr></thead><tbody id="autoBody"></tbody></table>
+        </div>
+      </div>
+
+      <!-- METRICS -->
+      <div class="screen" id="s-metrics">
+        <div class="h1">Metrics</div><div class="sub">Business intelligence · InspectFlow Advanced</div>
+        <div class="grid2" style="margin-top:22px">
+          <div class="card"><h3>Revenue by Service</h3><div class="csub">Last 90 days</div><div class="bars" id="svcBars"></div></div>
+          <div class="card"><h3>Top Referring Agents</h3><div class="csub">By inspections sent</div><div id="agentList"></div></div>
+        </div>
+      </div>
+
+      <!-- REPORTING -->
+      <div class="screen" id="s-reporting">
+        <div class="h1">Reporting</div><div class="sub">Deep-dive reports · agents, revenue, inspectors, geography</div>
+        <div class="card tablecard">
+          <h3>Available Reports</h3><div class="csub">Run any report, then export</div>
+          <div id="reportList"></div>
+        </div>
+      </div>
+
       <!-- PAYMENTS -->
       <div class="screen" id="s-payments">
         <div class="h1">Payments</div><div class="sub">Integrated payments · instant payouts</div>
@@ -286,50 +380,125 @@
         </div>
         <div class="card tablecard"><h3>Recent Transactions</h3><div class="csub">Auto-collected via InspectFlow Payments</div><div id="payList"></div></div>
       </div>
-      <!-- METRICS -->
-      <div class="screen" id="s-metrics">
-        <div class="h1">Metrics</div><div class="sub">Business intelligence · InspectFlow Advanced</div>
-        <div class="grid2" style="margin-top:22px">
-          <div class="card"><h3>Revenue by Service</h3><div class="csub">Last 90 days</div><div class="bars" id="svcBars"></div></div>
-          <div class="card"><h3>Top Referring Agents</h3><div class="csub">By inspections sent</div><div id="agentList"></div></div>
+
+      <!-- BILLING -->
+      <div class="screen" id="s-billing">
+        <div class="h1">Billing</div><div class="sub">Your InspectFlow subscription &amp; invoices</div>
+        <div class="card tablecard" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div><b style="font-size:16px">Growth Plan</b> <span class="chip green" style="margin-left:6px">Active</span><div class="csub" style="margin:5px 0 0">2 inspectors · billed monthly · renews Jul 25, 2026</div></div>
+          <button class="minibtn">Manage plan</button>
+        </div>
+        <div class="card tablecard"><h3>Invoices</h3><div class="csub">Payment method · Visa •••• 6411</div><div id="invoiceList"></div></div>
+      </div>
+
+      <!-- DATA EXPORTS -->
+      <div class="screen" id="s-data">
+        <div class="h1">Data Exports</div><div class="sub">Export any dataset to CSV for accounting or analysis</div>
+        <div class="card tablecard"><div id="exportList"></div></div>
+      </div>
+
+      <!-- INTEGRATIONS -->
+      <div class="screen" id="s-integrations">
+        <div class="h1">Integrations</div><div class="sub">Connect the tools you already use</div>
+        <div class="intgrid" id="intGrid"></div>
+      </div>
+
+      <!-- TEAM -->
+      <div class="screen" id="s-team">
+        <div class="h1">Team</div><div class="sub">Inspectors, office staff &amp; roles</div>
+        <div class="card tablecard" style="display:flex;justify-content:flex-end"><button class="minibtn">＋ Invite team member</button></div>
+        <div class="card tablecard"><div id="teamList"></div></div>
+      </div>
+
+      <!-- UNCONFIRMED -->
+      <div class="screen" id="s-unconfirmed">
+        <div class="h1">Unconfirmed</div><div class="sub">Inspections awaiting client confirmation</div>
+        <div class="card tablecard"><div id="unconfList"></div></div>
+      </div>
+
+      <!-- TEXT QUEUE -->
+      <div class="screen" id="s-textqueue">
+        <div class="h1">Text Queue</div><div class="sub">Outbound SMS · queued &amp; recently sent</div>
+        <div class="card tablecard"><div id="textList"></div></div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="screen" id="s-settings">
+        <div class="h1">Settings</div><div class="sub">Company profile, services, fees, agreements, branding</div>
+        <div class="card tablecard">
+          <div class="listrow"><div class="nm"><b>Company Profile</b><small>904 Digital Media — InspectFlow · logo, license #s, timezone</small></div><span class="chip green">Active</span></div>
+          <div class="listrow"><div class="nm"><b>Services &amp; Fees</b><small>6 services · base fees, durations, discount codes</small></div><button class="minibtn">Edit</button></div>
+          <div class="listrow"><div class="nm"><b>Payments</b><small>Connected · instant payouts on · require-payment-to-release</small></div><span class="chip green">Connected</span></div>
+          <div class="listrow"><div class="nm"><b>Online Booking Widget</b><small>Embedded on yoursite.com</small></div><span class="chip green">Live</span></div>
+          <div class="listrow"><div class="nm"><b>E-sign Agreements</b><small>Pre-inspection agreement v3</small></div><span class="chip blue">2 pending</span></div>
+          <div class="listrow"><div class="nm"><b>Two-Factor Authentication</b><small>Authenticator app</small></div><span class="chip green">Enabled</span></div>
         </div>
       </div>
-      <!-- TEMPLATES / SETTINGS -->
-      <div class="screen" id="s-templates">
-        <div class="h1">Templates</div><div class="sub">Your inspection report templates</div>
-        <div class="card tablecard"><div id="tplList"></div></div>
-      </div>
-      <div class="screen" id="s-settings">
-        <div class="h1">Settings</div><div class="sub">Company profile, branding, integrations</div>
+
+      <!-- SUPPORT -->
+      <div class="screen" id="s-support">
+        <div class="h1">Support Center</div><div class="sub">Help articles, walkthroughs &amp; live support</div>
         <div class="card tablecard">
-          <div class="listrow"><div class="nm"><b>Company</b><small>904 Digital Media — InspectFlow</small></div><span class="chip green">Active</span></div>
-          <div class="listrow"><div class="nm"><b>Payments</b><small>Connected · instant payouts on</small></div><span class="chip green">Connected</span></div>
-          <div class="listrow"><div class="nm"><b>Online booking widget</b><small>Embedded on yoursite.com</small></div><span class="chip green">Live</span></div>
-          <div class="listrow"><div class="nm"><b>E-sign agreements</b><small>Pre-inspection agreement v3</small></div><span class="chip blue">2 pending</span></div>
+          <div class="listrow"><div class="nm"><b>Getting Started Guide</b><small>Set up your company in 15 minutes</small></div><button class="minibtn">Open</button></div>
+          <div class="listrow"><div class="nm"><b>Video Walkthroughs</b><small>Reporting, scheduling, payments</small></div><button class="minibtn">Watch</button></div>
+          <div class="listrow"><div class="nm"><b>Live Chat</b><small>Mon–Sat, 7am–6pm</small></div><button class="minibtn">Chat</button></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- New Inspection modal (Spectora-style sections) -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="mh"><h3>New Inspection</h3><button class="x" onclick="closeNew()">✕</button></div>
     <div class="mb">
+      <div class="mlbl">Inspector(s) &amp; Date/Time</div>
+      <div class="frow">
+        <div class="fld"><label>Inspector</label><select id="f_insp"><option>Ryan W.</option><option>Dave M.</option></select></div>
+        <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
+      </div>
+      <div class="frow">
+        <div class="fld"><label>Start time</label><input type="time" value="09:00"></div>
+        <div class="fld"><label>Duration</label><input value="3 hours"></div>
+      </div>
+      <div class="mlbl">Location</div>
       <div class="fld"><label>Property address</label><input id="f_addr" placeholder="123 Main St, Jacksonville, FL"></div>
       <div class="frow">
-        <div class="fld"><label>Client name</label><input id="f_client" placeholder="Buyer name"></div>
-        <div class="fld"><label>Inspection type</label><select id="f_type"><option>Full Home</option><option>Full Home + Radon</option><option>Full Home + WDO</option><option>4-Point</option><option>Wind Mitigation</option></select></div>
+        <div class="fld"><label>Property type</label><select><option>Single Family</option><option>Condo</option><option>Townhouse</option><option>Multi-Family</option></select></div>
+        <div class="fld"><label>Occupancy</label><select><option>Occupied</option><option>Vacant</option><option>Tenant-occupied</option></select></div>
       </div>
+      <div class="fld"><label>How do we get inside? (lockbox / key / gate code)</label><input placeholder="Lockbox code, gate instructions…"></div>
+      <div class="mlbl">Client</div>
       <div class="frow">
-        <div class="fld"><label>Date</label><input id="f_date" type="date"></div>
-        <div class="fld"><label>Inspector</label><select id="f_insp"><option>Ryan W.</option><option>Dave M.</option></select></div>
+        <div class="fld"><label>Client name</label><input id="f_client" placeholder="Buyer name"></div>
+        <div class="fld"><label>Phone</label><input placeholder="(904) 555-0142"></div>
       </div>
+      <div class="fld"><label>Email</label><input placeholder="client@email.com"></div>
+      <div class="mlbl">Services</div>
+      <div class="svc">
+        <label><input type="checkbox" checked> Full Home</label>
+        <label><input type="checkbox"> Radon</label>
+        <label><input type="checkbox"> WDO</label>
+        <label><input type="checkbox"> Sewer Scope</label>
+        <label><input type="checkbox"> 4-Point</label>
+        <label><input type="checkbox"> Wind Mitigation</label>
+      </div>
+      <select id="f_type" style="display:none"><option>Full Home</option></select>
+      <div class="mlbl">Fees &amp; Payment</div>
+      <div class="frow">
+        <div class="fld"><label>Fee</label><input value="$595"></div>
+        <div class="fld"><label>Discount code</label><input placeholder="Optional"></div>
+      </div>
+      <div class="fld"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" checked style="width:auto"> Require payment to release report(s)</label></div>
+      <div class="mlbl">Client's Agent</div>
+      <div class="fld"><label>Agent</label><input placeholder="Search agents…"></div>
     </div>
     <div class="mf"><button onclick="closeNew()">Cancel</button><button class="save" onclick="createInsp()">Create &amp; send confirmation</button></div>
   </div>
 </div>
 
+<!-- Detail drawer -->
 <div class="drawer" id="drawer">
   <div class="dh"><button class="x" onclick="closeDrawer()">✕</button><h3 id="dTitle"></h3><p id="dSub"></p></div>
   <div class="db" id="dBody"></div>
@@ -385,7 +554,7 @@ function closeNew(){ document.getElementById('overlay').classList.remove('show')
 function createInsp(){
   const addr=document.getElementById('f_addr').value.trim()||'New Property';
   const client=document.getElementById('f_client').value.trim()||'New Client';
-  const it={p:addr.split(',')[0],city:addr.split(',').slice(1).join(',').trim()||'Jacksonville, FL',client,insp:document.getElementById('f_insp').value,date:'Jun 26',type:document.getElementById('f_type').value,status:'Scheduled',pay:'Pending',fee:'$595'};
+  const it={p:addr.split(',')[0],city:addr.split(',').slice(1).join(',').trim()||'Jacksonville, FL',client,insp:document.getElementById('f_insp').value,date:'Jun 26',type:'Full Home',status:'Scheduled',pay:'Pending',fee:'$595'};
   inspections.unshift(it); persist(); closeNew(); renderAll(''); document.getElementById('f_addr').value='';document.getElementById('f_client').value='';
   go('inspections'); fakeSync(); toast('✅ Inspection created · confirmation emailed to '+client);
 }
@@ -402,6 +571,37 @@ function openInsp(i){
 }
 function closeDrawer(){ document.getElementById('drawer').classList.remove('show'); }
 
+/* ---- Template Editor ---- */
+const TPL={
+  general:{name:'General Information',items:[{n:'Inspection Details',c:[['Inspection performed per InterNACHI Standards of Practice.','info']]},{n:'Client & Property',c:[]}]},
+  roof:{name:'Roof',items:[
+    {n:'Roof Coverings',c:[['Asphalt shingles in serviceable condition.','info'],['Cracked and lifted shingles observed on the south slope.','safety'],['Granule loss consistent with the age of the roof.','maint'],['Exposed nail heads noted near the ridge.','repair']]},
+    {n:'Flashing',c:[['Flashing intact and properly sealed.','info'],['Deteriorated flashing observed at the valley.','repair']]},
+    {n:'Gutters & Downspouts',c:[['Functional and draining away from the foundation.','info'],['Gutters loose / pulling away from fascia.','repair']]},
+    {n:'Skylights',c:[['No skylights present.','info']]}
+  ]},
+  exterior:{name:'Exterior',items:[{n:'Siding / Cladding',c:[['Fiber cement siding in good condition.','info']]},{n:'Trim & Soffits',c:[]},{n:'Grading & Drainage',c:[['Grading slopes away from the structure.','info']]}]},
+  interior:{name:'Interior',items:[{n:'Walls & Ceilings',c:[]},{n:'Floors',c:[]},{n:'Windows',c:[]}]},
+  electrical:{name:'Electrical',items:[
+    {n:'Service Panel',c:[['200A service, panel properly labeled.','info'],['Double-tapped breaker observed in the main panel.','safety'],['Missing breaker blank(s).','repair']]},
+    {n:'Outlets & GFCI',c:[['GFCI protection present and functional.','info'],['GFCI failed to trip when tested.','repair']]},
+    {n:'Smoke Detectors',c:[['Present in required locations.','info']]}
+  ]},
+  plumbing:{name:'Plumbing',items:[{n:'Water Heater',c:[['40 gal gas water heater, functional.','info'],['No drain pan installed beneath the water heater.','maint']]},{n:'Supply & Drains',c:[]},{n:'Fixtures',c:[]}]},
+  hvac:{name:'HVAC',items:[{n:'Heating',c:[]},{n:'Cooling',c:[]}]}
+};
+let tplSel='roof', tplItem=0;
+function tplRender(){
+  const secs=Object.keys(TPL);
+  document.getElementById('tplSections').innerHTML=secs.map(k=>'<div class="tplrow '+(k===tplSel?'on':'')+'" onclick="tplPickSec(\''+k+'\')">'+TPL[k].name+'<span class="cnt">'+TPL[k].items.length+'</span></div>').join('');
+  const items=TPL[tplSel].items;
+  document.getElementById('tplItems').innerHTML=items.map((it,i)=>'<div class="tplrow '+(i===tplItem?'on':'')+'" onclick="tplPickItem('+i+')">'+it.n+'<span class="cnt">'+it.c.length+'</span></div>').join('');
+  const cms=(items[tplItem]&&items[tplItem].c)||[];
+  document.getElementById('tplComments').innerHTML=cms.length?cms.map(c=>'<div class="cmt"><div class="ct">'+c[0]+'</div><span class="rt '+c[1]+'">'+({info:'Informational',safety:'Safety',repair:'Repair',maint:'Maintenance'}[c[1]])+'</span></div>').join(''):'<div class="empty">No saved comments yet — click ＋ Add to build the library.</div>';
+}
+function tplPickSec(k){ tplSel=k; tplItem=0; tplRender(); }
+function tplPickItem(i){ tplItem=i; tplRender(); }
+
 function buildStatic(){
   document.getElementById('chart').innerHTML=[['Jan',48],['Feb',58],['Mar',52],['Apr',72],['May',80],['Jun',96]].map(c=>'<div class="col"><div class="bar2" style="height:'+c[1]+'%"></div><small>'+c[0]+'</small></div>').join('');
   document.getElementById('weekList').innerHTML=[
@@ -409,8 +609,50 @@ function buildStatic(){
   ].map(d=>'<div class="listrow"><div class="time" style="width:60px;font-weight:700">'+d[0]+'</div><div class="nm"><b>'+d[1]+'</b><small>'+d[2]+'</small></div></div>').join('');
   document.getElementById('svcBars').innerHTML=[['Full Home',82],['+ Radon',46],['+ WDO',38],['4-Point',24],['Wind Mit.',18]].map(s=>'<div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span>'+s[0]+'</span><span style="color:var(--muted)">$'+(s[1]*120).toLocaleString()+'</span></div><div style="height:9px;background:rgba(255,255,255,.07);border-radius:6px;overflow:hidden"><div style="height:100%;width:'+s[1]+'%;background:linear-gradient(90deg,#39C2FF,#3B9EFF)"></div></div></div>').join('');
   document.getElementById('agentList').innerHTML=[['Amanda Cruz — KW',18],['Marcus Bell — eXp',12],['Lia Romano — Compass',9],['Devon Hart — Redfin',6]].map(a=>'<div class="listrow"><span class="mini-av">'+av(a[0])+'</span><div class="nm"><b>'+a[0]+'</b><small>'+a[1]+' inspections referred</small></div></div>').join('');
-  document.getElementById('tplList').innerHTML=[['Residential — Full Home','InterNACHI SOP','Default'],['4-Point Inspection','Citizens format','Active'],['Wind Mitigation','OIR-B1-1802','Active'],['Commercial','Custom','Draft']].map(t=>'<div class="listrow"><div class="nm"><b>'+t[0]+'</b><small>'+t[1]+'</small></div><span class="chip '+(t[2]==='Draft'?'gray':'green')+'">'+t[2]+'</span></div>').join('');
+
+  document.getElementById('autoBody').innerHTML=[
+    ['Pre-inspection reminder','Reminders','Client','SMS','Active'],
+    ['Sewer scope upsell','Upsells','Client','Email','Active'],
+    ['Agreement not signed','Reminders','Client','Email + SMS','Active'],
+    ['11-month new-construction follow-up','Follow-up','Client','Email','Active'],
+    ['Contractor — radon drop-off','Internal','Vendor','SMS','Active'],
+    ['Post-report review request','Reviews','Client','Email','Paused']
+  ].map(r=>'<tr><td class="pa">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td><span class="chip '+(r[4]==='Active'?'green':'gray')+'">'+r[4]+'</span></td></tr>').join('');
+
+  document.getElementById('reportList').innerHTML=[
+    ['Top Referring Agents','Which agents send you the most work'],['Revenue by ZIP code','Where your money comes from geographically'],
+    ['Revenue by Inspector','Per-inspector production & pay splits'],['Conversion Funnel','Lead → booked → inspected → paid → reviewed'],
+    ['Service Attach Rate','How often add-ons are sold']
+  ].map(r=>'<div class="listrow"><div class="nm"><b>'+r[0]+'</b><small>'+r[1]+'</small></div><button class="minibtn">Run report</button></div>').join('');
+
+  document.getElementById('invoiceList').innerHTML=[
+    ['Jun 25, 2026','$218.00','Paid'],['May 25, 2026','$218.00','Paid'],['Apr 25, 2026','$218.00','Paid']
+  ].map(r=>'<div class="listrow"><div class="nm"><b>Invoice · '+r[0]+'</b><small>Growth Plan · 2 inspectors</small></div><b style="margin-right:12px">'+r[1]+'</b><span class="chip green">'+r[2]+'</span></div>').join('');
+
+  document.getElementById('exportList').innerHTML=[
+    ['Inspections','All inspections with status, fees, dates'],['Payments','Transactions, fees, net, payouts'],
+    ['Contacts','Clients & agents with tags'],['Agreements','Signed agreements & timestamps']
+  ].map(r=>'<div class="listrow"><div class="nm"><b>'+r[0]+'</b><small>'+r[1]+'</small></div><button class="minibtn">⤓ Export CSV</button></div>').join('');
+
+  const ints=[['QuickBooks','Accounting sync','Connected'],['Google Calendar','Two-way calendar','Connected'],['GoHighLevel','CRM & marketing','Connected'],['MailChimp','Email marketing','Connect'],['HomeBinder','Homeowner portal','Connect'],['RecallChek','Appliance recalls','Connect'],['Repair Pricer','Repair cost estimates','Connect'],['ISN','Migration / data','Connect'],['Zapier','Connect 5,000+ apps','Connect']];
+  document.getElementById('intGrid').innerHTML=ints.map(x=>'<div class="intcard"><div class="nm">'+x[0]+'</div><div class="ds">'+x[1]+'</div>'+(x[2]==='Connected'?'<span class="chip green">Connected</span>':'<button class="minibtn">Connect</button>')+'</div>').join('');
+
+  document.getElementById('teamList').innerHTML=[
+    ['Ryan Warren','Owner · all access','Owner'],['Dave Martinez','Inspector · assigned jobs','Inspector'],['Megan Office','Office staff · scheduling & payments','Admin']
+  ].map(r=>'<div class="listrow"><span class="mini-av">'+av(r[0])+'</span><div class="nm"><b>'+r[0]+'</b><small>'+r[1]+'</small></div><span class="chip blue">'+r[2]+'</span></div>').join('');
+
+  document.getElementById('unconfList').innerHTML=inspections.filter(i=>i.status==='Scheduled').concat([{p:'14 Loris Ln, Jacksonville',client:'Aisha Khan',date:'Jun 27'},{p:'88 Selva Marina Dr',client:'Marcus Bell',date:'Jun 28'}]).map(it=>'<div class="listrow"><div class="nm"><b>'+it.p+'</b><small>'+it.client+' · '+(it.date||'Jun 26')+'</small></div><button class="minibtn">Send confirmation</button></div>').join('');
+
+  document.getElementById('textList').innerHTML=[
+    ['Sarah Mitchell','Your report for 1428 Magnolia is ready 🎉','Sent'],
+    ['James Carter','Reminder: inspection tomorrow at 11:30am','Queued'],
+    ['The Nguyen Family','Please e-sign your agreement before Thu','Queued'],
+    ['Amanda Cruz','New report shared with you','Sent'],
+    ['Tyler Brooks','How was your inspection? Leave us a review','Queued']
+  ].map(r=>'<div class="listrow"><span class="mini-av">'+av(r[0])+'</span><div class="nm"><b>'+r[0]+'</b><small>'+r[1]+'</small></div><span class="chip '+(r[2]==='Sent'?'green':'amber')+'">'+r[2]+'</span></div>').join('');
+
   const now=new Date(); document.getElementById('todayLine').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' · 3 inspections scheduled today';
+  tplRender();
 }
 
 function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); }
